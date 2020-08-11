@@ -32,7 +32,7 @@ public class ItemBuilder {
 	}
 
 	public ItemBuilder clone() {
-		return new ItemBuilder(itemStack);
+		return new ItemBuilder(itemStack.clone());
 	}
 
 	public ItemStack toItemStack() {
@@ -164,16 +164,7 @@ public class ItemBuilder {
 	}
 
 	public ItemBuilder setLore(String... lore) {
-		ItemMeta meta = itemStack.getItemMeta();
-		
-		if (meta == null) {
-			return this;
-		}
-		
-		meta.setLore(Arrays.asList(lore));
-		itemStack.setItemMeta(meta);
-		
-		return this;
+		return setLore(Arrays.asList(lore));
 	}
 
 	public ItemBuilder setLore(List<String> lore) {
@@ -189,6 +180,9 @@ public class ItemBuilder {
 		return this;
 	}
 
+	public ItemBuilder addLoreLines(String... lines) {
+		return addLoreLines(Arrays.asList(lines));
+	}
 
 	public ItemBuilder addLoreLines(List<String> line) {
 		ItemMeta meta = itemStack.getItemMeta();
@@ -218,30 +212,6 @@ public class ItemBuilder {
 		}
 		
 		meta.setUnbreakable(value);
-		itemStack.setItemMeta(meta);
-		
-		return this;
-	}
-
-	public ItemBuilder addLoreLines(String[] line) {
-		ItemMeta meta = itemStack.getItemMeta();
-		
-		if (meta == null) {
-			return this;
-		}
-		
-		// Add lore lines
-		List<String> lore = new ArrayList<>();
-		
-		if (meta.hasLore()) {
-			lore.addAll(meta.getLore());
-		}
-		
-		for (String s : line) {
-			lore.add(ChatColor.translateAlternateColorCodes('&', s));
-		}
-		
-		meta.setLore(lore);
 		itemStack.setItemMeta(meta);
 		
 		return this;

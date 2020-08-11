@@ -9,14 +9,14 @@ public enum MenuSize {
 	XL(45),
 	XXL(54);
 	
-	private int size;
+	private int slots;
 	
-	MenuSize(int size) {
-		this.size = size;
+	MenuSize(int slots) {
+		this.slots = slots;
 	}
 	
-	public int getSize() {
-		return size;
+	public int getSlots() {
+		return slots;
 	}
 	
 }

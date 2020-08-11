@@ -2,19 +2,19 @@ package nl.timvandijkhuizen.spigotutils.menu;
 
 import java.util.List;
 import java.util.Map;
-import java.util.function.Consumer;
 
 import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
 
 import nl.timvandijkhuizen.spigotutils.inventory.ItemBuilder;
 
 public class MenuItemBuilder extends ItemBuilder {
 
-	private Consumer<Player> onClick;
+	private MenuAction<Player, Menu, MenuItemBuilder, ClickType> onClick;
 	
 	public MenuItemBuilder(ItemStack itemStack) {
 		super(itemStack);
@@ -28,17 +28,17 @@ public class MenuItemBuilder extends ItemBuilder {
 		super(material, amount);
 	}
 	
-	public MenuItemBuilder setClickListener(Consumer<Player> onClick) {
+	public MenuItemBuilder setClickListener(MenuAction<Player, Menu, MenuItemBuilder, ClickType> onClick) {
 		this.onClick = onClick;
 		return this;
 	}
 	
-	public Consumer<Player> getClickListener() {
+	public MenuAction<Player, Menu, MenuItemBuilder, ClickType> getClickListener() {
 		return onClick;
 	}
 	
 	public MenuItemBuilder clone() {
-		return new MenuItemBuilder(itemStack);
+		return new MenuItemBuilder(itemStack.clone());
 	}
 	
 	public MenuItemBuilder setDurability(short durability) {
@@ -122,8 +122,8 @@ public class MenuItemBuilder extends ItemBuilder {
 		return this;
 	}
 
-	public MenuItemBuilder addLoreLines(String[] line) {
-		super.addLoreLines(line);
+	public MenuItemBuilder addLoreLines(String... lines) {
+		super.addLoreLines(lines);
 		return this;
 	}
 

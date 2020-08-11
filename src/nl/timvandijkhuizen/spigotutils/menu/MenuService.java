@@ -39,7 +39,7 @@ public class MenuService implements Service, Listener {
 		
 		if (menu != null) {
 			event.setCancelled(true);
-			menu.handleClick(event.getSlot(), player);
+			menu.handleClick(event);
 		}
 	}
 	

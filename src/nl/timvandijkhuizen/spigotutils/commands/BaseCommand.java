@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.bukkit.command.Command;
-import org.bukkit.command.CommandException;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -63,8 +62,6 @@ public abstract class BaseCommand implements CommandExecutor {
 			} else {
 				onConsoleUse(sender, args);
 			}
-		} catch(CommandException e) {
-			sender.sendMessage(UI.color(e.getMessage(), UI.ERROR_COLOR));
 		} catch(Exception e) {
 			e.printStackTrace();
 			sender.sendMessage(UI.color(MESSAGE_ERROR, UI.ERROR_COLOR));
@@ -83,10 +80,6 @@ public abstract class BaseCommand implements CommandExecutor {
     	}
     	
     	return subCommandMap;
-    }
-    
-    protected void showError(String error) {
-    	throw new CommandException(error);
     }
 	
 }
