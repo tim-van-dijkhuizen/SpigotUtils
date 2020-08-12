@@ -139,14 +139,14 @@ public class ItemBuilder {
 		return this;
 	}
 
-	public ItemBuilder addEnchantGlow(Enchantment ench, int level) {
+	public ItemBuilder addEnchantGlow() {
 		ItemMeta meta = itemStack.getItemMeta();
 		
 		if (meta == null) {
 			return this;
 		}
 		
-		meta.addEnchant(ench, level, true);
+		meta.addEnchant(Enchantment.DURABILITY, 1, true);
 		meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
 		itemStack.setItemMeta(meta);
 		

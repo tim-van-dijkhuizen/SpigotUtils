@@ -97,11 +97,6 @@ public class PagedMenu extends Menu {
 		int columnStart = columnOffset;
 		int itemIndex = page * (rows * columns);
 		
-		// Ignore if page is empty
-		if(page < 0 || itemIndex >= pagedItems.size()) {
-			return;
-		}
-		
 		this.page = page;
 		this.clear();
 		
@@ -121,12 +116,18 @@ public class PagedMenu extends Menu {
 		// Add pagination
 		super.setButton(BACK_BUTTON.setClickListener((whoClicked, activeMenu, clickedItem, clickType) -> {
 			whoClicked.playSound(whoClicked.getLocation(), Sound.UI_BUTTON_CLICK, 1, 1);
-			setPage(page - 1);
+			
+			if(page > 0) {
+				setPage(page - 1);
+			}
 		}), size.getSlots() - 9 + previousButtonOffset);
 		
 		super.setButton(NEXT_BUTTON.setClickListener((whoClicked, activeMenu, clickedItem, clickType) -> {
 			whoClicked.playSound(whoClicked.getLocation(), Sound.UI_BUTTON_CLICK, 1, 1);
-			setPage(page + 1);
+			
+			if(((page + 1) * (rows * columns)) < pagedItems.size()) {
+				setPage(page + 1);
+			}
 		}), size.getSlots() - 9 + nextButtonOffset);
 		
 		// Fill the gaps

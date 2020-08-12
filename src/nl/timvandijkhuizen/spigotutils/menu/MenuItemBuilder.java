@@ -86,8 +86,8 @@ public class MenuItemBuilder extends ItemBuilder {
 		return this;
 	}
 
-	public MenuItemBuilder addEnchantGlow(Enchantment ench, int level) {
-		super.addEnchantGlow(ench, level);
+	public MenuItemBuilder addEnchantGlow() {
+		super.addEnchantGlow();
 		return this;
 	}
 
