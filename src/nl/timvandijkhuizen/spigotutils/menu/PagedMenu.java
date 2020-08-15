@@ -8,6 +8,7 @@ import java.util.Map.Entry;
 
 import org.bukkit.Material;
 import org.bukkit.Sound;
+import org.bukkit.entity.Player;
 
 public class PagedMenu extends Menu {
 	
@@ -114,7 +115,9 @@ public class PagedMenu extends Menu {
 		}
 		
 		// Add pagination
-		super.setButton(BACK_BUTTON.setClickListener((whoClicked, activeMenu, clickedItem, clickType) -> {
+		super.setButton(BACK_BUTTON.setClickListener(event -> {
+			Player whoClicked = event.getPlayer();
+			
 			whoClicked.playSound(whoClicked.getLocation(), Sound.UI_BUTTON_CLICK, 1, 1);
 			
 			if(page > 0) {
@@ -122,7 +125,9 @@ public class PagedMenu extends Menu {
 			}
 		}), size.getSlots() - 9 + previousButtonOffset);
 		
-		super.setButton(NEXT_BUTTON.setClickListener((whoClicked, activeMenu, clickedItem, clickType) -> {
+		super.setButton(NEXT_BUTTON.setClickListener(event -> {
+			Player whoClicked = event.getPlayer();
+			
 			whoClicked.playSound(whoClicked.getLocation(), Sound.UI_BUTTON_CLICK, 1, 1);
 			
 			if(((page + 1) * (rows * columns)) < pagedItems.size()) {

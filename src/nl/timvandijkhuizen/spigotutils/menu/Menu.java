@@ -7,7 +7,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
-import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
@@ -26,7 +25,7 @@ public class Menu {
 	protected String title;
 	protected MenuSize size;
 	protected Inventory inventory;
-	protected Map<Integer, MenuAction<Player, Menu, MenuItemBuilder, ClickType>> clickableItems = new HashMap<>();
+	protected Map<Integer, MenuItemBuilder> items = new HashMap<>();
 
 	public Menu(String title) {
 		this(title, MenuSize.MD);
@@ -60,20 +59,15 @@ public class Menu {
 	}
 	
 	public Menu setButton(MenuItemBuilder item, int slot) {
-		MenuAction<Player, Menu, MenuItemBuilder, ClickType> listener = item.getClickListener();
-		
 		inventory.setItem(slot, item.toItemStack());
-		
-		if(listener != null) {
-			clickableItems.put(slot, listener);
-		}
+		items.put(slot, item);
 		
 		return this;
 	}
 	
 	public void clear() {
 		inventory.clear();
-		clickableItems.clear();
+		items.clear();
 	}
 	
 	public Menu removeButton(int slot) {
@@ -81,18 +75,21 @@ public class Menu {
 		
 		if(item != null) {
 			inventory.remove(item);
-			clickableItems.remove(slot);
+			items.remove(slot);
 		}
 		
 		return this;
 	}
 	
 	void handleClick(InventoryClickEvent event) {
-		MenuAction<Player, Menu, MenuItemBuilder, ClickType> click = clickableItems.get(event.getSlot());
-		MenuItemBuilder item = new MenuItemBuilder(event.getCurrentItem()).setClickListener(click);
+		MenuItemBuilder item = items.get(event.getSlot());
+		Player player = (Player) event.getWhoClicked();
 		
-		if (click != null) {
-			click.onClick((Player) event.getWhoClicked(), this, item, event.getClick());
+		// Check if item has a click listener
+		MenuAction listener = item.getClickListener();
+		
+		if (listener != null) {
+			listener.onClick(new MenuItemClickEvent(player, this, item, event.getClick()));
 		}
 	}
 	

@@ -6,15 +6,13 @@ import java.util.Map;
 import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
-import org.bukkit.entity.Player;
-import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
 
 import nl.timvandijkhuizen.spigotutils.inventory.ItemBuilder;
 
 public class MenuItemBuilder extends ItemBuilder {
 
-	private MenuAction<Player, Menu, MenuItemBuilder, ClickType> onClick;
+	private MenuAction listeners;
 	
 	public MenuItemBuilder(ItemStack itemStack) {
 		super(itemStack);
@@ -28,13 +26,13 @@ public class MenuItemBuilder extends ItemBuilder {
 		super(material, amount);
 	}
 	
-	public MenuItemBuilder setClickListener(MenuAction<Player, Menu, MenuItemBuilder, ClickType> onClick) {
-		this.onClick = onClick;
+	public MenuItemBuilder setClickListener(MenuAction listener) {
+		this.listeners = listener;
 		return this;
 	}
 	
-	public MenuAction<Player, Menu, MenuItemBuilder, ClickType> getClickListener() {
-		return onClick;
+	public MenuAction getClickListener() {
+		return listeners;
 	}
 	
 	public MenuItemBuilder clone() {
@@ -150,6 +148,14 @@ public class MenuItemBuilder extends ItemBuilder {
 	public MenuItemBuilder setLeatherArmorColor(Color color) {
 		super.setLeatherArmorColor(color);
 		return this;
+	}
+	
+	public boolean isDisabled() {
+		return false; // TODO: Finish this
+	}
+	
+	public void setDisabled(boolean disabled) {
+		// TODO: Finish this
 	}
 	
 }

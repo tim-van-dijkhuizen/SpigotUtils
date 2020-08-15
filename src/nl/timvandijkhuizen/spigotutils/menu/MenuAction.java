@@ -1,11 +1,7 @@
 package nl.timvandijkhuizen.spigotutils.menu;
 
-import org.bukkit.entity.Player;
-import org.bukkit.event.inventory.ClickType;
+public interface MenuAction {
 
-@FunctionalInterface
-public interface MenuAction<One, Two, Three, Four> {
-
-	void onClick(Player whoClicked, Menu activeMenu, MenuItemBuilder clickedItem, ClickType clickType);
+	void onClick(MenuItemClickEvent event);
 	
 }
