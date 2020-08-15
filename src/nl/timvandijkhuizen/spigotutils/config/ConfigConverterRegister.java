@@ -4,6 +4,6 @@ import java.util.Collection;
 
 public interface ConfigConverterRegister {
 
-	public Collection<ConfigConverter<?>> getConfigConverters();
+    public Collection<ConfigConverter<?>> getConfigConverters();
 
 }

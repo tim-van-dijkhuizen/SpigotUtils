@@ -16,296 +16,294 @@ import org.bukkit.inventory.meta.LeatherArmorMeta;
 
 @SuppressWarnings("deprecation")
 public class ItemBuilder {
-	
-	protected ItemStack itemStack;
-	
-	public ItemBuilder(Material material) {
-		this(material, 1);
-	}
-	
-	public ItemBuilder(Material material, int amount) {
-		itemStack = new ItemStack(material, amount);
-	}
-	
-	public ItemBuilder(ItemStack itemStack) {
-		this.itemStack = itemStack;
-	}
 
-	public ItemBuilder clone() {
-		return new ItemBuilder(itemStack.clone());
-	}
+    protected ItemStack itemStack;
 
-	public ItemStack toItemStack() {
-		return itemStack;
-	}
+    public ItemBuilder(Material material) {
+        this(material, 1);
+    }
 
-	public ItemBuilder setDurability(short durability) {
-		if (durability == 0) {
-			return this;
-		}
-		
-		itemStack.setDurability(durability);
-		
-		return this;
-	}
+    public ItemBuilder(Material material, int amount) {
+        itemStack = new ItemStack(material, amount);
+    }
 
-	public ItemBuilder setType(Material material) {
-		itemStack.setType(material);
-		return this;
-	}
+    public ItemBuilder(ItemStack itemStack) {
+        this.itemStack = itemStack;
+    }
 
-	public ItemBuilder setName(String name) {
-		ItemMeta meta = itemStack.getItemMeta();
-		
-		if (meta == null) {
-			return this;
-		}
-		
-		meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', name));
-		itemStack.setItemMeta(meta);
-		
-		return this;
-	}
+    public ItemBuilder clone() {
+        return new ItemBuilder(itemStack.clone());
+    }
 
-	public ItemBuilder setAmount(int amount) {
-		itemStack.setAmount(amount);
-		return this;
-	}
+    public ItemStack toItemStack() {
+        return itemStack;
+    }
 
-	public List<String> getLore() {
-		ItemMeta meta = itemStack.getItemMeta();
-		
-		if (meta == null) {
-			return new ArrayList<>();
-		}
-		
-		return meta.getLore();
-	}
+    public ItemBuilder setDurability(short durability) {
+        if (durability == 0) {
+            return this;
+        }
 
-	public ItemBuilder removeLore() {
-		ItemMeta meta = itemStack.getItemMeta();
-		
-		if (meta == null || !meta.hasLore() || meta.getLore() == null) {
-			return this;
-		}
+        itemStack.setDurability(durability);
 
-		// Remove lore
-		meta.setLore(new ArrayList<>());
-		itemStack.setItemMeta(meta);
-		
-		return this;
-	}
+        return this;
+    }
 
-	public ItemBuilder hideAttributes() {
-		ItemMeta meta = itemStack.getItemMeta();
-		
-		if (meta == null) {
-			return this;
-		}
-		
-		meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-		meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-		meta.addItemFlags(ItemFlag.HIDE_PLACED_ON);
-		meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
-		meta.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
-		itemStack.setItemMeta(meta);
-		
-		return this;
-	}
+    public ItemBuilder setType(Material material) {
+        itemStack.setType(material);
+        return this;
+    }
 
-	public ItemBuilder addUnsafeEnchantment(Enchantment enchantment, int level) {
-		itemStack.addUnsafeEnchantment(enchantment, level);
-		return this;
-	}
+    public ItemBuilder setName(String name) {
+        ItemMeta meta = itemStack.getItemMeta();
 
-	public ItemBuilder removeEnchantment(Enchantment enchantment) {
-		itemStack.removeEnchantment(enchantment);
-		return this;
-	}
+        if (meta == null) {
+            return this;
+        }
 
-	public ItemBuilder addEnchant(Enchantment enchantment, int level) {
-		ItemMeta meta = itemStack.getItemMeta();
-		
-		if (meta == null) {
-			return this;
-		}
-		
-		meta.addEnchant(enchantment, level, true);
-		itemStack.setItemMeta(meta);
-		
-		return this;
-	}
+        meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', name));
+        itemStack.setItemMeta(meta);
 
-	public ItemBuilder addEnchantGlow() {
-		ItemMeta meta = itemStack.getItemMeta();
-		
-		if (meta == null) {
-			return this;
-		}
-		
-		meta.addEnchant(Enchantment.DURABILITY, 1, true);
-		meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-		itemStack.setItemMeta(meta);
-		
-		return this;
-	}
+        return this;
+    }
 
-	public ItemBuilder addEnchantments(Map<Enchantment, Integer> enchantments) {
-		itemStack.addEnchantments(enchantments);
-		return this;
-	}
+    public ItemBuilder setAmount(int amount) {
+        itemStack.setAmount(amount);
+        return this;
+    }
 
-	public ItemBuilder setInfinityDurability() {
-		itemStack.setDurability(Short.MAX_VALUE);
-		return this;
-	}
+    public List<String> getLore() {
+        ItemMeta meta = itemStack.getItemMeta();
 
-	public ItemBuilder setLore(String... lore) {
-		return setLore(Arrays.asList(lore));
-	}
+        if (meta == null) {
+            return new ArrayList<>();
+        }
 
-	public ItemBuilder setLore(List<String> lore) {
-		ItemMeta meta = itemStack.getItemMeta();
-		
-		if (meta == null) {
-			return this;
-		}
-		
-		meta.setLore(lore);
-		itemStack.setItemMeta(meta);
-		
-		return this;
-	}
+        return meta.getLore();
+    }
 
-	public ItemBuilder addLore(String... lines) {
-		return addLore(Arrays.asList(lines));
-	}
+    public ItemBuilder removeLore() {
+        ItemMeta meta = itemStack.getItemMeta();
 
-	public ItemBuilder addLore(List<String> line) {
-		ItemMeta meta = itemStack.getItemMeta();
-		
-		if (meta == null || !meta.hasLore() || meta.getLore() == null) {
-			return this;
-		}
-		
-		// Add lore
-		List<String> lore = meta.getLore();
-		
-		for(String s : line) {
-			lore.add(ChatColor.translateAlternateColorCodes('&', s));
-		}
-		
-		meta.setLore(lore);
-		itemStack.setItemMeta(meta);
-		
-		return this;
-	}
+        if (meta == null || !meta.hasLore() || meta.getLore() == null) {
+            return this;
+        }
 
-	public ItemBuilder setUnbreakable(boolean value) {
-		ItemMeta meta = itemStack.getItemMeta();
-		
-		if (meta == null) {
-			return this;
-		}
-		
-		meta.setUnbreakable(value);
-		itemStack.setItemMeta(meta);
-		
-		return this;
-	}
+        // Remove lore
+        meta.setLore(new ArrayList<>());
+        itemStack.setItemMeta(meta);
 
-	public ItemBuilder removeLore(String line) {
-		ItemMeta meta = itemStack.getItemMeta();
-		List<String> lore = meta.getLore();
-		
-		if (!lore.contains(line)) {
-			return this;
-		}
-		
-		lore.remove(line);
-		meta.setLore(lore);
-		itemStack.setItemMeta(meta);
-		
-		return this;
-	}
+        return this;
+    }
 
-	public ItemBuilder removeLore(int index) {
-		ItemMeta meta = itemStack.getItemMeta();
-		List<String> lore = meta.getLore();
-		
-		if (index < 0 || index > lore.size()) {
-			return this;
-		}
-		
-		lore.remove(index);
-		meta.setLore(lore);
-		itemStack.setItemMeta(meta);
-		
-		return this;
-	}
+    public ItemBuilder hideAttributes() {
+        ItemMeta meta = itemStack.getItemMeta();
 
-	public ItemBuilder addLore(String line) {
-		ItemMeta meta = itemStack.getItemMeta();
-		List<String> lore = new ArrayList<>();
-		
-		if (meta.hasLore()) {
-			lore.addAll(meta.getLore());
-		}
-		
-		lore.add(line);
-		meta.setLore(lore);
-		itemStack.setItemMeta(meta);
-		
-		return this;
-	}
+        if (meta == null) {
+            return this;
+        }
 
-	public ItemBuilder addLore(String line, int position) {
-		ItemMeta meta = itemStack.getItemMeta();
-		List<String> lore = meta.getLore();
-		
-		lore.set(position, line);
-		meta.setLore(lore);
-		itemStack.setItemMeta(meta);
-		
-		return this;
-	}
+        meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+        meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+        meta.addItemFlags(ItemFlag.HIDE_PLACED_ON);
+        meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
+        meta.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
+        itemStack.setItemMeta(meta);
 
-	public ItemBuilder setLeatherArmorColor(Color color) {
-		try {
-			LeatherArmorMeta im = (LeatherArmorMeta) itemStack.getItemMeta();
-			
-			im.setColor(color);
-			itemStack.setItemMeta(im);
-		} catch (ClassCastException expected) {
-			throw new RuntimeException("Item is not leather armor");
-		}
-		
-		return this;
-	}
+        return this;
+    }
 
-	public static class SkullData {
-		
-		private final String texture;
-		private final SkullDataType type;
-		
-		public SkullData(String texture, SkullDataType type) {
-			this.texture = texture;
-			this.type = type;
-		}
-		
-		public String getTexture() {
-			return texture;
-		}
-		
-		public SkullDataType getType() {
-			return type;
-		}
-	}
-	
-	public enum SkullDataType {
-		NAME,
-		URL,
-		TEXTURE,
-	}
-	
+    public ItemBuilder addUnsafeEnchantment(Enchantment enchantment, int level) {
+        itemStack.addUnsafeEnchantment(enchantment, level);
+        return this;
+    }
+
+    public ItemBuilder removeEnchantment(Enchantment enchantment) {
+        itemStack.removeEnchantment(enchantment);
+        return this;
+    }
+
+    public ItemBuilder addEnchant(Enchantment enchantment, int level) {
+        ItemMeta meta = itemStack.getItemMeta();
+
+        if (meta == null) {
+            return this;
+        }
+
+        meta.addEnchant(enchantment, level, true);
+        itemStack.setItemMeta(meta);
+
+        return this;
+    }
+
+    public ItemBuilder addEnchantGlow() {
+        ItemMeta meta = itemStack.getItemMeta();
+
+        if (meta == null) {
+            return this;
+        }
+
+        meta.addEnchant(Enchantment.DURABILITY, 1, true);
+        meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+        itemStack.setItemMeta(meta);
+
+        return this;
+    }
+
+    public ItemBuilder addEnchantments(Map<Enchantment, Integer> enchantments) {
+        itemStack.addEnchantments(enchantments);
+        return this;
+    }
+
+    public ItemBuilder setInfinityDurability() {
+        itemStack.setDurability(Short.MAX_VALUE);
+        return this;
+    }
+
+    public ItemBuilder setLore(String... lore) {
+        return setLore(Arrays.asList(lore));
+    }
+
+    public ItemBuilder setLore(List<String> lore) {
+        ItemMeta meta = itemStack.getItemMeta();
+
+        if (meta == null) {
+            return this;
+        }
+
+        meta.setLore(lore);
+        itemStack.setItemMeta(meta);
+
+        return this;
+    }
+
+    public ItemBuilder addLore(String... lines) {
+        return addLore(Arrays.asList(lines));
+    }
+
+    public ItemBuilder addLore(List<String> line) {
+        ItemMeta meta = itemStack.getItemMeta();
+
+        if (meta == null || !meta.hasLore() || meta.getLore() == null) {
+            return this;
+        }
+
+        // Add lore
+        List<String> lore = meta.getLore();
+
+        for (String s : line) {
+            lore.add(ChatColor.translateAlternateColorCodes('&', s));
+        }
+
+        meta.setLore(lore);
+        itemStack.setItemMeta(meta);
+
+        return this;
+    }
+
+    public ItemBuilder setUnbreakable(boolean value) {
+        ItemMeta meta = itemStack.getItemMeta();
+
+        if (meta == null) {
+            return this;
+        }
+
+        meta.setUnbreakable(value);
+        itemStack.setItemMeta(meta);
+
+        return this;
+    }
+
+    public ItemBuilder removeLore(String line) {
+        ItemMeta meta = itemStack.getItemMeta();
+        List<String> lore = meta.getLore();
+
+        if (!lore.contains(line)) {
+            return this;
+        }
+
+        lore.remove(line);
+        meta.setLore(lore);
+        itemStack.setItemMeta(meta);
+
+        return this;
+    }
+
+    public ItemBuilder removeLore(int index) {
+        ItemMeta meta = itemStack.getItemMeta();
+        List<String> lore = meta.getLore();
+
+        if (index < 0 || index > lore.size()) {
+            return this;
+        }
+
+        lore.remove(index);
+        meta.setLore(lore);
+        itemStack.setItemMeta(meta);
+
+        return this;
+    }
+
+    public ItemBuilder addLore(String line) {
+        ItemMeta meta = itemStack.getItemMeta();
+        List<String> lore = new ArrayList<>();
+
+        if (meta.hasLore()) {
+            lore.addAll(meta.getLore());
+        }
+
+        lore.add(line);
+        meta.setLore(lore);
+        itemStack.setItemMeta(meta);
+
+        return this;
+    }
+
+    public ItemBuilder addLore(String line, int position) {
+        ItemMeta meta = itemStack.getItemMeta();
+        List<String> lore = meta.getLore();
+
+        lore.set(position, line);
+        meta.setLore(lore);
+        itemStack.setItemMeta(meta);
+
+        return this;
+    }
+
+    public ItemBuilder setLeatherArmorColor(Color color) {
+        try {
+            LeatherArmorMeta im = (LeatherArmorMeta) itemStack.getItemMeta();
+
+            im.setColor(color);
+            itemStack.setItemMeta(im);
+        } catch (ClassCastException expected) {
+            throw new RuntimeException("Item is not leather armor");
+        }
+
+        return this;
+    }
+
+    public static class SkullData {
+
+        private final String texture;
+        private final SkullDataType type;
+
+        public SkullData(String texture, SkullDataType type) {
+            this.texture = texture;
+            this.type = type;
+        }
+
+        public String getTexture() {
+            return texture;
+        }
+
+        public SkullDataType getType() {
+            return type;
+        }
+    }
+
+    public enum SkullDataType {
+        NAME, URL, TEXTURE,
+    }
+
 }

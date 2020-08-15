@@ -5,29 +5,29 @@ import nl.timvandijkhuizen.spigotutils.services.Service;
 
 public class CommandService implements Service {
 
-	private PluginBase plugin;
-	
-	public CommandService(PluginBase plugin) {
-		this.plugin = plugin;
-	}
-	
-	@Override
-	public String getHandle() {
-		return "commands";
-	}	
-	
-	@Override
-	public void load() throws Exception {
+    private PluginBase plugin;
 
-	}
-	
-	@Override
-	public void unload() throws Exception {
-		
-	}
+    public CommandService(PluginBase plugin) {
+        this.plugin = plugin;
+    }
 
-	public void register(BaseCommand command) {
-		plugin.getCommand(command.getCommand()).setExecutor(command);
-	}
-	
+    @Override
+    public String getHandle() {
+        return "commands";
+    }
+
+    @Override
+    public void load() throws Exception {
+
+    }
+
+    @Override
+    public void unload() throws Exception {
+
+    }
+
+    public void register(BaseCommand command) {
+        plugin.getCommand(command.getCommand()).setExecutor(command);
+    }
+
 }

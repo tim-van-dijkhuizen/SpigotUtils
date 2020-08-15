@@ -2,6 +2,11 @@ package nl.timvandijkhuizen.spigotutils.menu;
 
 public interface MenuAction {
 
-	void onClick(MenuItemClickEvent event);
-	
+    /**
+     * Called when the menu item is clicked.
+     * 
+     * @param event
+     */
+    void onClick(MenuItemClickEvent event);
+
 }
