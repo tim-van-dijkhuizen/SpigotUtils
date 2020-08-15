@@ -12,6 +12,10 @@ public class DataList<E> implements Iterable<E> {
 	private Set<E> toAdd = new HashSet<E>();
 	private Set<E> toRemove = new HashSet<E>();
 	
+	public DataList() {
+
+	}
+	
 	public DataList(Collection<E> items) {
 		this.items.addAll(items);
 	}
