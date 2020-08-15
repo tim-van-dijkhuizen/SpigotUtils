@@ -85,6 +85,11 @@ public class Menu {
 		MenuItemBuilder item = items.get(event.getSlot());
 		Player player = (Player) event.getWhoClicked();
 		
+		// Ignore empty slots
+		if(item == null) {
+			return;
+		}
+		
 		// Check if item has a click listener
 		MenuAction listener = item.getClickListener();
 		
