@@ -73,13 +73,13 @@ public class ItemBuilder {
 	}
 
 	public List<String> getLore() {
-		ItemMeta im = itemStack.getItemMeta();
+		ItemMeta meta = itemStack.getItemMeta();
 		
-		if (im == null) {
+		if (meta == null) {
 			return new ArrayList<>();
 		}
 		
-		return itemStack.getItemMeta().getLore();
+		return meta.getLore();
 	}
 
 	public ItemBuilder removeLore() {
@@ -90,10 +90,7 @@ public class ItemBuilder {
 		}
 
 		// Remove lore
-		List<String> lore = new ArrayList<>(meta.getLore());
-		
-		lore.clear();
-		meta.setLore(lore);
+		meta.setLore(new ArrayList<>());
 		itemStack.setItemMeta(meta);
 		
 		return this;
@@ -180,11 +177,11 @@ public class ItemBuilder {
 		return this;
 	}
 
-	public ItemBuilder addLoreLines(String... lines) {
-		return addLoreLines(Arrays.asList(lines));
+	public ItemBuilder addLore(String... lines) {
+		return addLore(Arrays.asList(lines));
 	}
 
-	public ItemBuilder addLoreLines(List<String> line) {
+	public ItemBuilder addLore(List<String> line) {
 		ItemMeta meta = itemStack.getItemMeta();
 		
 		if (meta == null || !meta.hasLore() || meta.getLore() == null) {
@@ -217,7 +214,7 @@ public class ItemBuilder {
 		return this;
 	}
 
-	public ItemBuilder removeLoreLine(String line) {
+	public ItemBuilder removeLore(String line) {
 		ItemMeta meta = itemStack.getItemMeta();
 		List<String> lore = meta.getLore();
 		
@@ -232,7 +229,7 @@ public class ItemBuilder {
 		return this;
 	}
 
-	public ItemBuilder removeLoreLine(int index) {
+	public ItemBuilder removeLore(int index) {
 		ItemMeta meta = itemStack.getItemMeta();
 		List<String> lore = meta.getLore();
 		
@@ -247,7 +244,7 @@ public class ItemBuilder {
 		return this;
 	}
 
-	public ItemBuilder addLoreLine(String line) {
+	public ItemBuilder addLore(String line) {
 		ItemMeta meta = itemStack.getItemMeta();
 		List<String> lore = new ArrayList<>();
 		
@@ -262,11 +259,11 @@ public class ItemBuilder {
 		return this;
 	}
 
-	public ItemBuilder addLoreLine(String line, int pos) {
+	public ItemBuilder addLore(String line, int position) {
 		ItemMeta meta = itemStack.getItemMeta();
 		List<String> lore = meta.getLore();
 		
-		lore.set(pos, line);
+		lore.set(position, line);
 		meta.setLore(lore);
 		itemStack.setItemMeta(meta);
 		

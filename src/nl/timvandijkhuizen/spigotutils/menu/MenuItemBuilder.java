@@ -13,6 +13,7 @@ import nl.timvandijkhuizen.spigotutils.inventory.ItemBuilder;
 public class MenuItemBuilder extends ItemBuilder {
 
 	private MenuAction listeners;
+	private boolean disabled;
 	
 	public MenuItemBuilder(ItemStack itemStack) {
 		super(itemStack);
@@ -110,8 +111,8 @@ public class MenuItemBuilder extends ItemBuilder {
 	}
 
 
-	public MenuItemBuilder addLoreLines(List<String> line) {
-		super.addLoreLines(line);
+	public MenuItemBuilder addLore(List<String> line) {
+		super.addLore(line);
 		return this;
 	}
 
@@ -120,28 +121,28 @@ public class MenuItemBuilder extends ItemBuilder {
 		return this;
 	}
 
-	public MenuItemBuilder addLoreLines(String... lines) {
-		super.addLoreLines(lines);
+	public MenuItemBuilder addLore(String... lines) {
+		super.addLore(lines);
 		return this;
 	}
 
-	public MenuItemBuilder removeLoreLine(String line) {
-		super.removeLoreLine(line);
+	public MenuItemBuilder removeLore(String line) {
+		super.removeLore(line);
 		return this;
 	}
 
-	public MenuItemBuilder removeLoreLine(int index) {
-		super.removeLoreLine(index);
+	public MenuItemBuilder removeLore(int index) {
+		super.removeLore(index);
 		return this;
 	}
 
-	public MenuItemBuilder addLoreLine(String line) {
-		super.addLoreLine(line);
+	public MenuItemBuilder addLore(String line) {
+		super.addLore(line);
 		return this;
 	}
 
-	public MenuItemBuilder addLoreLine(String line, int pos) {
-		super.addLoreLine(line, pos);
+	public MenuItemBuilder addLore(String line, int pos) {
+		super.addLore(line, pos);
 		return this;
 	}
 
@@ -151,11 +152,11 @@ public class MenuItemBuilder extends ItemBuilder {
 	}
 	
 	public boolean isDisabled() {
-		return false; // TODO: Finish this
+		return disabled;
 	}
 	
 	public void setDisabled(boolean disabled) {
-		// TODO: Finish this
+		this.disabled = disabled;
 	}
 	
 }

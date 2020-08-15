@@ -88,7 +88,7 @@ public class Menu {
 		// Check if item has a click listener
 		MenuAction listener = item.getClickListener();
 		
-		if (listener != null) {
+		if (listener != null && !item.isDisabled()) {
 			listener.onClick(new MenuItemClickEvent(player, this, item, event.getClick()));
 		}
 	}
