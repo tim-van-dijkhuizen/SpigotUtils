@@ -7,6 +7,6 @@ public interface MenuAction {
      * 
      * @param event
      */
-    void onClick(MenuItemClickEvent event);
+    void onClick(MenuItemClick event);
 
 }

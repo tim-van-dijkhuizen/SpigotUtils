@@ -140,8 +140,8 @@ public class MenuItemBuilder extends ItemBuilder {
         return this;
     }
 
-    public MenuItemBuilder addLore(String line, int pos) {
-        super.addLore(line, pos);
+    public MenuItemBuilder setLore(String line, int pos) {
+        super.setLore(line, pos);
         return this;
     }
 

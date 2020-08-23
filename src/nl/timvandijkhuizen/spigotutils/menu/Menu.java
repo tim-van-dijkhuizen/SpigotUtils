@@ -2,6 +2,7 @@ package nl.timvandijkhuizen.spigotutils.menu;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -10,11 +11,11 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.InventoryHolder;
 
 import nl.timvandijkhuizen.spigotutils.ui.UI;
 
-public class Menu {
+public class Menu implements InventoryHolder {
 
     public static final MenuItemBuilder BACK_BUTTON = new MenuItemBuilder(Material.RED_BED).setName(UI.color("Go back", UI.SECONDARY_COLOR, ChatColor.BOLD));
     public static final MenuItemBuilder CLOSE_BUTTON = new MenuItemBuilder(Material.OAK_DOOR).setName(UI.color("Close", ChatColor.RED, ChatColor.BOLD));
@@ -34,12 +35,12 @@ public class Menu {
     public Menu(String title, MenuSize size) {
         this.title = ChatColor.translateAlternateColorCodes('&', title);
         this.size = size;
-        this.inventory = Bukkit.createInventory(null, size.getSlots(), this.title);
+        this.inventory = Bukkit.createInventory(this, size.getSlots(), this.title);
     }
 
     public Menu(String title, InventoryType type) {
         this.title = ChatColor.translateAlternateColorCodes('&', title);
-        this.inventory = Bukkit.createInventory(null, type, this.title);
+        this.inventory = Bukkit.createInventory(this, type, this.title);
     }
 
     /**
@@ -67,7 +68,7 @@ public class Menu {
      * @return
      */
     public boolean isEmpty(int slot) {
-        return inventory.getItem(slot) == null;
+        return !items.containsKey(slot);
     }
 
     /**
@@ -78,17 +79,14 @@ public class Menu {
      * @return
      */
     public Menu setButton(MenuItemBuilder item, int slot) {
-        inventory.setItem(slot, item.toItemStack());
         items.put(slot, item);
-
         return this;
     }
 
     /**
-     * Clears the inventory.
+     * Clears the inventory items.
      */
     public void clear() {
-        inventory.clear();
         items.clear();
     }
 
@@ -99,16 +97,52 @@ public class Menu {
      * @return
      */
     public Menu removeButton(int slot) {
-        ItemStack item = this.inventory.getItem(slot);
-
-        if (item != null) {
-            inventory.remove(item);
-            items.remove(slot);
-        }
-
+        items.remove(slot);
         return this;
     }
+    
+    /**
+     * Re-draw the menu.
+     */
+    public void refresh() {
+        draw();
+    }
+    
+    /**
+     * Opens the menu.
+     * 
+     * @param player
+     */
+    public void open(Player player) {
+        this.draw();
+        player.openInventory(inventory);
+    }
+    
+    /**
+     * Close the menu.
+     * 
+     * @param player
+     */
+    public void close(Player player) {
+        player.closeInventory();
+    }
 
+    @Override
+    public Inventory getInventory() {
+        return inventory;
+    }
+    
+    /**
+     * Clears the inventory and adds the items.
+     */
+    protected void draw() {
+        inventory.clear();
+        
+        for(Entry<Integer, MenuItemBuilder> item : items.entrySet()) {
+            inventory.setItem(item.getKey(), item.getValue().toItemStack());
+        }
+    }
+    
     /**
      * Handles a click while the menu is active.
      * 
@@ -127,17 +161,8 @@ public class Menu {
         MenuAction listener = item.getClickListener();
 
         if (listener != null && !item.isDisabled()) {
-            listener.onClick(new MenuItemClickEvent(player, this, item, event.getClick()));
+            listener.onClick(new MenuItemClick(player, this, item, event.getClick()));
         }
-    }
-    
-    /**
-     * Returns the inventory.
-     * 
-     * @return
-     */
-    Inventory getInventory() {
-        return inventory;
     }
 
 }

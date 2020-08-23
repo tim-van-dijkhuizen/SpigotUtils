@@ -1,20 +1,16 @@
 package nl.timvandijkhuizen.spigotutils.menu;
 
 import org.bukkit.entity.Player;
-import org.bukkit.event.Event;
-import org.bukkit.event.HandlerList;
 import org.bukkit.event.inventory.ClickType;
 
-public class MenuItemClickEvent extends Event {
-
-    private static final HandlerList HANDLERS_LIST = new HandlerList();
+public class MenuItemClick {
 
     private Player player;
     private Menu menu;
     private MenuItemBuilder item;
     private ClickType clickType;
 
-    public MenuItemClickEvent(Player player, Menu menu, MenuItemBuilder item, ClickType clickType) {
+    public MenuItemClick(Player player, Menu menu, MenuItemBuilder item, ClickType clickType) {
         this.player = player;
         this.menu = menu;
         this.item = item;
@@ -35,11 +31,6 @@ public class MenuItemClickEvent extends Event {
 
     public ClickType getClickType() {
         return clickType;
-    }
-
-    @Override
-    public HandlerList getHandlers() {
-        return HANDLERS_LIST;
     }
 
 }

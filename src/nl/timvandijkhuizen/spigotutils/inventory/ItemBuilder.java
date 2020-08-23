@@ -259,7 +259,7 @@ public class ItemBuilder {
         return this;
     }
 
-    public ItemBuilder addLore(String line, int position) {
+    public ItemBuilder setLore(String line, int position) {
         ItemMeta meta = itemStack.getItemMeta();
         List<String> lore = meta.getLore();
 
