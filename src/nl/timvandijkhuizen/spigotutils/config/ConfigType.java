@@ -1,6 +1,6 @@
 package nl.timvandijkhuizen.spigotutils.config;
 
-import nl.timvandijkhuizen.spigotutils.menu.MenuItemBuilder;
+import nl.timvandijkhuizen.spigotutils.menu.MenuItemClick;
 
 public interface ConfigType<T> {
     
@@ -24,11 +24,22 @@ public interface ConfigType<T> {
     void setValue(YamlConfig config, ConfigOption<T> option, T value);
     
     /**
-     * Creates a menu item for this option.
+     * Returns the lore lines used
+     * to display the current value.
      * 
-     * @param currentValue
+     * @param config
+     * @param option
      * @return
      */
-    MenuItemBuilder createMenuItem(YamlConfig config, ConfigOption<T> option);
+    String getItemValue(YamlConfig config, ConfigOption<T> option);
+    
+    /**
+     * Handle a click for this config type.
+     * 
+     * @param config
+     * @param option
+     * @return
+     */
+    void handleItemClick(YamlConfig config, ConfigOption<T> option, MenuItemClick event);
 
 }

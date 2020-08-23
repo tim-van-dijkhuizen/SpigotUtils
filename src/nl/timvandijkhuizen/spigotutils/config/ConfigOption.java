@@ -6,27 +6,29 @@ public class ConfigOption<T> {
 
     private String path;
     private ConfigType<T> type;
+    
     private T defaultValue;
     private ConfigIcon icon;
+    private boolean readOnly;
     
     public ConfigOption(String path, ConfigType<T> type) {
         this.path = path;
         this.type = type;
     }
     
-    public ConfigOption(String path, ConfigType<T> type, ConfigIcon icon) {
-        this(path, type);
-        this.icon = icon;
-    }
-    
-    public ConfigOption(String path, ConfigType<T> type, T defaultValue) {
-        this(path, type);
+    public ConfigOption<T> setDefaultValue(T defaultValue) {
         this.defaultValue = defaultValue;
+        return this;
     }
     
-    public ConfigOption(String path, ConfigType<T> type, T defaultValue, ConfigIcon icon) {
-        this(path, type, defaultValue);
+    public ConfigOption<T> setIcon(ConfigIcon icon) {
         this.icon = icon;
+        return this;
+    }
+    
+    public ConfigOption<T> setReadOnly(boolean readOnly) {
+        this.readOnly = readOnly;
+        return this;
     }
     
     /**
@@ -72,6 +74,10 @@ public class ConfigOption<T> {
     
     public ConfigIcon getIcon() {
         return icon;
+    }
+    
+    public boolean isReadOnly() {
+        return readOnly;
     }
     
 }
