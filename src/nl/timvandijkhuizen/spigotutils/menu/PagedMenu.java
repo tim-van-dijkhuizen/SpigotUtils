@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 
 import nl.timvandijkhuizen.spigotutils.ui.UI;
@@ -59,9 +58,8 @@ public class PagedMenu extends Menu {
         previousButton = BACK_BUTTON.clone().setClickListener(event -> {
             Player whoClicked = event.getPlayer();
 
-            whoClicked.playSound(whoClicked.getLocation(), Sound.UI_BUTTON_CLICK, 1, 1);
-
             if (page > 0) {
+                UI.playSound(whoClicked, UI.CLICK_SOUND);
                 page -= 1;
                 refresh();
             }
@@ -76,9 +74,8 @@ public class PagedMenu extends Menu {
         nextButton = NEXT_BUTTON.clone().setClickListener(event -> {
             Player whoClicked = event.getPlayer();
 
-            whoClicked.playSound(whoClicked.getLocation(), Sound.UI_BUTTON_CLICK, 1, 1);
-
             if (((page + 1) * (rows * columns)) < pagedItems.size()) {
+                UI.playSound(whoClicked, UI.CLICK_SOUND);
                 page += 1;
                 refresh();
             }

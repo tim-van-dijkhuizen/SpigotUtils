@@ -1,6 +1,5 @@
 package nl.timvandijkhuizen.spigotutils.config.types;
 
-import org.bukkit.Sound;
 import org.bukkit.conversations.Conversation;
 import org.bukkit.conversations.ConversationContext;
 import org.bukkit.conversations.ConversationFactory;
@@ -47,7 +46,7 @@ public class ConfigTypeInteger implements ConfigType<Integer> {
         Player player = event.getPlayer();
         Menu menu = event.getMenu();
 
-        player.playSound(player.getLocation(), Sound.UI_BUTTON_CLICK, 1, 1);
+        UI.playSound(player, UI.CLICK_SOUND);
 
         Conversation conversation = factory.withFirstPrompt(new NumericPrompt() {
             @Override
