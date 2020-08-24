@@ -139,7 +139,7 @@ public class PagedMenu extends Menu {
         }
         
         // Update current button
-        int max = (int) Math.ceil(pagedItems.size() / Double.valueOf(rows * columns));
+        int max = 1 + (int) (pagedItems.size() / Double.valueOf(rows * columns));
         
         currentButton.setName(UI.color("Page " + (page + 1) + "/" + max, UI.SECONDARY_COLOR, ChatColor.BOLD));
         
