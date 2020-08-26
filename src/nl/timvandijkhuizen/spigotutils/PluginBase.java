@@ -10,10 +10,13 @@ import nl.timvandijkhuizen.spigotutils.services.Service;
 @SuppressWarnings("unchecked")
 public abstract class PluginBase extends JavaPlugin {
 
+    private static PluginBase instance;
     private HashMap<String, Service> services = new HashMap<>();
 
     @Override
     public void onEnable() {
+        instance = this;
+        
         try {
             load();
 
@@ -53,6 +56,17 @@ public abstract class PluginBase extends JavaPlugin {
      */
     public abstract void unload() throws Exception;
 
+    /**
+     * Returns the instance of this plugin. Extending plugins
+     * will need to add their own static instance method to
+     * be able to access their own methods.
+     * 
+     * @return
+     */
+    public static PluginBase getInstance() {
+        return instance;
+    }
+    
     /**
      * Returns all registered services.
      * 

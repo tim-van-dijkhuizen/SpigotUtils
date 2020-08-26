@@ -1,6 +1,9 @@
 package nl.timvandijkhuizen.spigotutils.config;
 
-import nl.timvandijkhuizen.spigotutils.menu.MenuItemClick;
+import java.util.function.Consumer;
+
+import org.bukkit.configuration.Configuration;
+import org.bukkit.entity.Player;
 
 public interface ConfigType<T> {
     
@@ -12,7 +15,7 @@ public interface ConfigType<T> {
      * @return
      * @throws ConfigurationException
      */
-    T getValue(YamlConfig config, ConfigOption<T> option) throws ConfigurationException;
+    T getValue(Configuration config, ConfigOption<T> option);
     
     /**
      * Serializes and sets the value.
@@ -21,7 +24,7 @@ public interface ConfigType<T> {
      * @param path
      * @param value
      */
-    void setValue(YamlConfig config, ConfigOption<T> option, T value);
+    void setValue(Configuration config, ConfigOption<T> option, T value);
     
     /**
      * Returns the lore lines used
@@ -31,15 +34,24 @@ public interface ConfigType<T> {
      * @param option
      * @return
      */
-    String getItemValue(YamlConfig config, ConfigOption<T> option);
+    String getValueLore(Configuration config, ConfigOption<T> option);
     
     /**
-     * Handle a click for this config type.
+     * Returns whether the value is empty.
      * 
      * @param config
      * @param option
      * @return
      */
-    void handleItemClick(YamlConfig config, ConfigOption<T> option, MenuItemClick event);
+    boolean isValueEmpty(Configuration config, ConfigOption<T> option);
+    
+    /**
+     * Returns the input value for this option.
+     * 
+     * @param config
+     * @param option
+     * @return
+     */
+    void getValueInput(Player player, Consumer<T> callback);
 
 }

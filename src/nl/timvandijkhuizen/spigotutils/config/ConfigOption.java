@@ -1,6 +1,9 @@
 package nl.timvandijkhuizen.spigotutils.config;
 
-import nl.timvandijkhuizen.spigotutils.helpers.ConsoleHelper;
+import java.util.function.Consumer;
+
+import org.bukkit.configuration.Configuration;
+import org.bukkit.entity.Player;
 
 public class ConfigOption<T> {
 
@@ -10,6 +13,7 @@ public class ConfigOption<T> {
     private T defaultValue;
     private ConfigIcon icon;
     private boolean readOnly;
+    private boolean required;
     
     public ConfigOption(String path, ConfigType<T> type) {
         this.path = path;
@@ -31,23 +35,23 @@ public class ConfigOption<T> {
         return this;
     }
     
+    public ConfigOption<T> setRequired(boolean required) {
+        this.required = required;
+        return this;
+    }
+    
     /**
      * Returns this option's value.
      * 
      * @param config
      * @return
      */
-    public T getValue(YamlConfig config) {
+    public T getValue(Configuration config) {
         if(!config.contains(path, true)) {
             return defaultValue;
         }
         
-        try {
-            return type.getValue(config, this);
-        } catch(ConfigurationException e) {
-            ConsoleHelper.printError("Invalid config value for \"" + path + "\", using default value.");
-            return defaultValue;
-        }
+        return type.getValue(config, this);
     }
     
     /**
@@ -56,28 +60,77 @@ public class ConfigOption<T> {
      * @param config
      * @param value
      */
-    public void setValue(YamlConfig config, T value) {
+    public void setValue(Configuration config, T value) {
         type.setValue(config, this, value);
     }
     
+    /**
+     * Returns the value lore.
+     * 
+     * @param config
+     * @return
+     */
+    public String getValueLore(Configuration config) {
+        return type.getValueLore(config, this);
+    }
+
+    /**
+     * Returns whether the value is empty.
+     * 
+     * @param config
+     * @return
+     */
+    public boolean isValueEmpty(Configuration config) {
+        return type.isValueEmpty(config, this);
+    }
+    
+    public void getValueInput(Player player, Consumer<T> callback) {
+        type.getValueInput(player, callback);
+    }
+    
+    /**
+     * Returns the option path.
+     * 
+     * @return
+     */
     public String getPath() {
         return path;
     }
     
-    public ConfigType<T> getType() {
-        return type;
-    }
-    
+    /**
+     * Returns the default value.
+     * 
+     * @return
+     */
     public T getDefaultValue() {
         return defaultValue;
     }
     
+    /**
+     * Returns the icon. This may be null.
+     * 
+     * @return
+     */
     public ConfigIcon getIcon() {
         return icon;
     }
     
+    /**
+     * This returns whether this option is read-only.
+     * 
+     * @return
+     */
     public boolean isReadOnly() {
         return readOnly;
+    }
+    
+    /**
+     * This returns whether this option is required.
+     * 
+     * @return
+     */
+    public boolean isRequired() {
+        return required;
     }
     
 }

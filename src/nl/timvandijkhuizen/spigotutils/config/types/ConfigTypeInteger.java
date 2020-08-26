@@ -1,5 +1,8 @@
 package nl.timvandijkhuizen.spigotutils.config.types;
 
+import java.util.function.Consumer;
+
+import org.bukkit.configuration.Configuration;
 import org.bukkit.conversations.Conversation;
 import org.bukkit.conversations.ConversationContext;
 import org.bukkit.conversations.ConversationFactory;
@@ -7,46 +10,36 @@ import org.bukkit.conversations.NumericPrompt;
 import org.bukkit.conversations.Prompt;
 import org.bukkit.entity.Player;
 
+import nl.timvandijkhuizen.spigotutils.PluginBase;
 import nl.timvandijkhuizen.spigotutils.config.ConfigOption;
 import nl.timvandijkhuizen.spigotutils.config.ConfigType;
-import nl.timvandijkhuizen.spigotutils.config.ConfigurationException;
-import nl.timvandijkhuizen.spigotutils.config.YamlConfig;
-import nl.timvandijkhuizen.spigotutils.menu.Menu;
-import nl.timvandijkhuizen.spigotutils.menu.MenuItemBuilder;
-import nl.timvandijkhuizen.spigotutils.menu.MenuItemClick;
 import nl.timvandijkhuizen.spigotutils.ui.UI;
 
 public class ConfigTypeInteger implements ConfigType<Integer> {
 
     @Override
-    public Integer getValue(YamlConfig config, ConfigOption<Integer> option) throws ConfigurationException {
-        String path = option.getPath();
-        
-        if(!config.isInt(path)) {
-            throw new ConfigurationException("Value must be an integer");
-        }
-        
-        return config.getInt(path);
+    public Integer getValue(Configuration config, ConfigOption<Integer> option) {
+        return config.getInt(option.getPath());
     }
 
     @Override
-    public void setValue(YamlConfig config, ConfigOption<Integer> option, Integer value) {
+    public void setValue(Configuration config, ConfigOption<Integer> option, Integer value) {
         config.set(option.getPath(), value);
     }
 
     @Override
-    public String getItemValue(YamlConfig config, ConfigOption<Integer> option) {
-        return "" + config.getOptionValue(option);
+    public String getValueLore(Configuration config, ConfigOption<Integer> option) {
+        return "" + getValue(config, option);
+    }
+    
+    @Override
+    public boolean isValueEmpty(Configuration config, ConfigOption<Integer> option) {
+        return getValue(config, option) == null;
     }
 
     @Override
-    public void handleItemClick(YamlConfig config, ConfigOption<Integer> option, MenuItemClick event) {
-        ConversationFactory factory = new ConversationFactory(config.getPlugin());
-        MenuItemBuilder item = event.getItem();
-        Player player = event.getPlayer();
-        Menu menu = event.getMenu();
-
-        UI.playSound(player, UI.CLICK_SOUND);
+    public void getValueInput(Player player, Consumer<Integer> callback) {
+        ConversationFactory factory = new ConversationFactory(PluginBase.getInstance());
 
         Conversation conversation = factory.withFirstPrompt(new NumericPrompt() {
             @Override
@@ -56,15 +49,12 @@ public class ConfigTypeInteger implements ConfigType<Integer> {
 
             @Override
             protected Prompt acceptValidatedInput(ConversationContext context, Number input) {
-                config.setOptionValue(option, input.intValue());
-                item.setLore(UI.color("Current value: ", UI.TEXT_COLOR) + UI.color(getItemValue(config, option), UI.SECONDARY_COLOR), 0);
-                menu.open(player);
-                
+                callback.accept(input.intValue());
                 return null;
             }
         }).withLocalEcho(false).buildConversation(player);
 
-        menu.close(player);
+        player.closeInventory();
         conversation.begin();
     }
 

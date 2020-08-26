@@ -1,6 +1,9 @@
 package nl.timvandijkhuizen.spigotutils.config.types;
 
+import java.util.function.Consumer;
+
 import org.apache.commons.lang.StringUtils;
+import org.bukkit.configuration.Configuration;
 import org.bukkit.conversations.Conversation;
 import org.bukkit.conversations.ConversationContext;
 import org.bukkit.conversations.ConversationFactory;
@@ -8,13 +11,9 @@ import org.bukkit.conversations.Prompt;
 import org.bukkit.conversations.StringPrompt;
 import org.bukkit.entity.Player;
 
+import nl.timvandijkhuizen.spigotutils.PluginBase;
 import nl.timvandijkhuizen.spigotutils.config.ConfigOption;
 import nl.timvandijkhuizen.spigotutils.config.ConfigType;
-import nl.timvandijkhuizen.spigotutils.config.ConfigurationException;
-import nl.timvandijkhuizen.spigotutils.config.YamlConfig;
-import nl.timvandijkhuizen.spigotutils.menu.Menu;
-import nl.timvandijkhuizen.spigotutils.menu.MenuItemBuilder;
-import nl.timvandijkhuizen.spigotutils.menu.MenuItemClick;
 import nl.timvandijkhuizen.spigotutils.ui.UI;
 
 public class ConfigTypePassword implements ConfigType<String> {
@@ -22,35 +21,30 @@ public class ConfigTypePassword implements ConfigType<String> {
     public static final String PASSWORD_CHARACTER = "•";
     
     @Override
-    public String getValue(YamlConfig config, ConfigOption<String> option) throws ConfigurationException {
-        String path = option.getPath();
-        
-        if(!config.isString(path)) {
-            throw new ConfigurationException("Value must be a string");
-        }
-        
-        return config.getString(path);
+    public String getValue(Configuration config, ConfigOption<String> option) {
+        return config.getString(option.getPath());
     }
 
     @Override
-    public void setValue(YamlConfig config, ConfigOption<String> option, String value) {
+    public void setValue(Configuration config, ConfigOption<String> option, String value) {
         config.set(option.getPath(), value);
     }
 
     @Override
-    public String getItemValue(YamlConfig config, ConfigOption<String> option) {
-        String value = config.getOptionValue(option);
-        return StringUtils.repeat(PASSWORD_CHARACTER, value.length());
+    public String getValueLore(Configuration config, ConfigOption<String> option) {
+        String value = this.getValue(config, option);
+        return value != null ? StringUtils.repeat(PASSWORD_CHARACTER, value.length()) : "";
     }
 
     @Override
-    public void handleItemClick(YamlConfig config, ConfigOption<String> option, MenuItemClick event) {
-        ConversationFactory factory = new ConversationFactory(config.getPlugin());
-        MenuItemBuilder item = event.getItem();
-        Player player = event.getPlayer();
-        Menu menu = event.getMenu();
-
-        UI.playSound(player, UI.CLICK_SOUND);
+    public boolean isValueEmpty(Configuration config, ConfigOption<String> option) {
+        String value = getValue(config, option);
+        return value == null || value.length() == 0;
+    }
+    
+    @Override
+    public void getValueInput(Player player, Consumer<String> callback) {
+        ConversationFactory factory = new ConversationFactory(PluginBase.getInstance());
 
         Conversation conversation = factory.withFirstPrompt(new StringPrompt() {
             @Override
@@ -60,15 +54,12 @@ public class ConfigTypePassword implements ConfigType<String> {
 
             @Override
             public Prompt acceptInput(ConversationContext context, String input) {
-                config.setOptionValue(option, input);
-                item.setLore(UI.color("Current value: ", UI.TEXT_COLOR) + UI.color(getItemValue(config, option), UI.SECONDARY_COLOR), 0);
-                menu.open(player);
-                
+                callback.accept(input);
                 return null;
             }
         }).withLocalEcho(false).buildConversation(player);
 
-        menu.close(player);
+        player.closeInventory();
         conversation.begin();
     }
     

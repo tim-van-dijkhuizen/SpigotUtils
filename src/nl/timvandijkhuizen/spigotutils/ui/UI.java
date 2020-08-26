@@ -6,6 +6,8 @@ import org.bukkit.entity.Player;
 
 public class UI {
 
+    public static final String TAB = "  ";
+    
     // UI colors
     public static final ChatColor PRIMARY_COLOR = ChatColor.GREEN;
     public static final ChatColor SECONDARY_COLOR = ChatColor.AQUA;
