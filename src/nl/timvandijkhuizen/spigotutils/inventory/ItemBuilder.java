@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Color;
 import org.bukkit.Material;
@@ -13,6 +15,7 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
+import org.bukkit.inventory.meta.SkullMeta;
 
 @SuppressWarnings("deprecation")
 public class ItemBuilder {
@@ -271,39 +274,29 @@ public class ItemBuilder {
     }
 
     public ItemBuilder setLeatherArmorColor(Color color) {
-        try {
-            LeatherArmorMeta im = (LeatherArmorMeta) itemStack.getItemMeta();
+        ItemMeta meta = itemStack.getItemMeta();
 
-            im.setColor(color);
-            itemStack.setItemMeta(im);
-        } catch (ClassCastException expected) {
-            throw new RuntimeException("Item is not leather armor");
+        if(meta instanceof LeatherArmorMeta) {
+            LeatherArmorMeta leatherMeta = (LeatherArmorMeta) meta;
+            
+            leatherMeta.setColor(color);
+            itemStack.setItemMeta(leatherMeta);
         }
 
         return this;
     }
 
-    public static class SkullData {
+    public ItemBuilder setSkullOwner(UUID uuid) {
+        ItemMeta meta = itemStack.getItemMeta();
 
-        private final String texture;
-        private final SkullDataType type;
-
-        public SkullData(String texture, SkullDataType type) {
-            this.texture = texture;
-            this.type = type;
+        if(meta instanceof SkullMeta) {
+            SkullMeta skullMeta = (SkullMeta) meta;
+            
+            skullMeta.setOwningPlayer(Bukkit.getOfflinePlayer(uuid));
+            itemStack.setItemMeta(skullMeta);
         }
 
-        public String getTexture() {
-            return texture;
-        }
-
-        public SkullDataType getType() {
-            return type;
-        }
-    }
-
-    public enum SkullDataType {
-        NAME, URL, TEXTURE,
+        return this;
     }
 
 }

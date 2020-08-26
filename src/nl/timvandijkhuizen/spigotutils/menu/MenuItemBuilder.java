@@ -2,6 +2,7 @@ package nl.timvandijkhuizen.spigotutils.menu;
 
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import org.bukkit.Color;
 import org.bukkit.Material;
@@ -150,6 +151,11 @@ public class MenuItemBuilder extends ItemBuilder {
         return this;
     }
 
+    public MenuItemBuilder setSkullOwner(UUID uuid) {
+        super.setSkullOwner(uuid);
+        return this;
+    }
+    
     public boolean isDisabled() {
         return disabled;
     }
