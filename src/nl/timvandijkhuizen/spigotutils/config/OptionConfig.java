@@ -8,6 +8,6 @@ public interface OptionConfig {
     
     public Collection<ConfigOption<?>> getOptions();
     
-    public ConfigOption<?> getOption(String path);
+    public <T> ConfigOption<T> getOption(String path);
     
 }

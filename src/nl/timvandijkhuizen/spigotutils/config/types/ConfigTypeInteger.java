@@ -29,12 +29,12 @@ public class ConfigTypeInteger implements ConfigType<Integer> {
 
     @Override
     public String getValueLore(Configuration config, ConfigOption<Integer> option) {
-        return "" + getValue(config, option);
+        return "" + option.getValue(config);
     }
     
     @Override
     public boolean isValueEmpty(Configuration config, ConfigOption<Integer> option) {
-        return getValue(config, option) == null;
+        return option.getValue(config) == null;
     }
 
     @Override

@@ -32,13 +32,13 @@ public class ConfigTypePassword implements ConfigType<String> {
 
     @Override
     public String getValueLore(Configuration config, ConfigOption<String> option) {
-        String value = this.getValue(config, option);
+        String value = option.getValue(config);
         return value != null ? StringUtils.repeat(PASSWORD_CHARACTER, value.length()) : "";
     }
 
     @Override
     public boolean isValueEmpty(Configuration config, ConfigOption<String> option) {
-        String value = getValue(config, option);
+        String value = option.getValue(config);
         return value == null || value.length() == 0;
     }
     

@@ -47,11 +47,18 @@ public class ConfigOption<T> {
      * @return
      */
     public T getValue(Configuration config) {
-        if(!config.contains(path, true)) {
+        if(!config.contains(path)) {
             return defaultValue;
         }
         
-        return type.getValue(config, this);
+        // Get value
+        T value = type.getValue(config, this);
+        
+        if(value == null) {
+            return defaultValue;
+        }
+        
+        return value;
     }
     
     /**

@@ -29,12 +29,12 @@ public class ConfigTypeString implements ConfigType<String> {
 
     @Override
     public String getValueLore(Configuration config, ConfigOption<String> option) {
-        return getValue(config, option);
+        return option.getValue(config);
     }
 
     @Override
     public boolean isValueEmpty(Configuration config, ConfigOption<String> option) {
-        String value = getValue(config, option);
+        String value = option.getValue(config);
         return value == null || value.length() == 0;
     }
     

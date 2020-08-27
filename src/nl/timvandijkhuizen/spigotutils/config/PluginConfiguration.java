@@ -71,8 +71,9 @@ public class PluginConfiguration extends YamlConfiguration implements OptionConf
     }
     
     @Override
-    public ConfigOption<?> getOption(String path) {
-        return options.stream().filter(i -> i.getPath().equals(path)).findFirst().orElse(null);
+    @SuppressWarnings("unchecked")
+    public <T> ConfigOption<T> getOption(String path) {
+        return options.stream().filter(i -> i.getPath().equals(path)).map(i -> (ConfigOption<T>) i).findFirst().orElse(null);
     }
 
 }
