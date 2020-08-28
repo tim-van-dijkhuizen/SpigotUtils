@@ -17,7 +17,7 @@ public class UI {
     // UI sounds
     public static final PredefinedSound CLICK_SOUND = new PredefinedSound(Sound.UI_BUTTON_CLICK, 1, 1);
     public static final PredefinedSound SUCCESS_SOUND = new PredefinedSound(Sound.ENTITY_PLAYER_LEVELUP, 1, 1.5f);
-    public static final PredefinedSound ERROR_SOUND = new PredefinedSound(Sound.BLOCK_ANVIL_BREAK, 1, 1);
+    public static final PredefinedSound ERROR_SOUND = new PredefinedSound(Sound.BLOCK_NOTE_BLOCK_BASS, 10.0F, 1.0F);
     public static final PredefinedSound DELETE_SOUND = new PredefinedSound(Sound.ENTITY_ITEM_BREAK, 1, 1);
     
     public static String color(String text, ChatColor... colors) {
