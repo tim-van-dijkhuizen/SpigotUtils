@@ -5,6 +5,8 @@ import java.util.function.Consumer;
 import org.bukkit.configuration.Configuration;
 import org.bukkit.entity.Player;
 
+import com.google.gson.JsonObject;
+
 public interface ConfigType<T> {
     
     /**
@@ -20,11 +22,30 @@ public interface ConfigType<T> {
     /**
      * Serializes and sets the value.
      * 
-     * @param config
+     * @param json
      * @param path
      * @param value
      */
     void setValue(Configuration config, ConfigOption<T> option, T value);
+    
+    /**
+     * Deserializes and returns the value.
+     * 
+     * @param config
+     * @param path
+     * @return
+     * @throws ConfigurationException
+     */
+    T getValue(JsonObject json, ConfigOption<T> option);
+    
+    /**
+     * Serializes and sets the value.
+     * 
+     * @param json
+     * @param path
+     * @param value
+     */
+    void setValue(JsonObject json, ConfigOption<T> option, T value);
     
     /**
      * Returns the lore lines used
@@ -34,7 +55,7 @@ public interface ConfigType<T> {
      * @param option
      * @return
      */
-    String getValueLore(Configuration config, ConfigOption<T> option);
+    String getValueLore(T value);
     
     /**
      * Returns whether the value is empty.
@@ -43,7 +64,7 @@ public interface ConfigType<T> {
      * @param option
      * @return
      */
-    boolean isValueEmpty(Configuration config, ConfigOption<T> option);
+    boolean isValueEmpty(T value);
     
     /**
      * Returns the input value for this option.

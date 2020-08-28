@@ -8,6 +8,9 @@ import org.bukkit.Material;
 import org.bukkit.configuration.Configuration;
 import org.bukkit.entity.Player;
 
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+
 import nl.timvandijkhuizen.spigotutils.config.ConfigOption;
 import nl.timvandijkhuizen.spigotutils.config.ConfigType;
 import nl.timvandijkhuizen.spigotutils.menu.MenuItemBuilder;
@@ -32,13 +35,35 @@ public class ConfigTypeCurrency implements ConfigType<Currency> {
     }
 
     @Override
-    public String getValueLore(Configuration config, ConfigOption<Currency> option) {
-        return option.getValue(config).getDisplayName();
+    public Currency getValue(JsonObject json, ConfigOption<Currency> option) {
+        JsonElement element = json.get(option.getPath());
+        
+        // Check if json property exists
+        if(element == null) {
+            return null;
+        }
+        
+        // Get and parse value
+        try {
+            return Currency.getInstance(element.getAsString());
+        } catch(IllegalArgumentException e) {
+            return null;
+        }
     }
 
     @Override
-    public boolean isValueEmpty(Configuration config, ConfigOption<Currency> option) {
-        return option.getValue(config) == null;
+    public void setValue(JsonObject json, ConfigOption<Currency> option, Currency value) {
+        json.addProperty(option.getPath(), value.getCurrencyCode());
+    }
+    
+    @Override
+    public String getValueLore(Currency value) {
+        return value.getDisplayName();
+    }
+
+    @Override
+    public boolean isValueEmpty(Currency value) {
+        return value == null;
     }
 
     @Override

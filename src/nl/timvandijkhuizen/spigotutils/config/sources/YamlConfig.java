@@ -1,4 +1,4 @@
-package nl.timvandijkhuizen.spigotutils.config;
+package nl.timvandijkhuizen.spigotutils.config.sources;
 
 import java.io.File;
 import java.io.IOException;
@@ -11,24 +11,26 @@ import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import nl.timvandijkhuizen.spigotutils.PluginBase;
+import nl.timvandijkhuizen.spigotutils.config.ConfigOption;
+import nl.timvandijkhuizen.spigotutils.config.OptionConfig;
 import nl.timvandijkhuizen.spigotutils.helpers.ConsoleHelper;
 
-public class PluginConfiguration extends YamlConfiguration implements OptionConfig {
+public class YamlConfig extends YamlConfiguration implements OptionConfig {
 
     private File file;
     private boolean isLoaded;
     
     private Collection<ConfigOption<?>> options = new LinkedHashSet<>();
 
-    public PluginConfiguration(PluginBase plugin) {
+    public YamlConfig(PluginBase plugin) {
         this(plugin, "config.yml", "config.yml");
     }
 
-    public PluginConfiguration(PluginBase plugin, String fileName, String defaults) {
+    public YamlConfig(PluginBase plugin, String fileName, String defaults) {
         this(plugin, new File(plugin.getDataFolder(), fileName), defaults);
     }
 
-    public PluginConfiguration(PluginBase plugin, File file, String defaults) {
+    public YamlConfig(PluginBase plugin, File file, String defaults) {
         this.file = file;
 
         if (!file.exists()) {

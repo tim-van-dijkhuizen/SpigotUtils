@@ -5,6 +5,8 @@ import java.util.function.Consumer;
 import org.bukkit.configuration.Configuration;
 import org.bukkit.entity.Player;
 
+import com.google.gson.JsonObject;
+
 public class ConfigOption<T> {
 
     private String path;
@@ -72,13 +74,39 @@ public class ConfigOption<T> {
     }
     
     /**
+     * Returns this option's value.
+     * 
+     * @param json
+     * @return
+     */
+    public T getValue(JsonObject json) {
+        T value = type.getValue(json, this);
+        
+        if(value == null) {
+            return defaultValue;
+        }
+        
+        return value;
+    }
+    
+    /**
+     * Sets this option's value.
+     * 
+     * @param json
+     * @param value
+     */
+    public void setValue(JsonObject json, T value) {
+        type.setValue(json, this, value);
+    }
+    
+    /**
      * Returns the value lore.
      * 
      * @param config
      * @return
      */
     public String getValueLore(Configuration config) {
-        return type.getValueLore(config, this);
+        return type.getValueLore(getValue(config));
     }
 
     /**
@@ -88,7 +116,7 @@ public class ConfigOption<T> {
      * @return
      */
     public boolean isValueEmpty(Configuration config) {
-        return type.isValueEmpty(config, this);
+        return type.isValueEmpty(getValue(config));
     }
     
     public void getValueInput(Player player, Consumer<T> callback) {
