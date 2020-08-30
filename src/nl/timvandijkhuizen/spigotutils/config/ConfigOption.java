@@ -2,7 +2,6 @@ package nl.timvandijkhuizen.spigotutils.config;
 
 import java.util.function.Consumer;
 
-import org.bukkit.configuration.Configuration;
 import org.bukkit.entity.Player;
 
 import com.google.gson.JsonObject;
@@ -48,15 +47,10 @@ public class ConfigOption<T> {
      * @param config
      * @return
      */
-    public T getValue(Configuration config) {
-        if(!config.contains(path)) {
-            return defaultValue;
-        }
-        
-        // Get value
+    public T getValue(OptionConfig config) {
         T value = type.getValue(config, this);
         
-        if(value == null) {
+        if(!config.contains(path) || type.isValueEmpty(value)) {
             return defaultValue;
         }
         
@@ -69,7 +63,7 @@ public class ConfigOption<T> {
      * @param config
      * @param value
      */
-    public void setValue(Configuration config, T value) {
+    public void setValue(OptionConfig config, T value) {
         type.setValue(config, this, value);
     }
     
@@ -105,7 +99,7 @@ public class ConfigOption<T> {
      * @param config
      * @return
      */
-    public String getValueLore(Configuration config) {
+    public String[] getValueLore(OptionConfig config) {
         return type.getValueLore(getValue(config));
     }
 
@@ -115,12 +109,12 @@ public class ConfigOption<T> {
      * @param config
      * @return
      */
-    public boolean isValueEmpty(Configuration config) {
+    public boolean isValueEmpty(OptionConfig config) {
         return type.isValueEmpty(getValue(config));
     }
     
-    public void getValueInput(Player player, Consumer<T> callback) {
-        type.getValueInput(player, callback);
+    public void getValueInput(Player player, T value, Consumer<T> callback) {
+        type.getValueInput(player, value, callback);
     }
     
     /**

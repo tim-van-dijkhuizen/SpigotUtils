@@ -2,7 +2,9 @@ package nl.timvandijkhuizen.spigotutils.config;
 
 import java.util.Collection;
 
-public interface OptionConfig {
+import org.bukkit.configuration.Configuration;
+
+public interface OptionConfig extends Configuration {
 
     public void addOption(ConfigOption<?> option);
     

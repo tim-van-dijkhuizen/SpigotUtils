@@ -2,7 +2,8 @@ package nl.timvandijkhuizen.spigotutils.config;
 
 import java.util.function.Consumer;
 
-import org.bukkit.configuration.Configuration;
+import javax.naming.ConfigurationException;
+
 import org.bukkit.entity.Player;
 
 import com.google.gson.JsonObject;
@@ -17,7 +18,7 @@ public interface ConfigType<T> {
      * @return
      * @throws ConfigurationException
      */
-    T getValue(Configuration config, ConfigOption<T> option);
+    T getValue(OptionConfig config, ConfigOption<T> option);
     
     /**
      * Serializes and sets the value.
@@ -26,7 +27,7 @@ public interface ConfigType<T> {
      * @param path
      * @param value
      */
-    void setValue(Configuration config, ConfigOption<T> option, T value);
+    void setValue(OptionConfig config, ConfigOption<T> option, T value);
     
     /**
      * Deserializes and returns the value.
@@ -55,7 +56,7 @@ public interface ConfigType<T> {
      * @param option
      * @return
      */
-    String getValueLore(T value);
+    String[] getValueLore(T value);
     
     /**
      * Returns whether the value is empty.
@@ -70,9 +71,10 @@ public interface ConfigType<T> {
      * Returns the input value for this option.
      * 
      * @param config
+     * @param value
      * @param option
      * @return
      */
-    void getValueInput(Player player, Consumer<T> callback);
+    void getValueInput(Player player, T value, Consumer<T> callback);
 
 }

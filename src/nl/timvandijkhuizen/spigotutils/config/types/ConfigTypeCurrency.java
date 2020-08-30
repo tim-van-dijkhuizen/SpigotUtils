@@ -5,7 +5,6 @@ import java.util.function.Consumer;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.configuration.Configuration;
 import org.bukkit.entity.Player;
 
 import com.google.gson.JsonElement;
@@ -13,6 +12,7 @@ import com.google.gson.JsonObject;
 
 import nl.timvandijkhuizen.spigotutils.config.ConfigOption;
 import nl.timvandijkhuizen.spigotutils.config.ConfigType;
+import nl.timvandijkhuizen.spigotutils.config.OptionConfig;
 import nl.timvandijkhuizen.spigotutils.menu.MenuItemBuilder;
 import nl.timvandijkhuizen.spigotutils.menu.PagedMenu;
 import nl.timvandijkhuizen.spigotutils.ui.UI;
@@ -20,7 +20,7 @@ import nl.timvandijkhuizen.spigotutils.ui.UI;
 public class ConfigTypeCurrency implements ConfigType<Currency> {
     
     @Override
-    public Currency getValue(Configuration config, ConfigOption<Currency> option) {
+    public Currency getValue(OptionConfig config, ConfigOption<Currency> option) {
         try {
             String currencyCode = config.getString(option.getPath());
             return Currency.getInstance(currencyCode);
@@ -30,7 +30,7 @@ public class ConfigTypeCurrency implements ConfigType<Currency> {
     }
 
     @Override
-    public void setValue(Configuration config, ConfigOption<Currency> option, Currency value) {
+    public void setValue(OptionConfig config, ConfigOption<Currency> option, Currency value) {
         config.set(option.getPath(), value.getCurrencyCode());
     }
 
@@ -57,8 +57,8 @@ public class ConfigTypeCurrency implements ConfigType<Currency> {
     }
     
     @Override
-    public String getValueLore(Currency value) {
-        return value.getDisplayName();
+    public String[] getValueLore(Currency value) {
+        return new String[] { value.getDisplayName() };
     }
 
     @Override
@@ -67,7 +67,7 @@ public class ConfigTypeCurrency implements ConfigType<Currency> {
     }
 
     @Override
-    public void getValueInput(Player player, Consumer<Currency> callback) {
+    public void getValueInput(Player player, Currency value, Consumer<Currency> callback) {
         PagedMenu menu = new PagedMenu("Select Currency", 3, 7, 1, 1);
 
         for (Currency currency : Currency.getAvailableCurrencies()) {

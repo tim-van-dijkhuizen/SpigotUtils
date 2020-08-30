@@ -2,7 +2,6 @@ package nl.timvandijkhuizen.spigotutils.config.types;
 
 import java.util.function.Consumer;
 
-import org.bukkit.configuration.Configuration;
 import org.bukkit.conversations.Conversation;
 import org.bukkit.conversations.ConversationContext;
 import org.bukkit.conversations.ConversationFactory;
@@ -16,17 +15,18 @@ import com.google.gson.JsonObject;
 import nl.timvandijkhuizen.spigotutils.PluginBase;
 import nl.timvandijkhuizen.spigotutils.config.ConfigOption;
 import nl.timvandijkhuizen.spigotutils.config.ConfigType;
+import nl.timvandijkhuizen.spigotutils.config.OptionConfig;
 import nl.timvandijkhuizen.spigotutils.ui.UI;
 
 public class ConfigTypeInteger implements ConfigType<Integer> {
 
     @Override
-    public Integer getValue(Configuration config, ConfigOption<Integer> option) {
+    public Integer getValue(OptionConfig config, ConfigOption<Integer> option) {
         return config.getInt(option.getPath());
     }
 
     @Override
-    public void setValue(Configuration config, ConfigOption<Integer> option, Integer value) {
+    public void setValue(OptionConfig config, ConfigOption<Integer> option, Integer value) {
         config.set(option.getPath(), value);
     }
     
@@ -48,8 +48,8 @@ public class ConfigTypeInteger implements ConfigType<Integer> {
     }
 
     @Override
-    public String getValueLore(Integer value) {
-        return "" + value;
+    public String[] getValueLore(Integer value) {
+        return new String[] { "" + value };
     }
     
     @Override
@@ -58,7 +58,7 @@ public class ConfigTypeInteger implements ConfigType<Integer> {
     }
 
     @Override
-    public void getValueInput(Player player, Consumer<Integer> callback) {
+    public void getValueInput(Player player, Integer value, Consumer<Integer> callback) {
         ConversationFactory factory = new ConversationFactory(PluginBase.getInstance());
 
         Conversation conversation = factory.withFirstPrompt(new NumericPrompt() {
