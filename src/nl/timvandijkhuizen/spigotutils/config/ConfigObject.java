@@ -10,7 +10,9 @@ public interface ConfigObject {
     void serialize(ByteArrayDataOutput output);
     void deserialize(ByteArrayDataInput input);
     
-    String getInputName();
-    void createNew(Player player, Runnable callback);
+    String getItemName();
+    String[] getItemLore();
+    
+    void getInput(Player player, Runnable callback);
     
 }
