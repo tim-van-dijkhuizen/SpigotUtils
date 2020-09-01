@@ -19,9 +19,9 @@ import nl.timvandijkhuizen.spigotutils.config.ConfigObject;
 import nl.timvandijkhuizen.spigotutils.config.ConfigOption;
 import nl.timvandijkhuizen.spigotutils.config.ConfigType;
 import nl.timvandijkhuizen.spigotutils.config.OptionConfig;
-import nl.timvandijkhuizen.spigotutils.menu.Menu;
 import nl.timvandijkhuizen.spigotutils.menu.MenuItemBuilder;
-import nl.timvandijkhuizen.spigotutils.menu.PagedMenu;
+import nl.timvandijkhuizen.spigotutils.menu.MenuItems;
+import nl.timvandijkhuizen.spigotutils.menu.types.PagedMenu;
 import nl.timvandijkhuizen.spigotutils.ui.UI;
 
 public class ConfigTypeList<T extends ConfigObject> implements ConfigType<List<T>> {
@@ -108,7 +108,7 @@ public class ConfigTypeList<T extends ConfigObject> implements ConfigType<List<T
 
         // Cancel button
         // ===========================
-        MenuItemBuilder cancelButton = Menu.CANCEL_BUTTON.clone();
+        MenuItemBuilder cancelButton = MenuItems.CANCEL.clone();
 
         cancelButton.setClickListener(event -> {
             UI.playSound(player, UI.CLICK_SOUND);
@@ -146,7 +146,7 @@ public class ConfigTypeList<T extends ConfigObject> implements ConfigType<List<T
         
         // Save button
         // ===========================
-        MenuItemBuilder saveButton = Menu.SAVE_BUTTON.clone();
+        MenuItemBuilder saveButton = MenuItems.SAVE.clone();
 
         saveButton.setClickListener(event -> {
             UI.playSound(player, UI.SUCCESS_SOUND);

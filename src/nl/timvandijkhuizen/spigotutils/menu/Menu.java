@@ -6,22 +6,13 @@ import java.util.Map.Entry;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 
-import nl.timvandijkhuizen.spigotutils.ui.UI;
-
 public class Menu implements InventoryHolder {
-
-    public static final MenuItemBuilder BACK_BUTTON = new MenuItemBuilder(Material.RED_BED).setName(UI.color("Go back", UI.SECONDARY_COLOR, ChatColor.BOLD));
-    public static final MenuItemBuilder CLOSE_BUTTON = new MenuItemBuilder(Material.OAK_DOOR).setName(UI.color("Close", ChatColor.RED, ChatColor.BOLD));
-    public static final MenuItemBuilder CANCEL_BUTTON = new MenuItemBuilder(Material.GRAY_DYE).setName(UI.color("Cancel", ChatColor.GRAY, ChatColor.BOLD));
-    public static final MenuItemBuilder SAVE_BUTTON = new MenuItemBuilder(Material.LIME_DYE).setName(UI.color("Save", ChatColor.GREEN, ChatColor.BOLD));
-    public static final MenuItemBuilder BACKGROUND_BUTTON = new MenuItemBuilder(Material.GRAY_STAINED_GLASS_PANE);
 
     protected String title;
     protected MenuSize size;
@@ -71,6 +62,16 @@ public class Menu implements InventoryHolder {
         return !items.containsKey(slot);
     }
 
+    /**
+     * Returns the button at the specified slot.
+     * 
+     * @param slot
+     * @return
+     */
+    public MenuItemBuilder getButton(int slot) {
+        return items.get(slot);
+    }
+    
     /**
      * Sets an item at the specified slot.
      * 

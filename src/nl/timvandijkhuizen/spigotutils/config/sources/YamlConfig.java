@@ -19,7 +19,6 @@ public class YamlConfig extends YamlConfiguration implements OptionConfig {
 
     private File file;
     private boolean isLoaded;
-    
     private Collection<ConfigOption<?>> options = new LinkedHashSet<>();
 
     public YamlConfig(PluginBase plugin) {
@@ -65,6 +64,11 @@ public class YamlConfig extends YamlConfiguration implements OptionConfig {
     @Override
     public void addOption(ConfigOption<?> option) {
         options.add(option);
+    }
+    
+    @Override
+    public void addOptions(Collection<ConfigOption<?>> options) {
+        options.addAll(options);
     }
     
     @Override

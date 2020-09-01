@@ -1,19 +1,18 @@
-package nl.timvandijkhuizen.spigotutils.menu;
+package nl.timvandijkhuizen.spigotutils.menu.types;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.bukkit.ChatColor;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 
+import nl.timvandijkhuizen.spigotutils.menu.Menu;
+import nl.timvandijkhuizen.spigotutils.menu.MenuItemBuilder;
+import nl.timvandijkhuizen.spigotutils.menu.MenuItems;
+import nl.timvandijkhuizen.spigotutils.menu.MenuSize;
 import nl.timvandijkhuizen.spigotutils.ui.UI;
 
 public class PagedMenu extends Menu {
-
-    public static final MenuItemBuilder BACK_BUTTON = new MenuItemBuilder(Material.ARROW).setName(UI.color("Previous page", UI.SECONDARY_COLOR, ChatColor.BOLD));
-    public static final MenuItemBuilder NEXT_BUTTON = new MenuItemBuilder(Material.ARROW).setName(UI.color("Next page", UI.SECONDARY_COLOR, ChatColor.BOLD));
-    public static final MenuItemBuilder CURRENT_BUTTON = new MenuItemBuilder(Material.MAP);
 
     private int rows;
     private int columns;
@@ -51,11 +50,11 @@ public class PagedMenu extends Menu {
         
         // Fill bottom row with background items
         for (int i = 0; i < 9; i++) {
-            setButton(Menu.BACKGROUND_BUTTON, size.getSlots() - 9 + i);
+            setButton(MenuItems.BACKGROUND, size.getSlots() - 9 + i);
         }
         
         // Add previous button
-        previousButton = BACK_BUTTON.clone().setClickListener(event -> {
+        previousButton = MenuItems.PREVIOUS.clone().setClickListener(event -> {
             Player whoClicked = event.getPlayer();
 
             if (page > 0) {
@@ -68,10 +67,10 @@ public class PagedMenu extends Menu {
         setButton(previousButton, size.getSlots() - 9 + previousButtonOffset);
 
         // Add current button
-        setButton(currentButton = CURRENT_BUTTON.clone(), size.getSlots() - 9 + currentButtonOffset);
+        setButton(currentButton = MenuItems.CURRENT.clone(), size.getSlots() - 9 + currentButtonOffset);
         
         // Add next button
-        nextButton = NEXT_BUTTON.clone().setClickListener(event -> {
+        nextButton = MenuItems.NEXT.clone().setClickListener(event -> {
             Player whoClicked = event.getPlayer();
 
             if (((page + 1) * (rows * columns)) < pagedItems.size()) {

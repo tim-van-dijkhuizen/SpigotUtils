@@ -8,6 +8,8 @@ public interface OptionConfig extends Configuration {
 
     public void addOption(ConfigOption<?> option);
     
+    public void addOptions(Collection<ConfigOption<?>> options);
+    
     public Collection<ConfigOption<?>> getOptions();
     
     public <T> ConfigOption<T> getOption(String path);
