@@ -9,7 +9,9 @@ import java.util.Set;
 public class DataList<E> implements Iterable<E> {
 
     private Set<E> items = new HashSet<E>();
+    
     private Set<E> toAdd = new HashSet<E>();
+    private Set<E> toUpdate = new HashSet<E>();
     private Set<E> toRemove = new HashSet<E>();
 
     public DataList() {
@@ -18,6 +20,7 @@ public class DataList<E> implements Iterable<E> {
 
     public DataList(Collection<E> items) {
         this.items.addAll(items);
+        toUpdate.addAll(items);
     }
 
     public void add(E e) {
@@ -43,6 +46,10 @@ public class DataList<E> implements Iterable<E> {
 
     public Set<E> getToAdd() {
         return Collections.unmodifiableSet(toAdd);
+    }
+    
+    public Set<E> getToUpdate() {
+        return Collections.unmodifiableSet(toUpdate);
     }
 
     public Set<E> getToRemove() {
