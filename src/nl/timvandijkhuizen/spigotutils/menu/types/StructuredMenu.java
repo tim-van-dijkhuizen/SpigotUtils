@@ -46,7 +46,7 @@ public class StructuredMenu extends Menu {
             Player whoClicked = event.getPlayer();
 
             if (page > 0) {
-                UI.playSound(whoClicked, UI.CLICK_SOUND);
+                UI.playSound(whoClicked, UI.SOUND_CLICK);
                 page -= 1;
                 refresh();
             }
@@ -62,7 +62,7 @@ public class StructuredMenu extends Menu {
             Player whoClicked = event.getPlayer();
 
             if (((page + 1) * buttonSlots.length) < structuredItems.size()) {
-                UI.playSound(whoClicked, UI.CLICK_SOUND);
+                UI.playSound(whoClicked, UI.SOUND_CLICK);
                 page += 1;
                 refresh();
             }
@@ -110,7 +110,7 @@ public class StructuredMenu extends Menu {
         // Update current button
         int max = 1 + (int) (structuredItems.size() / Double.valueOf(buttonSlots.length));
         
-        currentButton.setName(UI.color("Page " + (page + 1) + "/" + max, UI.SECONDARY_COLOR, ChatColor.BOLD));
+        currentButton.setName(UI.color("Page " + (page + 1) + "/" + max, UI.COLOR_SECONDARY, ChatColor.BOLD));
         
         // Draw menu
         super.draw();

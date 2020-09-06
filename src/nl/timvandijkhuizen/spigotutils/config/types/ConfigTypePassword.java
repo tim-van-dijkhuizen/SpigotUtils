@@ -67,7 +67,7 @@ public class ConfigTypePassword implements ConfigType<String> {
         Conversation conversation = factory.withFirstPrompt(new StringPrompt() {
             @Override
             public String getPromptText(ConversationContext context) {
-                return UI.color("What should be the new value?", UI.PRIMARY_COLOR);
+                return UI.color("What should be the new value?", UI.COLOR_PRIMARY);
             }
 
             @Override

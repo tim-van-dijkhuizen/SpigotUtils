@@ -73,11 +73,11 @@ public class ConfigTypeCurrency implements ConfigType<Currency> {
         for (Currency currency : Currency.getAvailableCurrencies()) {
             MenuItemBuilder item = new MenuItemBuilder(Material.SUNFLOWER);
 
-            item.setName(UI.color(currency.getDisplayName(), UI.PRIMARY_COLOR, ChatColor.BOLD));
-            item.setLore(UI.color("Code: ", UI.TEXT_COLOR) + UI.color(currency.getCurrencyCode(), UI.SECONDARY_COLOR));
+            item.setName(UI.color(currency.getDisplayName(), UI.COLOR_PRIMARY, ChatColor.BOLD));
+            item.setLore(UI.color("Code: ", UI.COLOR_TEXT) + UI.color(currency.getCurrencyCode(), UI.COLOR_SECONDARY));
 
             item.setClickListener(event -> {
-                UI.playSound(player, UI.CLICK_SOUND);
+                UI.playSound(player, UI.SOUND_CLICK);
                 callback.accept(currency);
             });
 

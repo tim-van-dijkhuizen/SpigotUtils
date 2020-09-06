@@ -58,7 +58,7 @@ public class PagedMenu extends Menu {
             Player whoClicked = event.getPlayer();
 
             if (page > 0) {
-                UI.playSound(whoClicked, UI.CLICK_SOUND);
+                UI.playSound(whoClicked, UI.SOUND_CLICK);
                 page -= 1;
                 refresh();
             }
@@ -74,7 +74,7 @@ public class PagedMenu extends Menu {
             Player whoClicked = event.getPlayer();
 
             if (((page + 1) * (rows * columns)) < pagedItems.size()) {
-                UI.playSound(whoClicked, UI.CLICK_SOUND);
+                UI.playSound(whoClicked, UI.SOUND_CLICK);
                 page += 1;
                 refresh();
             }
@@ -137,7 +137,7 @@ public class PagedMenu extends Menu {
         // Update current button
         int max = 1 + (int) (pagedItems.size() / Double.valueOf(rows * columns));
         
-        currentButton.setName(UI.color("Page " + (page + 1) + "/" + max, UI.SECONDARY_COLOR, ChatColor.BOLD));
+        currentButton.setName(UI.color("Page " + (page + 1) + "/" + max, UI.COLOR_SECONDARY, ChatColor.BOLD));
         
         // Draw menu
         super.draw();

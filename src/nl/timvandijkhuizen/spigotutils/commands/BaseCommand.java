@@ -101,14 +101,14 @@ public abstract class BaseCommand implements CommandExecutor {
                 if (permission == null || player.hasPermission(permission)) {
                     onPlayerUse(player, args);
                 } else {
-                    player.sendMessage(UI.color(MESSAGE_NO_PERMISSION, UI.ERROR_COLOR));
+                    player.sendMessage(UI.color(MESSAGE_NO_PERMISSION, UI.COLOR_ERROR));
                 }
             } else {
                 onConsoleUse(sender, args);
             }
         } catch (Exception e) {
             e.printStackTrace();
-            sender.sendMessage(UI.color(MESSAGE_ERROR, UI.ERROR_COLOR));
+            sender.sendMessage(UI.color(MESSAGE_ERROR, UI.COLOR_ERROR));
         }
 
         return true;

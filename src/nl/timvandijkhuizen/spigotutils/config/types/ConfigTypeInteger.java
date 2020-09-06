@@ -64,7 +64,7 @@ public class ConfigTypeInteger implements ConfigType<Integer> {
         Conversation conversation = factory.withFirstPrompt(new NumericPrompt() {
             @Override
             public String getPromptText(ConversationContext context) {
-                return UI.color("What should be the new value?", UI.PRIMARY_COLOR);
+                return UI.color("What should be the new value?", UI.COLOR_PRIMARY);
             }
 
             @Override

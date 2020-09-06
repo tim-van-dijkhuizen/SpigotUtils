@@ -111,7 +111,7 @@ public class ConfigTypeList<T extends ConfigObject> implements ConfigType<List<T
         MenuItemBuilder cancelButton = MenuItems.CANCEL.clone();
 
         cancelButton.setClickListener(event -> {
-            UI.playSound(player, UI.CLICK_SOUND);
+            UI.playSound(player, UI.SOUND_CLICK);
             callback.accept(value);
         });
 
@@ -121,20 +121,20 @@ public class ConfigTypeList<T extends ConfigObject> implements ConfigType<List<T
         // ===========================
         MenuItemBuilder createButton = new MenuItemBuilder(Material.NETHER_STAR);
 
-        createButton.setName(UI.color("Create", UI.SECONDARY_COLOR, ChatColor.BOLD));
+        createButton.setName(UI.color("Create", UI.COLOR_SECONDARY, ChatColor.BOLD));
 
         createButton.setClickListener(event -> {
             try {
                 T object = clazz.newInstance();
                 
-                UI.playSound(player, UI.CLICK_SOUND);
+                UI.playSound(player, UI.SOUND_CLICK);
                 player.closeInventory();
                 
                 object.getInput(player, () -> {
                     addObjectButton(player, menu, objects, object);
                     objects.add(object);
                     
-                    UI.playSound(player, UI.CLICK_SOUND);
+                    UI.playSound(player, UI.SOUND_CLICK);
                     menu.open(player);
                 });
             } catch (InstantiationException | IllegalAccessException e) {
@@ -149,7 +149,7 @@ public class ConfigTypeList<T extends ConfigObject> implements ConfigType<List<T
         MenuItemBuilder saveButton = MenuItems.SAVE.clone();
 
         saveButton.setClickListener(event -> {
-            UI.playSound(player, UI.SUCCESS_SOUND);
+            UI.playSound(player, UI.SOUND_SUCCESS);
             callback.accept(objects);
         });
 
@@ -162,31 +162,31 @@ public class ConfigTypeList<T extends ConfigObject> implements ConfigType<List<T
     private void addObjectButton(Player player, PagedMenu menu, List<T> objects, T object) {
         MenuItemBuilder item = new MenuItemBuilder(menuIcon);
 
-        item.setName(UI.color(object.getItemName(), UI.PRIMARY_COLOR, ChatColor.BOLD));
+        item.setName(UI.color(object.getItemName(), UI.COLOR_PRIMARY, ChatColor.BOLD));
         item.setLore(object.getItemLore());
         
-        item.addLore("", UI.color("Use left-click to edit.", UI.SECONDARY_COLOR, ChatColor.ITALIC));
-        item.addLore(UI.color("Use right-click to delete.", UI.SECONDARY_COLOR, ChatColor.ITALIC));
+        item.addLore("", UI.color("Use left-click to edit.", UI.COLOR_SECONDARY, ChatColor.ITALIC));
+        item.addLore(UI.color("Use right-click to delete.", UI.COLOR_SECONDARY, ChatColor.ITALIC));
 
         item.setClickListener(event -> {
             ClickType clickType = event.getClickType();
 
             if (clickType == ClickType.RIGHT) {
-                UI.playSound(player, UI.DELETE_SOUND);
+                UI.playSound(player, UI.SOUND_DELETE);
                 
                 objects.remove(object);
                 
                 menu.removePagedButton(item);
                 menu.refresh();
             } else {
-                UI.playSound(player, UI.CLICK_SOUND);
+                UI.playSound(player, UI.SOUND_CLICK);
                 player.closeInventory();
                 
                 object.getInput(player, () -> {
-                    item.setName(UI.color(object.getItemName(), UI.PRIMARY_COLOR, ChatColor.BOLD));
+                    item.setName(UI.color(object.getItemName(), UI.COLOR_PRIMARY, ChatColor.BOLD));
                     item.setLore(object.getItemLore());
                     
-                    UI.playSound(player, UI.CLICK_SOUND);
+                    UI.playSound(player, UI.SOUND_CLICK);
                     menu.open(player);
                 });
             }

@@ -74,12 +74,12 @@ public class ConfigTypeLocale implements ConfigType<Locale> {
             String localeValue = LocaleHelper.serializeLocale(locale);
             String currencyValue = currency.getDisplayName() + "(" + currency.getCurrencyCode() + ")";
             
-            item.setName(UI.color(locale.getDisplayName(), UI.PRIMARY_COLOR, ChatColor.BOLD));
-            item.setLore(UI.color("Code: ", UI.TEXT_COLOR) + UI.color(localeValue, UI.SECONDARY_COLOR));
-            item.setLore(UI.color("Currency: ", UI.TEXT_COLOR) + UI.color(currencyValue, UI.SECONDARY_COLOR));
+            item.setName(UI.color(locale.getDisplayName(), UI.COLOR_PRIMARY, ChatColor.BOLD));
+            item.setLore(UI.color("Code: ", UI.COLOR_TEXT) + UI.color(localeValue, UI.COLOR_SECONDARY));
+            item.setLore(UI.color("Currency: ", UI.COLOR_TEXT) + UI.color(currencyValue, UI.COLOR_SECONDARY));
 
             item.setClickListener(event -> {
-                UI.playSound(player, UI.CLICK_SOUND);
+                UI.playSound(player, UI.SOUND_CLICK);
                 callback.accept(locale);
             });
 

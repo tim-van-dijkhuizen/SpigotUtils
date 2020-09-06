@@ -18,6 +18,7 @@ public class Menu implements InventoryHolder {
     protected MenuSize size;
     protected Inventory inventory;
     protected Map<Integer, MenuItemBuilder> items = new HashMap<>();
+    protected boolean disableButtons;
 
     public Menu(String title) {
         this(title, MenuSize.MD);
@@ -102,6 +103,16 @@ public class Menu implements InventoryHolder {
         return this;
     }
     
+    public Menu disableButtons() {
+        disableButtons = true;
+        return this;
+    }
+    
+    public Menu enableButtons() {
+        disableButtons = false;
+        return this;
+    }
+    
     /**
      * Re-draw the menu.
      */
@@ -153,8 +164,8 @@ public class Menu implements InventoryHolder {
         MenuItemBuilder item = items.get(event.getSlot());
         Player player = (Player) event.getWhoClicked();
 
-        // Ignore empty slots
-        if (item == null) {
+        // Ignore if empty or disabled
+        if (item == null || disableButtons) {
             return;
         }
 
