@@ -1,38 +1,46 @@
 package nl.timvandijkhuizen.spigotutils.data;
 
 import java.util.Collection;
-import java.util.Collections;
-import java.util.HashSet;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class DataList<E> implements Iterable<E> {
 
-    private Set<E> items = new HashSet<E>();
-    
-    private Set<E> toAdd = new HashSet<E>();
-    private Set<E> toUpdate = new HashSet<E>();
-    private Set<E> toRemove = new HashSet<E>();
+    private Map<E, DataAction> items = new HashMap<>();
 
     public DataList() {
 
     }
 
     public DataList(Collection<E> items) {
-        this.items.addAll(items);
-        toUpdate.addAll(items);
-    }
-
-    public void add(E e) {
-        if (items.add(e)) {
-            toAdd.add(e);
+        for(E item : items) {
+            this.items.put(item, DataAction.UPDATE);
         }
     }
 
-    public void remove(E e) {
-        if (items.remove(e)) {
-            toRemove.add(e);
+    public void add(E item) {
+        DataAction action = items.get(item);
+        
+        if(action == null) {
+            items.put(item, DataAction.CREATE);
+        } else if(action == DataAction.DELETE) {
+            items.put(item, DataAction.UPDATE);
         }
+    }
+
+    public void remove(E item) {
+        DataAction action = items.get(item);
+        
+        if(action == DataAction.CREATE) {
+            items.remove(item);
+            return;
+        }
+        
+        items.put(item, DataAction.DELETE);
     }
 
     public int size() {
@@ -41,19 +49,27 @@ public class DataList<E> implements Iterable<E> {
 
     @Override
     public Iterator<E> iterator() {
-        return items.iterator();
+        return items.keySet().iterator();
     }
 
-    public Set<E> getToAdd() {
-        return Collections.unmodifiableSet(toAdd);
+    public Set<E> getByAction(DataAction action) {
+        return items.entrySet().stream()
+            .filter(i -> i.getValue() == action)
+            .map(i -> i.getKey())
+            .collect(Collectors.toSet());
     }
     
-    public Set<E> getToUpdate() {
-        return Collections.unmodifiableSet(toUpdate);
-    }
-
-    public Set<E> getToRemove() {
-        return Collections.unmodifiableSet(toRemove);
+    public void clearPending() {
+        for(Entry<E, DataAction> entry : items.entrySet()) {
+            E item = entry.getKey();
+            DataAction action = entry.getValue();
+            
+            if(action == DataAction.CREATE) {
+                items.put(item, DataAction.UPDATE);
+            } else if(action == DataAction.DELETE) {
+                items.remove(item);
+            }
+        }
     }
 
 }
