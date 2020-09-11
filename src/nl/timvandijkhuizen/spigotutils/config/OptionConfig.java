@@ -14,4 +14,6 @@ public interface OptionConfig extends Configuration {
     
     public <T> ConfigOption<T> getOption(String path);
     
+    public void setDefaultOptions();
+    
 }

@@ -81,5 +81,14 @@ public class YamlConfig extends YamlConfiguration implements OptionConfig {
     public <T> ConfigOption<T> getOption(String path) {
         return options.stream().filter(i -> i.getPath().equals(path)).map(i -> (ConfigOption<T>) i).findFirst().orElse(null);
     }
+    
+    @Override
+    public void setDefaultOptions() {
+        for(ConfigOption<?> option : getOptions()) {
+            if(option.isValueEmpty(this)) {
+                option.resetValue(this);
+            }
+        }
+    }
 
 }

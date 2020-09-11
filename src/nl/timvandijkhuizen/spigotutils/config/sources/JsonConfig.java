@@ -59,6 +59,15 @@ public class JsonConfig implements Configuration, OptionConfig {
     public <T> ConfigOption<T> getOption(String path) {
         return getOptions().stream().filter(i -> i.getPath().equals(path)).map(i -> (ConfigOption<T>) i).findFirst().orElse(null);
     }
+    
+    @Override
+    public void setDefaultOptions() {
+        for(ConfigOption<?> option : getOptions()) {
+            if(option.isValueEmpty(this)) {
+                option.resetValue(json);
+            }
+        }
+    }
 
     @Override
     public Set<String> getKeys(boolean deep) {

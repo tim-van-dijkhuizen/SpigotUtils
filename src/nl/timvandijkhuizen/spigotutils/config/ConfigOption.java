@@ -68,6 +68,15 @@ public class ConfigOption<T> {
     }
     
     /**
+     * Sets the value to the default value.
+     * 
+     * @param config
+     */
+    public void resetValue(OptionConfig config) {
+        setValue(config, defaultValue);
+    }
+    
+    /**
      * Returns this option's value.
      * 
      * @param json
@@ -94,6 +103,15 @@ public class ConfigOption<T> {
     }
     
     /**
+     * Sets the value to the default value.
+     * 
+     * @param config
+     */
+    public void resetValue(JsonObject json) {
+        setValue(json, defaultValue);
+    }
+    
+    /**
      * Returns the value lore.
      * 
      * @param config
@@ -110,7 +128,8 @@ public class ConfigOption<T> {
      * @return
      */
     public boolean isValueEmpty(OptionConfig config) {
-        return type.isValueEmpty(getValue(config));
+        T rawValue = type.getValue(config, this);
+        return !config.contains(path) || type.isValueEmpty(rawValue);
     }
     
     public void getValueInput(Player player, T value, Consumer<T> callback) {
