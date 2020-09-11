@@ -10,6 +10,13 @@ public interface Service {
     public String getHandle();
 
     /**
+     * Called when the service is created.
+     * 
+     * @throws Exception
+     */
+    public void init() throws Exception;
+    
+    /**
      * Called when the service is loaded.
      * 
      * @throws Exception

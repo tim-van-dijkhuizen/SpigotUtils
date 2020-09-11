@@ -6,6 +6,12 @@ import org.bukkit.Bukkit;
 
 public class ConsoleHelper {
 
+    private static boolean showStacktraces;
+    
+    public static void showStacktraces(boolean showStacktraces) {
+        ConsoleHelper.showStacktraces = showStacktraces;
+    }
+    
     public static void printInfo(String message) {
         Bukkit.getLogger().log(Level.INFO, message);
     }
@@ -17,7 +23,7 @@ public class ConsoleHelper {
     public static void printError(String message, Throwable error) {
         Bukkit.getLogger().log(Level.WARNING, message);
 
-        if (error != null) {
+        if (error != null && showStacktraces) {
             error.printStackTrace();
         }
     }

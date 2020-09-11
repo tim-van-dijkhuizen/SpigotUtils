@@ -5,23 +5,13 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.InventoryHolder;
 
-import nl.timvandijkhuizen.spigotutils.services.Service;
+import nl.timvandijkhuizen.spigotutils.services.BaseService;
 
-public class MenuService implements Service, Listener {
+public class MenuService extends BaseService implements Listener {
 
     @Override
     public String getHandle() {
         return "menus";
-    }
-
-    @Override
-    public void load() throws Exception {
-
-    }
-
-    @Override
-    public void unload() throws Exception {
-
     }
 
     @EventHandler

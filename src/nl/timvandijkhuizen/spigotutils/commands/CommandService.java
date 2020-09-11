@@ -4,9 +4,9 @@ import java.util.HashSet;
 import java.util.Set;
 
 import nl.timvandijkhuizen.spigotutils.PluginBase;
-import nl.timvandijkhuizen.spigotutils.services.Service;
+import nl.timvandijkhuizen.spigotutils.services.BaseService;
 
-public class CommandService implements Service {
+public class CommandService extends BaseService {
 
     private PluginBase plugin;
     private Set<BaseCommand> commands = new HashSet<>();
@@ -18,16 +18,6 @@ public class CommandService implements Service {
     @Override
     public String getHandle() {
         return "commands";
-    }
-
-    @Override
-    public void load() throws Exception {
-
-    }
-
-    @Override
-    public void unload() throws Exception {
-
     }
 
     public void register(BaseCommand command) {

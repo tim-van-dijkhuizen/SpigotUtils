@@ -2,6 +2,7 @@ package nl.timvandijkhuizen.spigotutils.data;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
 
 @SuppressWarnings("unchecked")
@@ -63,6 +64,14 @@ public class DataValue {
 
     public <T> List<T> asList(Class<T> type) {
         return (List<T>) value;
+    }
+    
+    public Set<?> asSet() {
+        return (Set<?>) value;
+    }
+
+    public <T> Set<T> asSet(Class<T> type) {
+        return (Set<T>) value;
     }
 
     public <K, V> Map<K, V> asMap(Class<K> keyType, Class<V> valueType) {

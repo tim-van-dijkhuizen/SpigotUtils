@@ -12,6 +12,7 @@ public class UI {
     public static final ChatColor COLOR_PRIMARY = ChatColor.GREEN;
     public static final ChatColor COLOR_SECONDARY = ChatColor.AQUA;
     public static final ChatColor COLOR_TEXT = ChatColor.GRAY;
+    public static final ChatColor COLOR_SUCCESS = ChatColor.GREEN;
     public static final ChatColor COLOR_ERROR = ChatColor.RED;
 
     // UI sounds
