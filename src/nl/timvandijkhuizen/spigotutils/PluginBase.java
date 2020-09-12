@@ -27,6 +27,7 @@ public abstract class PluginBase extends JavaPlugin {
 
             // Initiate and load services
             for (Service service : registerServices()) {
+                services.put(service.getHandle(), service);
                 service.init();
                 loadService(service);
             }
@@ -124,9 +125,6 @@ public abstract class PluginBase extends JavaPlugin {
      * @param service
      */
     private void loadService(Service service) {
-        services.put(service.getHandle(), service);
-
-        // Load service
         try {
             service.load();
             
@@ -151,8 +149,6 @@ public abstract class PluginBase extends JavaPlugin {
         } catch (Exception e) {
             ConsoleHelper.printError("Failed to unload service: " + service.getHandle(), e);
         }
-
-        services.remove(service);
     }
     
     /**
