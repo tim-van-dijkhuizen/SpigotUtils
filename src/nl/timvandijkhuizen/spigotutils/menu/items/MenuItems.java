@@ -1,4 +1,4 @@
-package nl.timvandijkhuizen.spigotutils.menu;
+package nl.timvandijkhuizen.spigotutils.menu.items;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;

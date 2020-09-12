@@ -1,8 +1,9 @@
-package nl.timvandijkhuizen.spigotutils.menu;
+package nl.timvandijkhuizen.spigotutils.menu.items;
 
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import java.util.function.Supplier;
 
 import org.bukkit.Color;
 import org.bukkit.Material;
@@ -15,6 +16,11 @@ public class MenuItemBuilder extends ItemBuilder {
 
     private MenuAction listeners;
     private boolean disabled;
+    
+    // Dynamic content
+    private Supplier<String> nameGenerator;
+    private Supplier<Integer> amountGenerator;
+    private Supplier<List<String>> loreGenerator;
 
     public MenuItemBuilder(ItemStack itemStack) {
         super(itemStack);
@@ -162,6 +168,35 @@ public class MenuItemBuilder extends ItemBuilder {
 
     public void setDisabled(boolean disabled) {
         this.disabled = disabled;
+    }
+    
+    @Override
+    public ItemStack toItemStack() {
+        if(nameGenerator != null) {
+            setName(nameGenerator.get());
+        }
+        
+        if(amountGenerator != null) {
+            setAmount(amountGenerator.get());
+        }
+        
+        if(loreGenerator != null) {
+            setLore(loreGenerator.get());
+        }
+        
+        return super.toItemStack();
+    }
+    
+    public void setName(Supplier<String> nameGenerator) {
+        this.nameGenerator = nameGenerator;
+    }
+    
+    public void setAmount(Supplier<Integer> amountGenerator) {
+        this.amountGenerator = amountGenerator;
+    }
+    
+    public void setLore(Supplier<List<String>> loreGenerator) {
+        this.loreGenerator = loreGenerator;
     }
 
 }

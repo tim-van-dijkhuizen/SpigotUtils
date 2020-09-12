@@ -1,7 +1,9 @@
-package nl.timvandijkhuizen.spigotutils.menu;
+package nl.timvandijkhuizen.spigotutils.menu.items;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
+
+import nl.timvandijkhuizen.spigotutils.menu.Menu;
 
 public class MenuItemClick {
 

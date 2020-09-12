@@ -12,6 +12,10 @@ import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 
+import nl.timvandijkhuizen.spigotutils.menu.items.MenuAction;
+import nl.timvandijkhuizen.spigotutils.menu.items.MenuItemBuilder;
+import nl.timvandijkhuizen.spigotutils.menu.items.MenuItemClick;
+
 public class Menu implements InventoryHolder {
 
     protected String title;

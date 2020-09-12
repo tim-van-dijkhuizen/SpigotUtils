@@ -7,9 +7,9 @@ import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 import nl.timvandijkhuizen.spigotutils.menu.Menu;
-import nl.timvandijkhuizen.spigotutils.menu.MenuItemBuilder;
-import nl.timvandijkhuizen.spigotutils.menu.MenuItems;
 import nl.timvandijkhuizen.spigotutils.menu.MenuSize;
+import nl.timvandijkhuizen.spigotutils.menu.items.MenuItemBuilder;
+import nl.timvandijkhuizen.spigotutils.menu.items.MenuItems;
 import nl.timvandijkhuizen.spigotutils.ui.UI;
 
 public class PagedMenu extends Menu {
