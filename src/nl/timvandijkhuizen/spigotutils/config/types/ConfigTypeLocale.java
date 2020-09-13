@@ -53,8 +53,8 @@ public class ConfigTypeLocale implements ConfigType<Locale> {
     }
     
     @Override
-    public String[] getValueLore(Locale value) {
-        return new String[] { value.getDisplayName() };
+    public String getValueLore(Locale value) {
+        return value.getDisplayName();
     }
 
     @Override

@@ -41,8 +41,8 @@ public class ConfigTypeBoolean implements ConfigType<Boolean> {
     }
     
     @Override
-    public String[] getValueLore(Boolean value) {
-        return new String[] { value ? "Yes" : "No" };
+    public String getValueLore(Boolean value) {
+        return value ? "Yes" : "No";
     }
 
     @Override

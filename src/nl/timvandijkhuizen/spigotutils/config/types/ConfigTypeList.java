@@ -87,8 +87,9 @@ public class ConfigTypeList<T extends ConfigObject> implements ConfigType<List<T
     }
 
     @Override
-    public String[] getValueLore(List<T> value) {
-        return value.stream().map(i -> i.getItemName()).toArray(String[]::new);
+    public String getValueLore(List<T> value) {
+        String[] items = value.stream().map(i -> i.getItemName()).toArray(String[]::new);
+        return String.join(", ", items);
     }
 
     @Override

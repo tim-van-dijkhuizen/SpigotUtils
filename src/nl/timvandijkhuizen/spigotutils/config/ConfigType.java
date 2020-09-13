@@ -56,7 +56,7 @@ public interface ConfigType<T> {
      * @param option
      * @return
      */
-    String[] getValueLore(T value);
+    String getValueLore(T value);
     
     /**
      * Returns whether the value is empty.

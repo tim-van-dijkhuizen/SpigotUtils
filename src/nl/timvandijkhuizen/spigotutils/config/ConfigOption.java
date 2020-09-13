@@ -117,7 +117,7 @@ public class ConfigOption<T> {
      * @param config
      * @return
      */
-    public String[] getValueLore(OptionConfig config) {
+    public String getValueLore(OptionConfig config) {
         return type.getValueLore(getValue(config));
     }
 

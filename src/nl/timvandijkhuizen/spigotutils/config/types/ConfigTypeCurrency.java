@@ -57,8 +57,8 @@ public class ConfigTypeCurrency implements ConfigType<Currency> {
     }
     
     @Override
-    public String[] getValueLore(Currency value) {
-        return new String[] { value.getDisplayName() };
+    public String getValueLore(Currency value) {
+        return value.getDisplayName();
     }
 
     @Override

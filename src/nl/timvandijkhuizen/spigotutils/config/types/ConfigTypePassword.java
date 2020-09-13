@@ -51,8 +51,8 @@ public class ConfigTypePassword implements ConfigType<String> {
     }
     
     @Override
-    public String[] getValueLore(String value) {
-        return new String[] { StringUtils.repeat(PASSWORD_CHARACTER, value.length()) };
+    public String getValueLore(String value) {
+        return StringUtils.repeat(PASSWORD_CHARACTER, value.length());
     }
 
     @Override

@@ -48,8 +48,8 @@ public class ConfigTypeString implements ConfigType<String> {
     }
     
     @Override
-    public String[] getValueLore(String value) {
-        return new String[] { value };
+    public String getValueLore(String value) {
+        return value;
     }
 
     @Override

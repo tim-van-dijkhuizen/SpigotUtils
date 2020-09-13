@@ -48,8 +48,8 @@ public class ConfigTypeInteger implements ConfigType<Integer> {
     }
 
     @Override
-    public String[] getValueLore(Integer value) {
-        return new String[] { "" + value };
+    public String getValueLore(Integer value) {
+        return "" + value;
     }
     
     @Override
