@@ -187,12 +187,12 @@ public class ItemBuilder {
     public ItemBuilder addLore(List<String> line) {
         ItemMeta meta = itemStack.getItemMeta();
 
-        if (meta == null || !meta.hasLore() || meta.getLore() == null) {
+        if (meta == null) {
             return this;
         }
 
         // Add lore
-        List<String> lore = meta.getLore();
+        List<String> lore = meta.getLore() != null ? meta.getLore() : new ArrayList<>();
 
         for (String s : line) {
             lore.add(ChatColor.translateAlternateColorCodes('&', s));
