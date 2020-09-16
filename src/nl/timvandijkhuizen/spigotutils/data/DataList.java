@@ -1,8 +1,8 @@
 package nl.timvandijkhuizen.spigotutils.data;
 
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 
 public class DataList<E> implements Iterable<E> {
 
-    private Map<E, DataAction> items = new HashMap<>();
+    private Map<E, DataAction> items = new LinkedHashMap<>();
 
     public DataList() {
 
@@ -60,16 +60,19 @@ public class DataList<E> implements Iterable<E> {
     }
     
     public void clearPending() {
-        for(Entry<E, DataAction> entry : items.entrySet()) {
-            E item = entry.getKey();
+        Set<Entry<E, DataAction>> items = this.items.entrySet();
+        
+        // Change CREATE to UPDATE
+        for(Entry<E, DataAction> entry : items) {
             DataAction action = entry.getValue();
             
             if(action == DataAction.CREATE) {
-                items.put(item, DataAction.UPDATE);
-            } else if(action == DataAction.DELETE) {
-                items.remove(item);
+                entry.setValue(DataAction.UPDATE);
             }
         }
+        
+        // Remove DELETE
+        items.removeIf(i -> i.getValue() == DataAction.DELETE);
     }
 
 }
