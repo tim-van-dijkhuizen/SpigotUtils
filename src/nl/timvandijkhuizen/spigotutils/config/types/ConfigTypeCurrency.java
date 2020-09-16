@@ -7,9 +7,6 @@ import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-
 import nl.timvandijkhuizen.spigotutils.config.ConfigOption;
 import nl.timvandijkhuizen.spigotutils.config.ConfigType;
 import nl.timvandijkhuizen.spigotutils.config.OptionConfig;
@@ -32,28 +29,6 @@ public class ConfigTypeCurrency implements ConfigType<Currency> {
     @Override
     public void setValue(OptionConfig config, ConfigOption<Currency> option, Currency value) {
         config.set(option.getPath(), value.getCurrencyCode());
-    }
-
-    @Override
-    public Currency getValue(JsonObject json, ConfigOption<Currency> option) {
-        JsonElement element = json.get(option.getPath());
-        
-        // Check if json property exists
-        if(element == null) {
-            return null;
-        }
-        
-        // Get and parse value
-        try {
-            return Currency.getInstance(element.getAsString());
-        } catch(IllegalArgumentException e) {
-            return null;
-        }
-    }
-
-    @Override
-    public void setValue(JsonObject json, ConfigOption<Currency> option, Currency value) {
-        json.addProperty(option.getPath(), value.getCurrencyCode());
     }
     
     @Override

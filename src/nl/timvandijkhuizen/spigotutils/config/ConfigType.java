@@ -6,8 +6,6 @@ import javax.naming.ConfigurationException;
 
 import org.bukkit.entity.Player;
 
-import com.google.gson.JsonObject;
-
 public interface ConfigType<T> {
     
     /**
@@ -28,25 +26,6 @@ public interface ConfigType<T> {
      * @param value
      */
     void setValue(OptionConfig config, ConfigOption<T> option, T value);
-    
-    /**
-     * Deserializes and returns the value.
-     * 
-     * @param config
-     * @param path
-     * @return
-     * @throws ConfigurationException
-     */
-    T getValue(JsonObject json, ConfigOption<T> option);
-    
-    /**
-     * Serializes and sets the value.
-     * 
-     * @param json
-     * @param path
-     * @param value
-     */
-    void setValue(JsonObject json, ConfigOption<T> option, T value);
     
     /**
      * Returns the lore lines used

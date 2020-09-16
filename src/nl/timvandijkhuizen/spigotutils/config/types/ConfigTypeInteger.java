@@ -9,9 +9,6 @@ import org.bukkit.conversations.NumericPrompt;
 import org.bukkit.conversations.Prompt;
 import org.bukkit.entity.Player;
 
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-
 import nl.timvandijkhuizen.spigotutils.PluginBase;
 import nl.timvandijkhuizen.spigotutils.config.ConfigOption;
 import nl.timvandijkhuizen.spigotutils.config.ConfigType;
@@ -28,23 +25,6 @@ public class ConfigTypeInteger implements ConfigType<Integer> {
     @Override
     public void setValue(OptionConfig config, ConfigOption<Integer> option, Integer value) {
         config.set(option.getPath(), value);
-    }
-    
-    @Override
-    public Integer getValue(JsonObject json, ConfigOption<Integer> option) {
-        JsonElement element = json.get(option.getPath());
-        
-        // Check if json property exists
-        if(element == null) {
-            return null;
-        }
-        
-        return element.getAsInt();
-    }
-
-    @Override
-    public void setValue(JsonObject json, ConfigOption<Integer> option, Integer value) {
-        json.addProperty(option.getPath(), value);
     }
 
     @Override

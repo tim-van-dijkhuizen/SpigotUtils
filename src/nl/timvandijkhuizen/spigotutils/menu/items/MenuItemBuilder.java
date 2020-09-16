@@ -14,7 +14,7 @@ import nl.timvandijkhuizen.spigotutils.inventory.ItemBuilder;
 
 public class MenuItemBuilder extends ItemBuilder {
 
-    private MenuAction listeners;
+    private MenuItemAction listeners;
     private boolean disabled;
     
     // Dynamic content
@@ -34,12 +34,12 @@ public class MenuItemBuilder extends ItemBuilder {
         super(material, amount);
     }
 
-    public MenuItemBuilder setClickListener(MenuAction listener) {
+    public MenuItemBuilder setClickListener(MenuItemAction listener) {
         this.listeners = listener;
         return this;
     }
 
-    public MenuAction getClickListener() {
+    public MenuItemAction getClickListener() {
         return listeners;
     }
 

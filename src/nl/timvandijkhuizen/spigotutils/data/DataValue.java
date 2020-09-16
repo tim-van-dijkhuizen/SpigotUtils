@@ -6,21 +6,13 @@ import java.util.Set;
 import java.util.UUID;
 
 @SuppressWarnings("unchecked")
-public class DataValue {
-
-    private Object value;
+public class DataValue extends TypedValue<Object> {
 
     public DataValue(Object value) {
         this.value = value;
     }
-
-    public Object getValue() {
-        return value;
-    }
-
-    public void setValue(Object value) {
-        this.value = value;
-    }
+    
+    public DataValue() { }
 
     public String asString() {
         return String.class.cast(value);

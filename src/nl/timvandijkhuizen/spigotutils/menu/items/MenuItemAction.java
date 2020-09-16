@@ -1,9 +1,9 @@
 package nl.timvandijkhuizen.spigotutils.menu.items;
 
-public interface MenuAction {
+public interface MenuItemAction {
 
     /**
-     * Called when the menu item is clicked.
+     * Defines the click action
      * 
      * @param event
      */

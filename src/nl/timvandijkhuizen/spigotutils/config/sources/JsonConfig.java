@@ -64,7 +64,7 @@ public class JsonConfig implements Configuration, OptionConfig {
     public void setDefaultOptions() {
         for(ConfigOption<?> option : getOptions()) {
             if(option.isValueEmpty(this)) {
-                option.resetValue(json);
+                option.resetValue(this);
             }
         }
     }

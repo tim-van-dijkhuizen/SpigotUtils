@@ -1,4 +1,4 @@
-package nl.timvandijkhuizen.spigotutils.menu;
+package nl.timvandijkhuizen.spigotutils.data;
 
 import java.util.List;
 import java.util.Map;
@@ -6,11 +6,11 @@ import java.util.Set;
 import java.util.UUID;
 
 @SuppressWarnings("unchecked")
-public class MenuArguments {
+public class DataArguments {
 
     private Object[] arguments;
     
-    public MenuArguments(Object[] arguments) {
+    public DataArguments(Object... arguments) {
         this.arguments = arguments;
     }
     
@@ -34,59 +34,59 @@ public class MenuArguments {
         return getValue(index, defaultValue);
     }
 
-    public int getInteger(int index) {
+    public Integer getInteger(int index) {
         return getValue(index);
     }
     
-    public int getInteger(int index, int defaultValue) {
+    public Integer getInteger(int index, int defaultValue) {
         return getValue(index, defaultValue);
     }
 
-    public double getDouble(int index) {
+    public Double getDouble(int index) {
         return getValue(index);
     }
     
-    public double getDouble(int index, double defaultValue) {
+    public Double getDouble(int index, double defaultValue) {
         return getValue(index, defaultValue);
     }
 
-    public float getFloat(int index) {
+    public Float getFloat(int index) {
         return getValue(index);
     }
     
-    public float getFloat(int index, float defaultValue) {
+    public Float getFloat(int index, float defaultValue) {
         return getValue(index, defaultValue);
     }
 
-    public long getLong(int index) {
+    public Long getLong(int index) {
         return getValue(index);
     }
     
-    public long getLong(int index, long defaultValue) {
+    public Long getLong(int index, long defaultValue) {
         return getValue(index, defaultValue);
     }
 
-    public boolean getBoolean(int index) {
+    public Boolean getBoolean(int index) {
         return getValue(index);
     }
     
-    public boolean getBoolean(int index, boolean defaultValue) {
+    public Boolean getBoolean(int index, boolean defaultValue) {
         return getValue(index, defaultValue);
     }
 
-    public byte getByte(int index) {
+    public Byte getByte(int index) {
         return getValue(index);
     }
     
-    public byte getByte(int index, byte defaultValue) {
+    public Byte getByte(int index, byte defaultValue) {
         return getValue(index, defaultValue);
     }
 
-    public short getShort(int index) {
+    public Short getShort(int index) {
         return getValue(index);
     }
 
-    public short getShort(int index, short defaultValue) {
+    public Short getShort(int index, short defaultValue) {
         return getValue(index, defaultValue);
     }
     

@@ -13,7 +13,6 @@ import org.bukkit.event.inventory.ClickType;
 import com.google.common.io.ByteArrayDataInput;
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
-import com.google.gson.JsonObject;
 
 import nl.timvandijkhuizen.spigotutils.config.ConfigObject;
 import nl.timvandijkhuizen.spigotutils.config.ConfigOption;
@@ -74,16 +73,6 @@ public class ConfigTypeList<T extends ConfigObject> implements ConfigType<List<T
         }
         
         config.set(option.getPath(), output);
-    }
-
-    @Override
-    public List<T> getValue(JsonObject json, ConfigOption<List<T>> option) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public void setValue(JsonObject json, ConfigOption<List<T>> option, List<T> value) {
-        throw new UnsupportedOperationException();
     }
 
     @Override

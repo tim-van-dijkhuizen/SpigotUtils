@@ -9,9 +9,6 @@ import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-
 import nl.timvandijkhuizen.spigotutils.config.ConfigOption;
 import nl.timvandijkhuizen.spigotutils.config.ConfigType;
 import nl.timvandijkhuizen.spigotutils.config.OptionConfig;
@@ -33,23 +30,6 @@ public class ConfigTypeLocale implements ConfigType<Locale> {
     @Override
     public void setValue(OptionConfig config, ConfigOption<Locale> option, Locale value) {
         config.set(option.getPath(), LocaleHelper.serializeLocale(value));
-    }
-
-    @Override
-    public Locale getValue(JsonObject json, ConfigOption<Locale> option) {
-        JsonElement element = json.get(option.getPath());
-        
-        // Check if json property exists
-        if(element == null) {
-            return null;
-        }
-        
-        return LocaleHelper.deserializeLocale(element.getAsString());
-    }
-
-    @Override
-    public void setValue(JsonObject json, ConfigOption<Locale> option, Locale value) {
-        json.addProperty(option.getPath(), LocaleHelper.serializeLocale(value));
     }
     
     @Override

@@ -12,7 +12,7 @@ import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 
-import nl.timvandijkhuizen.spigotutils.menu.items.MenuAction;
+import nl.timvandijkhuizen.spigotutils.menu.items.MenuItemAction;
 import nl.timvandijkhuizen.spigotutils.menu.items.MenuItemBuilder;
 import nl.timvandijkhuizen.spigotutils.menu.items.MenuItemClick;
 
@@ -174,7 +174,7 @@ public class Menu implements InventoryHolder {
         }
 
         // Check if item has a click listener
-        MenuAction listener = item.getClickListener();
+        MenuItemAction listener = item.getClickListener();
 
         if (listener != null && !item.isDisabled()) {
             listener.onClick(new MenuItemClick(player, this, item, event.getClick()));

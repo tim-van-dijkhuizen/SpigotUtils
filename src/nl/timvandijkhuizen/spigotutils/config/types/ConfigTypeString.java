@@ -9,9 +9,6 @@ import org.bukkit.conversations.Prompt;
 import org.bukkit.conversations.StringPrompt;
 import org.bukkit.entity.Player;
 
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-
 import nl.timvandijkhuizen.spigotutils.PluginBase;
 import nl.timvandijkhuizen.spigotutils.config.ConfigOption;
 import nl.timvandijkhuizen.spigotutils.config.ConfigType;
@@ -28,23 +25,6 @@ public class ConfigTypeString implements ConfigType<String> {
     @Override
     public void setValue(OptionConfig config, ConfigOption<String> option, String value) {
         config.set(option.getPath(), value);
-    }
-
-    @Override
-    public String getValue(JsonObject json, ConfigOption<String> option) {
-        JsonElement element = json.get(option.getPath());
-        
-        // Check if json property exists
-        if(element == null) {
-            return null;
-        }
-        
-        return element.getAsString();
-    }
-
-    @Override
-    public void setValue(JsonObject json, ConfigOption<String> option, String value) {
-        json.addProperty(option.getPath(), value);
     }
     
     @Override
