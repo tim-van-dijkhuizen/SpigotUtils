@@ -35,7 +35,7 @@ public interface ConfigType<T> {
      * @param option
      * @return
      */
-    String getValueLore(T value);
+    String getValueLore(OptionConfig config, ConfigOption<T> option);
     
     /**
      * Returns whether the value is empty.
@@ -44,7 +44,7 @@ public interface ConfigType<T> {
      * @param option
      * @return
      */
-    boolean isValueEmpty(T value);
+    boolean isValueEmpty(OptionConfig config, ConfigOption<T> option);
     
     /**
      * Returns the input value for this option.
@@ -54,6 +54,6 @@ public interface ConfigType<T> {
      * @param option
      * @return
      */
-    void getValueInput(Player player, T value, Consumer<T> callback);
+    void getValueInput(OptionConfig config, ConfigOption<T> option, Player player, Consumer<T> callback);
 
 }

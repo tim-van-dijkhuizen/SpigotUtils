@@ -31,17 +31,18 @@ public class ConfigTypePassword implements ConfigType<String> {
     }
     
     @Override
-    public String getValueLore(String value) {
-        return StringUtils.repeat(PASSWORD_CHARACTER, value.length());
+    public String getValueLore(OptionConfig config, ConfigOption<String> option) {
+        return !isValueEmpty(config, option) ? StringUtils.repeat(PASSWORD_CHARACTER, getValue(config, option).length()) : "";
     }
 
     @Override
-    public boolean isValueEmpty(String value) {
+    public boolean isValueEmpty(OptionConfig config, ConfigOption<String> option) {
+        String value = getValue(config, option);
         return value == null || value.length() == 0;
     }
     
     @Override
-    public void getValueInput(Player player, String value, Consumer<String> callback) {
+    public void getValueInput(OptionConfig config, ConfigOption<String> option, Player player, Consumer<String> callback) {
         ConversationFactory factory = new ConversationFactory(PluginBase.getInstance());
 
         Conversation conversation = factory.withFirstPrompt(new StringPrompt() {

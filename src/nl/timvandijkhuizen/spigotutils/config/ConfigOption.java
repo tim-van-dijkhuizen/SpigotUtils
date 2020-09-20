@@ -68,13 +68,11 @@ public class ConfigOption<T> {
      * @return
      */
     public T getValue(OptionConfig config) {
-        T value = type.getValue(config, this);
-        
-        if(!config.contains(path) || type.isValueEmpty(value)) {
+        if(type.isValueEmpty(config, this)) {
             return defaultValue;
         }
         
-        return value;
+        return type.getValue(config, this);
     }
     
     /**
@@ -103,7 +101,7 @@ public class ConfigOption<T> {
      * @return
      */
     public String getValueLore(OptionConfig config) {
-        return type.getValueLore(getValue(config));
+        return type.getValueLore(config, this);
     }
 
     /**
@@ -113,8 +111,7 @@ public class ConfigOption<T> {
      * @return
      */
     public boolean isValueEmpty(OptionConfig config) {
-        T rawValue = type.getValue(config, this);
-        return !config.contains(path) || type.isValueEmpty(rawValue);
+        return type.isValueEmpty(config, this);
     }
     
     /**
@@ -124,8 +121,8 @@ public class ConfigOption<T> {
      * @param value
      * @param callback
      */
-    public void getValueInput(Player player, T value, Consumer<T> callback) {
-        type.getValueInput(player, value, callback);
+    public void getValueInput(OptionConfig config, Player player, Consumer<T> callback) {
+        type.getValueInput(config, this, player, callback);
     }
     
     /**

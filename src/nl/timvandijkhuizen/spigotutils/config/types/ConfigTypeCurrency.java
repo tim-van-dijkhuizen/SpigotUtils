@@ -21,7 +21,7 @@ public class ConfigTypeCurrency implements ConfigType<Currency> {
         try {
             String currencyCode = config.getString(option.getPath());
             return Currency.getInstance(currencyCode);
-        } catch(IllegalArgumentException e) {
+        } catch(Exception e) {
             return null;
         }
     }
@@ -32,17 +32,17 @@ public class ConfigTypeCurrency implements ConfigType<Currency> {
     }
     
     @Override
-    public String getValueLore(Currency value) {
-        return value.getDisplayName();
+    public String getValueLore(OptionConfig config, ConfigOption<Currency> option) {
+        return !isValueEmpty(config, option) ? getValue(config, option).getDisplayName() : "";
     }
 
     @Override
-    public boolean isValueEmpty(Currency value) {
-        return value == null;
+    public boolean isValueEmpty(OptionConfig config, ConfigOption<Currency> option) {
+        return !config.contains(option.getPath()) || getValue(config, option) == null;
     }
 
     @Override
-    public void getValueInput(Player player, Currency value, Consumer<Currency> callback) {
+    public void getValueInput(OptionConfig config, ConfigOption<Currency> option, Player player, Consumer<Currency> callback) {
         PagedMenu menu = new PagedMenu("Select Currency", 3, 7, 1, 1);
 
         for (Currency currency : Currency.getAvailableCurrencies()) {

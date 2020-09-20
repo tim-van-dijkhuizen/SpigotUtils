@@ -28,17 +28,17 @@ public class ConfigTypeInteger implements ConfigType<Integer> {
     }
 
     @Override
-    public String getValueLore(Integer value) {
-        return "" + value;
+    public String getValueLore(OptionConfig config, ConfigOption<Integer> option) {
+        return "" + getValue(config, option);
     }
     
     @Override
-    public boolean isValueEmpty(Integer value) {
-        return value == null;
+    public boolean isValueEmpty(OptionConfig config, ConfigOption<Integer> option) {
+        return !config.contains(option.getPath());
     }
 
     @Override
-    public void getValueInput(Player player, Integer value, Consumer<Integer> callback) {
+    public void getValueInput(OptionConfig config, ConfigOption<Integer> option, Player player, Consumer<Integer> callback) {
         ConversationFactory factory = new ConversationFactory(PluginBase.getInstance());
 
         Conversation conversation = factory.withFirstPrompt(new NumericPrompt() {

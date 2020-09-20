@@ -33,17 +33,17 @@ public class ConfigTypeLocale implements ConfigType<Locale> {
     }
     
     @Override
-    public String getValueLore(Locale value) {
-        return value.getDisplayName();
+    public String getValueLore(OptionConfig config, ConfigOption<Locale> option) {
+        return !isValueEmpty(config, option) ? getValue(config, option).getDisplayName() : "";
     }
 
     @Override
-    public boolean isValueEmpty(Locale value) {
-        return value == null;
+    public boolean isValueEmpty(OptionConfig config, ConfigOption<Locale> option) {
+        return !config.contains(option.getPath()) || getValue(config, option) == null;
     }
 
     @Override
-    public void getValueInput(Player player, Locale value, Consumer<Locale> callback) {
+    public void getValueInput(OptionConfig config, ConfigOption<Locale> option, Player player, Consumer<Locale> callback) {
         PagedMenu menu = new PagedMenu("Select Locale", 3, 7, 1, 1);
 
         for (Locale locale : LOCALES) {

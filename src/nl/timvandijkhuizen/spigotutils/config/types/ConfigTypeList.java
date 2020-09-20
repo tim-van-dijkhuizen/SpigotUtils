@@ -76,19 +76,23 @@ public class ConfigTypeList<T extends ConfigObject> implements ConfigType<List<T
     }
 
     @Override
-    public String getValueLore(List<T> value) {
-        String[] items = value.stream().map(i -> i.getItemName()).toArray(String[]::new);
+    public String getValueLore(OptionConfig config, ConfigOption<List<T>> option) {
+        String[] items = getValue(config, option).stream()
+            .map(i -> i.getItemName())
+            .toArray(String[]::new);
+        
         return String.join(", ", items);
     }
 
     @Override
-    public boolean isValueEmpty(List<T> value) {
-        return value == null || value.isEmpty();
+    public boolean isValueEmpty(OptionConfig config, ConfigOption<List<T>> option) {
+        return !config.contains(option.getPath()) || getValue(config, option).isEmpty();
     }
 
     @Override
-    public void getValueInput(Player player, List<T> value, Consumer<List<T>> callback) {
+    public void getValueInput(OptionConfig config, ConfigOption<List<T>> option, Player player, Consumer<List<T>> callback) {
         PagedMenu menu = new PagedMenu(menuTitle, 3, 7, 1, 1);
+        List<T> value = getValue(config, option);
         List<T> objects = new ArrayList<>(value);
 
         // Add command buttons

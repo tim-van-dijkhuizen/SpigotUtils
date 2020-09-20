@@ -12,7 +12,7 @@ public class ConfigTypeBoolean implements ConfigType<Boolean> {
 
     @Override
     public Boolean getValue(OptionConfig config, ConfigOption<Boolean> option) {
-        return config.getBoolean(option.getPath());
+        return config.getBoolean(option.getPath(), false);
     }
 
     @Override
@@ -21,18 +21,18 @@ public class ConfigTypeBoolean implements ConfigType<Boolean> {
     }
     
     @Override
-    public String getValueLore(Boolean value) {
-        return (value != null && value) ? "Yes" : "No";
+    public String getValueLore(OptionConfig config, ConfigOption<Boolean> option) {
+        return getValue(config, option) ? "Yes" : "No";
     }
 
     @Override
-    public boolean isValueEmpty(Boolean value) {
-        return value == null;
+    public boolean isValueEmpty(OptionConfig config, ConfigOption<Boolean> option) {
+        return false;
     }
     
     @Override
-    public void getValueInput(Player player, Boolean value, Consumer<Boolean> callback) {
-        callback.accept((value != null && value) ? false : true);
+    public void getValueInput(OptionConfig config, ConfigOption<Boolean> option, Player player, Consumer<Boolean> callback) {
+        callback.accept(!getValue(config, option));
     }
 
 }
