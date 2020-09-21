@@ -152,6 +152,20 @@ public class ItemBuilder {
 
         return this;
     }
+    
+    public ItemBuilder removeEnchantGlow() {
+        ItemMeta meta = itemStack.getItemMeta();
+
+        if (meta == null) {
+            return this;
+        }
+
+        meta.removeEnchant(Enchantment.DURABILITY);
+        meta.removeItemFlags(ItemFlag.HIDE_ENCHANTS);
+        itemStack.setItemMeta(meta);
+
+        return this;
+    }
 
     public ItemBuilder addEnchantments(Map<Enchantment, Integer> enchantments) {
         itemStack.addEnchantments(enchantments);

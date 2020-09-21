@@ -96,6 +96,11 @@ public class MenuItemBuilder extends ItemBuilder {
         super.addEnchantGlow();
         return this;
     }
+    
+    public MenuItemBuilder removeEnchantGlow() {
+        super.removeEnchantGlow();
+        return this;
+    }
 
     public MenuItemBuilder addEnchantments(Map<Enchantment, Integer> enchantments) {
         super.addEnchantments(enchantments);
