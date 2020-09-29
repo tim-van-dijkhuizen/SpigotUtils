@@ -18,9 +18,11 @@ public class MenuItemBuilder extends ItemBuilder {
     private boolean disabled;
     
     // Dynamic content
+    private Supplier<Material> typeGenerator;
     private Supplier<String> nameGenerator;
     private Supplier<Integer> amountGenerator;
     private Supplier<List<String>> loreGenerator;
+    private Supplier<Boolean> glowGenerator;
 
     public MenuItemBuilder(ItemStack itemStack) {
         super(itemStack);
@@ -177,6 +179,10 @@ public class MenuItemBuilder extends ItemBuilder {
     
     @Override
     public ItemStack toItemStack() {
+        if(typeGenerator != null) {
+            setType(typeGenerator.get());
+        }
+        
         if(nameGenerator != null) {
             setName(nameGenerator.get());
         }
@@ -189,7 +195,19 @@ public class MenuItemBuilder extends ItemBuilder {
             setLore(loreGenerator.get());
         }
         
+        if(glowGenerator != null) {
+            if(glowGenerator.get()) {
+                addEnchantGlow();
+            } else {
+                removeEnchantGlow();
+            }
+        }
+        
         return super.toItemStack();
+    }
+    
+    public void setType(Supplier<Material> typeGenerator) {
+        this.typeGenerator = typeGenerator;
     }
     
     public void setName(Supplier<String> nameGenerator) {
@@ -202,6 +220,10 @@ public class MenuItemBuilder extends ItemBuilder {
     
     public void setLore(Supplier<List<String>> loreGenerator) {
         this.loreGenerator = loreGenerator;
+    }
+    
+    public void setEnchantmentGlow(Supplier<Boolean> glowGenerator) {
+        this.glowGenerator = glowGenerator;
     }
 
 }
