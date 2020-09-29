@@ -23,6 +23,7 @@ public class MenuItemBuilder extends ItemBuilder {
     private Supplier<Integer> amountGenerator;
     private Supplier<List<String>> loreGenerator;
     private Supplier<Boolean> glowGenerator;
+    private Supplier<Boolean> disabledGenerator;
 
     public MenuItemBuilder(ItemStack itemStack) {
         super(itemStack);
@@ -203,6 +204,10 @@ public class MenuItemBuilder extends ItemBuilder {
             }
         }
         
+        if(disabledGenerator != null) {
+            setDisabled(disabledGenerator.get());
+        }
+        
         return super.toItemStack();
     }
     
@@ -224,6 +229,10 @@ public class MenuItemBuilder extends ItemBuilder {
     
     public void setEnchantmentGlow(Supplier<Boolean> glowGenerator) {
         this.glowGenerator = glowGenerator;
+    }
+    
+    public void setDisabled(Supplier<Boolean> disabledGenerator) {
+        this.disabledGenerator = disabledGenerator;
     }
 
 }
