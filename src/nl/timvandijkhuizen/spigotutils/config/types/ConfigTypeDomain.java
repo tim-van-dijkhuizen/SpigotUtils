@@ -19,7 +19,6 @@ import nl.timvandijkhuizen.spigotutils.ui.UI;
 public class ConfigTypeDomain extends ConfigTypeString {
 	
 	public static final Pattern DOMAIN_REGEX = Pattern.compile("^[0-9\\p{L}][0-9\\p{L}-\\.]{1,61}[0-9\\p{L}]\\.[0-9\\p{L}][\\p{L}-]*[0-9\\p{L}]+$");
-	public static final Pattern IP_REGEX = Pattern.compile("^(?:[0-9]{1,3}\\.){3}[0-9]{1,3}$");
 	
     @Override
     public void getValueInput(OptionConfig config, ConfigOption<String> option, Player player, Consumer<String> callback) {
@@ -34,10 +33,9 @@ public class ConfigTypeDomain extends ConfigTypeString {
             @Override
             public Prompt acceptInput(ConversationContext context, String input) {
             	Matcher domainMatch = DOMAIN_REGEX.matcher(input);
-            	Matcher ipMatch = IP_REGEX.matcher(input);
             	
-            	if(!domainMatch.matches() && !ipMatch.matches()) {
-            		context.getForWhom().sendRawMessage(UI.color("You must specify a valid domain or IP, please try again.", UI.COLOR_ERROR));
+            	if(!domainMatch.matches()) {
+            		context.getForWhom().sendRawMessage(UI.color("You must specify a valid domain, please try again.", UI.COLOR_ERROR));
             		return this;
             	}
             	
