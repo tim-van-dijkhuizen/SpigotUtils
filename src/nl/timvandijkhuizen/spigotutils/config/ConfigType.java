@@ -4,7 +4,7 @@ import java.util.function.Consumer;
 
 import javax.naming.ConfigurationException;
 
-import org.bukkit.entity.Player;
+import nl.timvandijkhuizen.spigotutils.menu.items.MenuItemClick;
 
 public interface ConfigType<T> {
     
@@ -54,6 +54,6 @@ public interface ConfigType<T> {
      * @param option
      * @return
      */
-    void getValueInput(OptionConfig config, ConfigOption<T> option, Player player, Consumer<T> callback);
+    void getValueInput(OptionConfig config, ConfigOption<T> option, MenuItemClick event, Consumer<T> callback);
 
 }

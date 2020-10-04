@@ -11,6 +11,7 @@ import nl.timvandijkhuizen.spigotutils.config.ConfigOption;
 import nl.timvandijkhuizen.spigotutils.config.ConfigType;
 import nl.timvandijkhuizen.spigotutils.config.OptionConfig;
 import nl.timvandijkhuizen.spigotutils.menu.items.MenuItemBuilder;
+import nl.timvandijkhuizen.spigotutils.menu.items.MenuItemClick;
 import nl.timvandijkhuizen.spigotutils.menu.types.PagedMenu;
 import nl.timvandijkhuizen.spigotutils.ui.UI;
 
@@ -42,8 +43,9 @@ public class ConfigTypeCurrency implements ConfigType<Currency> {
     }
 
     @Override
-    public void getValueInput(OptionConfig config, ConfigOption<Currency> option, Player player, Consumer<Currency> callback) {
+    public void getValueInput(OptionConfig config, ConfigOption<Currency> option, MenuItemClick event, Consumer<Currency> callback) {
         PagedMenu menu = new PagedMenu("Select Currency", 3, 7, 1, 1);
+        Player player = event.getPlayer();
 
         for (Currency currency : Currency.getAvailableCurrencies()) {
             MenuItemBuilder item = new MenuItemBuilder(Material.SUNFLOWER);
@@ -51,7 +53,7 @@ public class ConfigTypeCurrency implements ConfigType<Currency> {
             item.setName(UI.color(currency.getDisplayName(), UI.COLOR_PRIMARY, ChatColor.BOLD));
             item.setLore(UI.color("Code: ", UI.COLOR_TEXT) + UI.color(currency.getCurrencyCode(), UI.COLOR_SECONDARY));
 
-            item.setClickListener(event -> {
+            item.setClickListener(itemClick -> {
                 UI.playSound(player, UI.SOUND_CLICK);
                 callback.accept(currency);
             });

@@ -19,6 +19,7 @@ import nl.timvandijkhuizen.spigotutils.config.ConfigOption;
 import nl.timvandijkhuizen.spigotutils.config.ConfigType;
 import nl.timvandijkhuizen.spigotutils.config.OptionConfig;
 import nl.timvandijkhuizen.spigotutils.menu.items.MenuItemBuilder;
+import nl.timvandijkhuizen.spigotutils.menu.items.MenuItemClick;
 import nl.timvandijkhuizen.spigotutils.menu.items.MenuItems;
 import nl.timvandijkhuizen.spigotutils.menu.types.PagedMenu;
 import nl.timvandijkhuizen.spigotutils.ui.UI;
@@ -90,10 +91,11 @@ public class ConfigTypeList<T extends ConfigObject> implements ConfigType<List<T
     }
 
     @Override
-    public void getValueInput(OptionConfig config, ConfigOption<List<T>> option, Player player, Consumer<List<T>> callback) {
+    public void getValueInput(OptionConfig config, ConfigOption<List<T>> option, MenuItemClick event, Consumer<List<T>> callback) {
         PagedMenu menu = new PagedMenu(menuTitle, 3, 7, 1, 1);
         List<T> value = getValue(config, option);
         List<T> objects = new ArrayList<>(value);
+        Player player = event.getPlayer();
 
         // Add command buttons
         for (T object : objects) {
@@ -104,7 +106,7 @@ public class ConfigTypeList<T extends ConfigObject> implements ConfigType<List<T
         // ===========================
         MenuItemBuilder cancelButton = MenuItems.CANCEL.clone();
 
-        cancelButton.setClickListener(event -> {
+        cancelButton.setClickListener(cancelClick -> {
             UI.playSound(player, UI.SOUND_CLICK);
             callback.accept(value);
         });
@@ -117,7 +119,7 @@ public class ConfigTypeList<T extends ConfigObject> implements ConfigType<List<T
 
         createButton.setName(UI.color("Create", UI.COLOR_SECONDARY, ChatColor.BOLD));
 
-        createButton.setClickListener(event -> {
+        createButton.setClickListener(createClick -> {
             try {
                 T object = clazz.newInstance();
                 
@@ -142,7 +144,7 @@ public class ConfigTypeList<T extends ConfigObject> implements ConfigType<List<T
         // ===========================
         MenuItemBuilder saveButton = MenuItems.SAVE.clone();
 
-        saveButton.setClickListener(event -> {
+        saveButton.setClickListener(saveClick -> {
             UI.playSound(player, UI.SOUND_SUCCESS);
             callback.accept(objects);
         });

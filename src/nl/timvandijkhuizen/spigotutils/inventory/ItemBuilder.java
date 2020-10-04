@@ -52,6 +52,10 @@ public class ItemBuilder {
         return this;
     }
 
+    public Material getType() {
+    	return itemStack.getType();
+    }
+    
     public ItemBuilder setType(Material material) {
         itemStack.setType(material);
         return this;

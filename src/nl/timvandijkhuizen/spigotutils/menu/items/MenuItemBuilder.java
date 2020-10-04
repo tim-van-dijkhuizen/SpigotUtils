@@ -211,27 +211,51 @@ public class MenuItemBuilder extends ItemBuilder {
         return super.toItemStack();
     }
     
-    public void setType(Supplier<Material> typeGenerator) {
+    public Supplier<Material> getTypeGenerator() {
+    	return typeGenerator;
+    }
+    
+    public void setTypeGenerator(Supplier<Material> typeGenerator) {
         this.typeGenerator = typeGenerator;
     }
     
-    public void setName(Supplier<String> nameGenerator) {
+    public Supplier<String> getNameGenerator() {
+    	return nameGenerator;
+    }
+    
+    public void setNameGenerator(Supplier<String> nameGenerator) {
         this.nameGenerator = nameGenerator;
     }
     
-    public void setAmount(Supplier<Integer> amountGenerator) {
+    public Supplier<Integer> getAmountGenerator() {
+    	return amountGenerator;
+    }
+    
+    public void setAmountGenerator(Supplier<Integer> amountGenerator) {
         this.amountGenerator = amountGenerator;
     }
     
-    public void setLore(Supplier<List<String>> loreGenerator) {
+    public Supplier<List<String>> getLoreGenerator() {
+    	return loreGenerator;
+    }
+    
+    public void setLoreGenerator(Supplier<List<String>> loreGenerator) {
         this.loreGenerator = loreGenerator;
     }
     
-    public void setEnchantmentGlow(Supplier<Boolean> glowGenerator) {
+    public Supplier<Boolean> getGlowGenerator() {
+    	return glowGenerator;
+    }
+    
+    public void setGlowGenerator(Supplier<Boolean> glowGenerator) {
         this.glowGenerator = glowGenerator;
     }
     
-    public void setDisabled(Supplier<Boolean> disabledGenerator) {
+    public Supplier<Boolean> getDisabledGenerator() {
+    	return disabledGenerator;
+    }
+    
+    public void setDisabledGenerator(Supplier<Boolean> disabledGenerator) {
         this.disabledGenerator = disabledGenerator;
     }
 

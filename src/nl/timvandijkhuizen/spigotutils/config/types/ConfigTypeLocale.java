@@ -14,6 +14,7 @@ import nl.timvandijkhuizen.spigotutils.config.ConfigType;
 import nl.timvandijkhuizen.spigotutils.config.OptionConfig;
 import nl.timvandijkhuizen.spigotutils.helpers.LocaleHelper;
 import nl.timvandijkhuizen.spigotutils.menu.items.MenuItemBuilder;
+import nl.timvandijkhuizen.spigotutils.menu.items.MenuItemClick;
 import nl.timvandijkhuizen.spigotutils.menu.types.PagedMenu;
 import nl.timvandijkhuizen.spigotutils.ui.UI;
 
@@ -43,8 +44,9 @@ public class ConfigTypeLocale implements ConfigType<Locale> {
     }
 
     @Override
-    public void getValueInput(OptionConfig config, ConfigOption<Locale> option, Player player, Consumer<Locale> callback) {
+    public void getValueInput(OptionConfig config, ConfigOption<Locale> option, MenuItemClick event, Consumer<Locale> callback) {
         PagedMenu menu = new PagedMenu("Select Locale", 3, 7, 1, 1);
+        Player player = event.getPlayer();
 
         for (Locale locale : LOCALES) {
             MenuItemBuilder item = new MenuItemBuilder(Material.SUNFLOWER);
@@ -58,7 +60,7 @@ public class ConfigTypeLocale implements ConfigType<Locale> {
             item.setLore(UI.color("Code: ", UI.COLOR_TEXT) + UI.color(localeValue, UI.COLOR_SECONDARY));
             item.setLore(UI.color("Currency: ", UI.COLOR_TEXT) + UI.color(currencyValue, UI.COLOR_SECONDARY));
 
-            item.setClickListener(event -> {
+            item.setClickListener(itemClick -> {
                 UI.playSound(player, UI.SOUND_CLICK);
                 callback.accept(locale);
             });

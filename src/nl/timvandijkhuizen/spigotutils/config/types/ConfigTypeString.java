@@ -13,6 +13,7 @@ import nl.timvandijkhuizen.spigotutils.PluginBase;
 import nl.timvandijkhuizen.spigotutils.config.ConfigOption;
 import nl.timvandijkhuizen.spigotutils.config.ConfigType;
 import nl.timvandijkhuizen.spigotutils.config.OptionConfig;
+import nl.timvandijkhuizen.spigotutils.menu.items.MenuItemClick;
 import nl.timvandijkhuizen.spigotutils.ui.UI;
 
 public class ConfigTypeString implements ConfigType<String> {
@@ -39,8 +40,9 @@ public class ConfigTypeString implements ConfigType<String> {
     }
     
     @Override
-    public void getValueInput(OptionConfig config, ConfigOption<String> option, Player player, Consumer<String> callback) {
+    public void getValueInput(OptionConfig config, ConfigOption<String> option, MenuItemClick event, Consumer<String> callback) {
         ConversationFactory factory = new ConversationFactory(PluginBase.getInstance());
+        Player player = event.getPlayer();
 
         Conversation conversation = factory.withFirstPrompt(new StringPrompt() {
             @Override

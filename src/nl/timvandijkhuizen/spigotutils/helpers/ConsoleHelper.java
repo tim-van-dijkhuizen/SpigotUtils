@@ -6,7 +6,7 @@ import org.bukkit.Bukkit;
 
 public class ConsoleHelper {
 
-    private static boolean showStacktraces;
+    private static boolean showStacktraces = true;
     
     public static void showStacktraces(boolean showStacktraces) {
         ConsoleHelper.showStacktraces = showStacktraces;

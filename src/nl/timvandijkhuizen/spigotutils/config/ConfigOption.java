@@ -3,9 +3,9 @@ package nl.timvandijkhuizen.spigotutils.config;
 import java.util.function.Consumer;
 
 import org.bukkit.Material;
-import org.bukkit.entity.Player;
 
 import nl.timvandijkhuizen.spigotutils.data.DataArguments;
+import nl.timvandijkhuizen.spigotutils.menu.items.MenuItemClick;
 
 public class ConfigOption<T> {
 
@@ -121,8 +121,8 @@ public class ConfigOption<T> {
      * @param value
      * @param callback
      */
-    public void getValueInput(OptionConfig config, Player player, Consumer<T> callback) {
-        type.getValueInput(config, this, player, callback);
+    public void getValueInput(OptionConfig config, MenuItemClick event, Consumer<T> callback) {
+        type.getValueInput(config, this, event, callback);
     }
     
     /**
