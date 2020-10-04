@@ -1,11 +1,12 @@
 package nl.timvandijkhuizen.spigotutils.helpers;
 
 import java.util.function.Consumer;
-import java.util.function.Supplier;
 
 import org.bukkit.Bukkit;
 
 import nl.timvandijkhuizen.spigotutils.PluginBase;
+import nl.timvandijkhuizen.spigotutils.functions.UnsafeRunnable;
+import nl.timvandijkhuizen.spigotutils.functions.UnsafeSupplier;
 
 public class ThreadHelper {
 
@@ -15,10 +16,47 @@ public class ThreadHelper {
         Bukkit.getScheduler().runTask(plugin, task);
     }
     
-    public static <T> void executeAsync(Supplier<T> task, Consumer<T> callback) {
+    public static <T> void executeAsync(UnsafeRunnable task) {
+    	executeAsync(task, null, null);
+    }
+    
+    public static <T> void executeAsync(UnsafeRunnable task, Runnable onSuccess) {
+    	executeAsync(task, onSuccess, null);
+    }
+    
+    public static <T> void executeAsync(UnsafeRunnable task, Runnable onSuccess, Consumer<Throwable> onError) {
     	Bukkit.getScheduler().runTaskAsynchronously(PluginBase.getInstance(), () -> {
-    		T value = task.get();
-    		execute(() -> callback.accept(value));
+    		try {
+    			task.run();
+    			
+        		if(onSuccess != null) {
+        			execute(onSuccess);
+        		}
+    		} catch(Throwable e) {
+    			if(onError != null) {
+    				onError.accept(e);
+    			}
+    		}
+    	});
+    }
+    
+    public static <T> void getAsync(UnsafeSupplier<T> task, Consumer<T> onSuccess) {
+    	getAsync(task, onSuccess, null);
+    }
+    
+    public static <T> void getAsync(UnsafeSupplier<T> task, Consumer<T> onSuccess, Consumer<Throwable> onError) {
+    	Bukkit.getScheduler().runTaskAsynchronously(PluginBase.getInstance(), () -> {
+    		try {
+        		T value = task.get();
+        		
+        		if(onSuccess != null) {
+        			execute(() -> onSuccess.accept(value));
+        		}
+    		} catch(Throwable e) {
+    			if(onError != null) {
+    				onError.accept(e);
+    			}
+    		}
     	});
     }
 

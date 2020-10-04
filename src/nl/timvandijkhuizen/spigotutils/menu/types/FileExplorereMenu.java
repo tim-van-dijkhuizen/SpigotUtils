@@ -127,7 +127,7 @@ public class FileExplorereMenu extends PagedMenu {
 	}
 	
 	public void loadDirectory(File directory, Runnable callback) {
-		ThreadHelper.executeAsync(() -> directory.listFiles(), files -> {
+		ThreadHelper.getAsync(() -> directory.listFiles(), files -> {
 			currentDirectory = directory;
 			currentFiles = createPagedButtons(files);
 			callback.run();
