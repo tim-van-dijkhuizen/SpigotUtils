@@ -18,6 +18,7 @@ import nl.timvandijkhuizen.spigotutils.config.ConfigObject;
 import nl.timvandijkhuizen.spigotutils.config.ConfigOption;
 import nl.timvandijkhuizen.spigotutils.config.ConfigType;
 import nl.timvandijkhuizen.spigotutils.config.OptionConfig;
+import nl.timvandijkhuizen.spigotutils.helpers.ConsoleHelper;
 import nl.timvandijkhuizen.spigotutils.menu.items.MenuItemBuilder;
 import nl.timvandijkhuizen.spigotutils.menu.items.MenuItemClick;
 import nl.timvandijkhuizen.spigotutils.menu.items.MenuItems;
@@ -53,6 +54,7 @@ public class ConfigTypeList<T extends ConfigObject> implements ConfigType<List<T
                 object = clazz.newInstance();
                 object.deserialize(stream);
             } catch(Exception e) {
+            	ConsoleHelper.printError("Failed to deserialize config object", e);
                 continue;
             }
             
