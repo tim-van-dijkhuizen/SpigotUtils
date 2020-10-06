@@ -29,7 +29,7 @@ public class ConfigTypeCurrency implements ConfigType<Currency> {
 
     @Override
     public void setValue(OptionConfig config, ConfigOption<Currency> option, Currency value) {
-        config.set(option.getPath(), value.getCurrencyCode());
+        config.set(option.getPath(), value != null ? value.getCurrencyCode() : null);
     }
     
     @Override

@@ -30,7 +30,7 @@ public class ConfigTypeLocale implements ConfigType<Locale> {
 
     @Override
     public void setValue(OptionConfig config, ConfigOption<Locale> option, Locale value) {
-        config.set(option.getPath(), LocaleHelper.serializeLocale(value));
+        config.set(option.getPath(), value != null ? LocaleHelper.serializeLocale(value) : null);
     }
     
     @Override

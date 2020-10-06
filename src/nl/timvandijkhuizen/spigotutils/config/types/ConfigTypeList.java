@@ -66,16 +66,20 @@ public class ConfigTypeList<T extends ConfigObject> implements ConfigType<List<T
 
     @Override
     public void setValue(OptionConfig config, ConfigOption<List<T>> option, List<T> value) {
-        List<String> output = new ArrayList<>();
-        
-        for(T object : value) {
-            ByteArrayDataOutput stream = ByteStreams.newDataOutput();
+        if(value != null) {
+            List<String> output = new ArrayList<>();
             
-            object.serialize(stream);
-            output.add(Base64.getEncoder().encodeToString(stream.toByteArray()));
+            for(T object : value) {
+                ByteArrayDataOutput stream = ByteStreams.newDataOutput();
+                
+                object.serialize(stream);
+                output.add(Base64.getEncoder().encodeToString(stream.toByteArray()));
+            }
+            
+            config.set(option.getPath(), output);
+        } else {
+            config.set(option.getPath(), null);
         }
-        
-        config.set(option.getPath(), output);
     }
 
     @Override
