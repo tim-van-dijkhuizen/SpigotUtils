@@ -1,8 +1,8 @@
 package nl.timvandijkhuizen.spigotutils.config.types;
 
 import java.util.ArrayList;
-import java.util.Base64;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Consumer;
 
 import org.bukkit.ChatColor;
@@ -10,11 +10,8 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 
-import com.google.common.io.ByteArrayDataInput;
-import com.google.common.io.ByteArrayDataOutput;
-import com.google.common.io.ByteStreams;
-
 import nl.timvandijkhuizen.spigotutils.config.ConfigObject;
+import nl.timvandijkhuizen.spigotutils.config.ConfigObjectData;
 import nl.timvandijkhuizen.spigotutils.config.ConfigOption;
 import nl.timvandijkhuizen.spigotutils.config.ConfigType;
 import nl.timvandijkhuizen.spigotutils.config.OptionConfig;
@@ -45,14 +42,14 @@ public class ConfigTypeList<T extends ConfigObject> implements ConfigType<List<T
     public List<T> getValue(OptionConfig config, ConfigOption<List<T>> option) {
         List<T> output = new ArrayList<>();
         
-        for(String rawObject : config.getStringList(option.getPath())) {
-            byte[] decodedBytes = Base64.getDecoder().decode(rawObject);
-            ByteArrayDataInput stream = ByteStreams.newDataInput(decodedBytes);
+        for(Map<?, ?> rawObject : config.getMapList(option.getPath())) {
             T object;
             
             try {
+                ConfigObjectData data = new ConfigObjectData(rawObject);
+                
                 object = clazz.newInstance();
-                object.deserialize(stream);
+                object.deserialize(data);
             } catch(Exception e) {
             	ConsoleHelper.printError("Failed to deserialize config object", e);
                 continue;
@@ -67,13 +64,13 @@ public class ConfigTypeList<T extends ConfigObject> implements ConfigType<List<T
     @Override
     public void setValue(OptionConfig config, ConfigOption<List<T>> option, List<T> value) {
         if(value != null) {
-            List<String> output = new ArrayList<>();
+            List<Map<String, Object>> output = new ArrayList<>();
             
             for(T object : value) {
-                ByteArrayDataOutput stream = ByteStreams.newDataOutput();
+                ConfigObjectData data = new ConfigObjectData();
                 
-                object.serialize(stream);
-                output.add(Base64.getEncoder().encodeToString(stream.toByteArray()));
+                object.serialize(data);
+                output.add(data.toMap());
             }
             
             config.set(option.getPath(), output);
