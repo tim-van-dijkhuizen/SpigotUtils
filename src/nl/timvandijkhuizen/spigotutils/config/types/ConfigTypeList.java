@@ -51,7 +51,7 @@ public class ConfigTypeList<T extends ConfigObject> implements ConfigType<List<T
                 object = clazz.newInstance();
                 object.deserialize(data);
             } catch(Exception e) {
-            	ConsoleHelper.printError("Failed to deserialize config object", e);
+            	ConsoleHelper.printError("Failed to deserialize config object: " + rawObject.toString(), e);
                 continue;
             }
             
@@ -96,8 +96,7 @@ public class ConfigTypeList<T extends ConfigObject> implements ConfigType<List<T
     @Override
     public void getValueInput(OptionConfig config, ConfigOption<List<T>> option, MenuItemClick event, Consumer<List<T>> callback) {
         PagedMenu menu = new PagedMenu(menuTitle, 3, 7, 1, 1);
-        List<T> value = getValue(config, option);
-        List<T> objects = new ArrayList<>(value);
+        List<T> objects = getValue(config, option);
         Player player = event.getPlayer();
 
         // Add command buttons
@@ -105,16 +104,16 @@ public class ConfigTypeList<T extends ConfigObject> implements ConfigType<List<T
             addObjectButton(player, menu, objects, object);
         }
 
-        // Cancel button
+        // Back button
         // ===========================
-        MenuItemBuilder cancelButton = MenuItems.CANCEL.clone();
+        MenuItemBuilder backButton = MenuItems.BACK.clone();
 
-        cancelButton.setClickListener(cancelClick -> {
+        backButton.setClickListener(backClick -> {
             UI.playSound(player, UI.SOUND_CLICK);
-            callback.accept(value);
+            callback.accept(objects);
         });
 
-        menu.setButton(cancelButton, menu.getSize().getSlots() - 9 + 3);
+        menu.setButton(backButton, menu.getSize().getSlots() - 9 + 3);
 
         // Create button
         // ===========================
@@ -141,18 +140,7 @@ public class ConfigTypeList<T extends ConfigObject> implements ConfigType<List<T
             }
         });
 
-        menu.setButton(createButton, menu.getSize().getSlots() - 9 + 4);
-        
-        // Save button
-        // ===========================
-        MenuItemBuilder saveButton = MenuItems.SAVE.clone();
-
-        saveButton.setClickListener(saveClick -> {
-            UI.playSound(player, UI.SOUND_SUCCESS);
-            callback.accept(objects);
-        });
-
-        menu.setButton(saveButton, menu.getSize().getSlots() - 9 + 5);
+        menu.setButton(createButton, menu.getSize().getSlots() - 9 + 5);
         
         // Open menu
         menu.open(player);

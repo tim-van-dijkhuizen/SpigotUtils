@@ -23,45 +23,41 @@ public class ConfigObjectData {
         return getValue(key, raw -> (String) raw);
     }
     
-    public Integer getInteger(String key) {
-        return getValue(key, raw -> (Integer) raw);
+    public int getInteger(String key) {
+        return getValue(key, raw -> Integer.valueOf(raw));
     }
     
-    public Float getFloat(String key) {
-        return getValue(key, raw -> (Float) raw);
+    public float getFloat(String key) {
+        return getValue(key, raw -> Float.valueOf(raw));
     }
     
-    public Double getDouble(String key) {
-        return getValue(key, raw -> (Double) raw);
+    public double getDouble(String key) {
+        return getValue(key, raw -> Double.valueOf(raw));
     }
     
-    public Long getLong(String key) {
-        return getValue(key, raw -> (Long) raw);
+    public long getLong(String key) {
+        return getValue(key, raw -> Long.valueOf(raw));
     }
     
-    public Boolean getBoolean(String key) {
-        return getValue(key, raw -> (Boolean) raw);
+    public boolean getBoolean(String key) {
+        return getValue(key, raw -> Boolean.valueOf(raw));
     }
     
     public UUID getUUID(String key) {
-        return getValue(key, raw -> (UUID) raw);
+        return getValue(key, raw -> UUID.fromString(raw));
     }
     
     public void set(String key, Object value) {
         params.put(key, value);
     }
     
-    private <T> T getValue(String key, Function<Object, T> converter) {
+    private <T> T getValue(String key, Function<String, T> converter) {
         Object value = params.get(key);
         
-        if(value == null) {
-            return null;
-        }
-        
         try {
-            return converter.apply(value);
+            return converter.apply(value.toString());
         } catch(Exception e) {
-            return null;
+            throw new IllegalArgumentException("Value cannot be parsed into the requested type");
         }
     }
     
