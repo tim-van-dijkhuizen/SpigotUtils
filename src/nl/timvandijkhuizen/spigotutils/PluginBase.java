@@ -23,13 +23,17 @@ public abstract class PluginBase extends JavaPlugin {
         
         try {
             init();
-            load();
 
-            // Initiate and load services
             for (Service service : registerServices()) {
                 services.put(service.getHandle(), service);
                 service.init();
-                loadService(service);
+            }
+            
+            // Load plug-in and services
+            load();
+            
+            for(Service service : services.values()) {
+            	loadService(service);
             }
             
             ready();
