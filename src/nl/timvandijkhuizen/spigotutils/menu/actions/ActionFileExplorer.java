@@ -21,21 +21,23 @@ public class ActionFileExplorer implements MenuItemAction {
 	private Pattern[] allowed;
 	private File selected;
 	private Consumer<File> callback;
+	private Menu returnMenu;
 	
 	public ActionFileExplorer(File root, File selected, Consumer<File> callback) {
-		this(root, selected, null, callback);
+		this(root, selected, null, callback, null);
 	}
 	
-	public ActionFileExplorer(File root, File selected, Pattern[] allowed, Consumer<File> callback) {
+	public ActionFileExplorer(File root, File selected, Pattern[] allowed, Consumer<File> callback, Menu returnMenu) {
 		this.root = root;
 		this.allowed = allowed;
 		this.selected = selected;
 		this.callback = callback;
+		this.returnMenu = returnMenu;
 	}
 	
 	@Override
 	public void onClick(MenuItemClick event) {
-		FileExplorereMenu menu = new FileExplorereMenu(root, selected, allowed, callback);
+		FileExplorereMenu menu = new FileExplorereMenu(root, selected, allowed, callback, returnMenu);
         Player whoClicked = event.getPlayer();
         Menu activeMenu = event.getMenu();
         MenuItemBuilder clickedItem = event.getItem();

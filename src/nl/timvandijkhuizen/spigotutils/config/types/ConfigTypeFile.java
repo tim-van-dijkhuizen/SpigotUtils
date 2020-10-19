@@ -62,7 +62,8 @@ public class ConfigTypeFile implements ConfigType<File> {
 
 	@Override
 	public void getValueInput(OptionConfig config, ConfigOption<File> option, MenuItemClick event, Consumer<File> callback) {
-		new ActionFileExplorer(root, getValue(config, option), allowed, callback).onClick(event);
+		new ActionFileExplorer(root, getValue(config, option), allowed, callback, event.getMenu())
+			.onClick(event);
 	}
 
 }

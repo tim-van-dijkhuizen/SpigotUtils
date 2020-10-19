@@ -68,6 +68,10 @@ public class FileExplorereMenu extends PagedMenu {
 	private List<MenuItemBuilder> currentFiles;
 	
 	public FileExplorereMenu(File root, File selected, Pattern[] allowed, Consumer<File> callback) {
+		this(root, selected, allowed, callback, null);
+	}
+	
+	public FileExplorereMenu(File root, File selected, Pattern[] allowed, Consumer<File> callback, Menu returnMenu) {
 		super("File Explorer", 3, 7, 1, 1);
 		this.selected = selected;
 		this.allowed = allowed;
@@ -84,6 +88,9 @@ public class FileExplorereMenu extends PagedMenu {
 			if(currentDirectory != null && !currentDirectory.getPath().equals(root.getPath())) {
 				UI.playSound(player, UI.SOUND_CLICK);
 				setCurrentDirectory(currentDirectory.getParentFile(), event);
+			} else if(returnMenu != null) {
+				UI.playSound(player, UI.SOUND_CLICK);
+				returnMenu.open(player);
 			} else {
 				UI.playSound(player, UI.SOUND_ERROR);
 			}
