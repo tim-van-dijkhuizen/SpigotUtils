@@ -17,6 +17,8 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
 import org.bukkit.inventory.meta.SkullMeta;
 
+import com.cryptomorin.xseries.XMaterial;
+
 @SuppressWarnings("deprecation")
 public class ItemBuilder {
 
@@ -28,6 +30,14 @@ public class ItemBuilder {
 
     public ItemBuilder(Material material, int amount) {
         itemStack = new ItemStack(material, amount);
+    }
+    
+    public ItemBuilder(XMaterial material) {
+        this(material, 1);
+    }
+
+    public ItemBuilder(XMaterial material, int amount) {
+        this(material.parseMaterial(true), amount);
     }
 
     public ItemBuilder(ItemStack itemStack) {
@@ -59,6 +69,10 @@ public class ItemBuilder {
     public ItemBuilder setType(Material material) {
         itemStack.setType(material);
         return this;
+    }
+    
+    public ItemBuilder setType(XMaterial material) {
+        return setType(material.parseMaterial(true));
     }
 
     public ItemBuilder setName(String name) {

@@ -6,6 +6,7 @@ import java.util.Map.Entry;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
@@ -122,6 +123,12 @@ public class Menu implements InventoryHolder {
      */
     public void refresh() {
         draw();
+       
+        for(HumanEntity viewer : inventory.getViewers()) {
+            if(viewer instanceof Player) {
+                ((Player) viewer).updateInventory();
+            }
+        }
     }
     
     /**

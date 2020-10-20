@@ -12,9 +12,9 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 import org.bukkit.ChatColor;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 
+import com.cryptomorin.xseries.XMaterial;
 import com.google.common.io.Files;
 
 import nl.timvandijkhuizen.spigotutils.helpers.ThreadHelper;
@@ -26,38 +26,38 @@ import nl.timvandijkhuizen.spigotutils.ui.UI;
 
 public class FileExplorereMenu extends PagedMenu {
 
-	private static final Material DIRECTORY_ICON = Material.CHEST;
-	private static final Material DEFAULT_ICON = Material.PAPER;
-	public static final Map<String, Material> FILE_ICONS = new HashMap<>();
+	private static final XMaterial DIRECTORY_ICON = XMaterial.CHEST;
+	private static final XMaterial DEFAULT_ICON = XMaterial.PAPER;
+	public static final Map<String, XMaterial> FILE_ICONS = new HashMap<>();
 	
 	static {
-		FILE_ICONS.put("mp3", Material.JUKEBOX);
+		FILE_ICONS.put("mp3", XMaterial.JUKEBOX);
 		
-		FILE_ICONS.put("mp4", Material.ITEM_FRAME);
+		FILE_ICONS.put("mp4", XMaterial.ITEM_FRAME);
 		
-		FILE_ICONS.put("jpg", Material.PAINTING);
-		FILE_ICONS.put("jpeg", Material.PAINTING);
-		FILE_ICONS.put("png", Material.PAINTING);
-		FILE_ICONS.put("svg", Material.PAINTING);
-		FILE_ICONS.put("gif", Material.PAINTING);
-		FILE_ICONS.put("ico", Material.PAINTING);
+		FILE_ICONS.put("jpg", XMaterial.PAINTING);
+		FILE_ICONS.put("jpeg", XMaterial.PAINTING);
+		FILE_ICONS.put("png", XMaterial.PAINTING);
+		FILE_ICONS.put("svg", XMaterial.PAINTING);
+		FILE_ICONS.put("gif", XMaterial.PAINTING);
+		FILE_ICONS.put("ico", XMaterial.PAINTING);
 		
-		FILE_ICONS.put("zip", Material.ENDER_CHEST);
-		FILE_ICONS.put("rar", Material.ENDER_CHEST);
+		FILE_ICONS.put("zip", XMaterial.ENDER_CHEST);
+		FILE_ICONS.put("rar", XMaterial.ENDER_CHEST);
 		
-		FILE_ICONS.put("dat", Material.BOOKSHELF);
-		FILE_ICONS.put("db", Material.BOOKSHELF);
-		FILE_ICONS.put("sql", Material.BOOKSHELF);
+		FILE_ICONS.put("dat", XMaterial.BOOKSHELF);
+		FILE_ICONS.put("db", XMaterial.BOOKSHELF);
+		FILE_ICONS.put("sql", XMaterial.BOOKSHELF);
 		
-		FILE_ICONS.put("log", Material.OAK_LOG);
+		FILE_ICONS.put("log", XMaterial.OAK_LOG);
 		
-		FILE_ICONS.put("bat", Material.OBSERVER);
-		FILE_ICONS.put("exe", Material.OBSERVER);
-		FILE_ICONS.put("jar", Material.OBSERVER);
+		FILE_ICONS.put("bat", XMaterial.OBSERVER);
+		FILE_ICONS.put("exe", XMaterial.OBSERVER);
+		FILE_ICONS.put("jar", XMaterial.OBSERVER);
 		
-		FILE_ICONS.put("doc", Material.BOOK);
-		FILE_ICONS.put("docx", Material.BOOK);
-		FILE_ICONS.put("pdf", Material.BOOK);
+		FILE_ICONS.put("doc", XMaterial.BOOK);
+		FILE_ICONS.put("docx", XMaterial.BOOK);
+		FILE_ICONS.put("pdf", XMaterial.BOOK);
 	}
 	
 	private File selected;
@@ -169,7 +169,7 @@ public class FileExplorereMenu extends PagedMenu {
 			String extension = Files.getFileExtension(fileName);
 			
 			// Create menu item
-			Material type = FILE_ICONS.getOrDefault(extension, DEFAULT_ICON);
+			XMaterial type = FILE_ICONS.getOrDefault(extension, DEFAULT_ICON);
 			ChatColor color = isAllowed(fileName) ? UI.COLOR_PRIMARY : ChatColor.GRAY;
 			MenuItemBuilder item = new MenuItemBuilder(type);
 			

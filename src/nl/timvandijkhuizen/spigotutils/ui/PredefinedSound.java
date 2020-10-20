@@ -1,20 +1,20 @@
 package nl.timvandijkhuizen.spigotutils.ui;
 
-import org.bukkit.Sound;
+import com.cryptomorin.xseries.XSound;
 
 public class PredefinedSound {
 
-    private Sound sound;
+    private XSound sound;
     private float volume;
     private float pitch;
     
-    public PredefinedSound(Sound sound, float volume, float pitch) {
+    public PredefinedSound(XSound sound, float volume, float pitch) {
         this.sound = sound;
         this.volume = volume;
         this.pitch = pitch;
     }
     
-    public Sound getSound() {
+    public XSound getSound() {
         return sound;
     }
     

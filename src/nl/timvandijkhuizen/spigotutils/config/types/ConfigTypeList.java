@@ -10,6 +10,8 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 
+import com.cryptomorin.xseries.XMaterial;
+
 import nl.timvandijkhuizen.spigotutils.config.ConfigObject;
 import nl.timvandijkhuizen.spigotutils.config.ConfigObjectData;
 import nl.timvandijkhuizen.spigotutils.config.ConfigOption;
@@ -34,8 +36,12 @@ public class ConfigTypeList<T extends ConfigObject> implements ConfigType<List<T
         this.menuIcon = menuIcon;
     }
     
+    public ConfigTypeList(Class<T> clazz, String menuTitle, XMaterial menuIcon) {
+        this(clazz, menuTitle, menuIcon.parseMaterial(true));
+    }
+    
     public ConfigTypeList(Class<T> clazz, String menuTitle) {
-        this(clazz, menuTitle, Material.PAPER);
+        this(clazz, menuTitle, XMaterial.PAPER);
     }
     
     @Override
@@ -117,7 +123,7 @@ public class ConfigTypeList<T extends ConfigObject> implements ConfigType<List<T
 
         // Create button
         // ===========================
-        MenuItemBuilder createButton = new MenuItemBuilder(Material.NETHER_STAR);
+        MenuItemBuilder createButton = new MenuItemBuilder(XMaterial.NETHER_STAR);
 
         createButton.setName(UI.color("Create", UI.COLOR_SECONDARY, ChatColor.BOLD));
 

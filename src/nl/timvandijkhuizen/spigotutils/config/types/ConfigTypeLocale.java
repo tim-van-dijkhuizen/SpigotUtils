@@ -6,8 +6,9 @@ import java.util.Locale;
 import java.util.function.Consumer;
 
 import org.bukkit.ChatColor;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
+
+import com.cryptomorin.xseries.XMaterial;
 
 import nl.timvandijkhuizen.spigotutils.config.ConfigOption;
 import nl.timvandijkhuizen.spigotutils.config.ConfigType;
@@ -49,7 +50,7 @@ public class ConfigTypeLocale implements ConfigType<Locale> {
         Player player = event.getPlayer();
 
         for (Locale locale : LOCALES) {
-            MenuItemBuilder item = new MenuItemBuilder(Material.SUNFLOWER);
+            MenuItemBuilder item = new MenuItemBuilder(XMaterial.SUNFLOWER);
             Currency currency = Currency.getInstance(locale);
 
             // Format values

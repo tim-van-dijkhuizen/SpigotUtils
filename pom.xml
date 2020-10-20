@@ -63,5 +63,11 @@
             <version>1.5.25</version>
             <scope>provided</scope>
         </dependency>
+
+		<dependency>
+			<groupId>com.github.cryptomorin</groupId>
+			<artifactId>XSeries</artifactId>
+			<version>7.5.4</version>
+		</dependency>
 	</dependencies>
 </project>

@@ -4,8 +4,9 @@ import java.util.Currency;
 import java.util.function.Consumer;
 
 import org.bukkit.ChatColor;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
+
+import com.cryptomorin.xseries.XMaterial;
 
 import nl.timvandijkhuizen.spigotutils.config.ConfigOption;
 import nl.timvandijkhuizen.spigotutils.config.ConfigType;
@@ -48,7 +49,7 @@ public class ConfigTypeCurrency implements ConfigType<Currency> {
         Player player = event.getPlayer();
 
         for (Currency currency : Currency.getAvailableCurrencies()) {
-            MenuItemBuilder item = new MenuItemBuilder(Material.SUNFLOWER);
+            MenuItemBuilder item = new MenuItemBuilder(XMaterial.SUNFLOWER);
 
             item.setName(UI.color(currency.getDisplayName(), UI.COLOR_PRIMARY, ChatColor.BOLD));
             item.setLore(UI.color("Code: ", UI.COLOR_TEXT) + UI.color(currency.getCurrencyCode(), UI.COLOR_SECONDARY));

@@ -10,6 +10,8 @@ import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
 
+import com.cryptomorin.xseries.XMaterial;
+
 import nl.timvandijkhuizen.spigotutils.inventory.ItemBuilder;
 
 public class MenuItemBuilder extends ItemBuilder {
@@ -36,6 +38,14 @@ public class MenuItemBuilder extends ItemBuilder {
     public MenuItemBuilder(Material material, int amount) {
         super(material, amount);
     }
+    
+    public MenuItemBuilder(XMaterial material) {
+        super(material);
+    }
+
+    public MenuItemBuilder(XMaterial material, int amount) {
+        super(material, amount);
+    }
 
     public MenuItemBuilder setClickListener(MenuItemAction listener) {
         this.listeners = listener;
@@ -56,6 +66,11 @@ public class MenuItemBuilder extends ItemBuilder {
     }
 
     public MenuItemBuilder setType(Material material) {
+        super.setType(material);
+        return this;
+    }
+    
+    public MenuItemBuilder setType(XMaterial material) {
         super.setType(material);
         return this;
     }

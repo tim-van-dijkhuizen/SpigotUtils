@@ -4,6 +4,8 @@ import java.util.function.Consumer;
 
 import org.bukkit.Material;
 
+import com.cryptomorin.xseries.XMaterial;
+
 import nl.timvandijkhuizen.spigotutils.data.DataArguments;
 import nl.timvandijkhuizen.spigotutils.menu.items.MenuItemClick;
 
@@ -19,7 +21,7 @@ public class ConfigOption<T> {
     private DataArguments meta = new DataArguments();
     
     public ConfigOption(String path, String name, ConfigType<T> type) {
-        this(path, name, Material.COMPARATOR, type);
+        this(path, name, XMaterial.COMPARATOR, type);
     }
     
     public ConfigOption(String path, String name, Material icon, ConfigType<T> type) {
@@ -27,6 +29,10 @@ public class ConfigOption<T> {
         this.name = name;
         this.icon = icon;
         this.type = type;
+    }
+    
+    public ConfigOption(String path, String name, XMaterial icon, ConfigType<T> type) {
+        this(path, name, icon.parseMaterial(true), type);
     }
     
     /**
