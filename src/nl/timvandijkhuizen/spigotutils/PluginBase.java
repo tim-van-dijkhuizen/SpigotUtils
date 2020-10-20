@@ -37,7 +37,7 @@ public abstract class PluginBase extends JavaPlugin {
             }
             
             ready();
-        } catch (Exception e) {
+        } catch (Throwable e) {
             ConsoleHelper.printError("Failed to load plugin.", e);
         }
     }
@@ -50,7 +50,7 @@ public abstract class PluginBase extends JavaPlugin {
 
        try {
             unload();
-        } catch (Exception e) {
+        } catch (Throwable e) {
             ConsoleHelper.printError("Failed to unload plugin.", e);
         }
     }
@@ -58,30 +58,30 @@ public abstract class PluginBase extends JavaPlugin {
     /**
      * Called when the plugin is created.
      * 
-     * @throws Exception
+     * @throws Throwable
      */
-    public void init() throws Exception { }
+    public void init() throws Throwable { }
     
     /**
      * Called when the plugin is loaded. Services are loaded after this.
      * 
-     * @throws Exception
+     * @throws Throwable
      */
-    public void load() throws Exception { }
+    public void load() throws Throwable { }
 
     /**
      * Called after the plugin and its services have been loaded.
      * 
-     * @throws Exception
+     * @throws Throwable
      */
-    public void ready() throws Exception { }
+    public void ready() throws Throwable { }
     
     /**
      * Called when the plugin is unloaded. Services are unloaded before this.
      * 
-     * @throws Exception
+     * @throws Throwable
      */
-    public void unload() throws Exception { }
+    public void unload() throws Throwable { }
 
     /**
      * Reloads all services.
@@ -89,7 +89,7 @@ public abstract class PluginBase extends JavaPlugin {
     public void reload() {
         try {
             unload();
-        } catch(Exception e) {
+        } catch(Throwable e) {
             ConsoleHelper.printError("Failed to unload plugin.", e);
         }
         
@@ -99,7 +99,7 @@ public abstract class PluginBase extends JavaPlugin {
         
         try {
             load();
-        } catch(Exception e) {
+        } catch(Throwable e) {
             ConsoleHelper.printError("Failed to load plugin.", e);
         }
     }
@@ -119,9 +119,9 @@ public abstract class PluginBase extends JavaPlugin {
      * Returns all registered services.
      * 
      * @return
-     * @throws Exception
+     * @throws Throwable
      */
-    public abstract Service[] registerServices() throws Exception;
+    public abstract Service[] registerServices() throws Throwable;
 
     /**
      * Loads a service.
@@ -136,7 +136,7 @@ public abstract class PluginBase extends JavaPlugin {
             if (service instanceof Listener) {
                 getServer().getPluginManager().registerEvents((Listener) service, this);
             }
-        } catch (Exception e) {
+        } catch (Throwable e) {
             ConsoleHelper.printError("Failed to load service: " + service.getHandle(), e);
             serviceErrors.put(service.getHandle(), e.getMessage());
         }
@@ -150,7 +150,7 @@ public abstract class PluginBase extends JavaPlugin {
     private void unloadService(Service service) {
         try {
             service.unload();
-        } catch (Exception e) {
+        } catch (Throwable e) {
             ConsoleHelper.printError("Failed to unload service: " + service.getHandle(), e);
         }
     }
@@ -166,7 +166,7 @@ public abstract class PluginBase extends JavaPlugin {
         try {
             service.unload();
             service.load();
-        } catch (Exception e) {
+        } catch (Throwable e) {
             ConsoleHelper.printError("Failed to reload service: " + service.getHandle(), e);
             serviceErrors.put(service.getHandle(), e.getMessage());
         }
@@ -182,7 +182,7 @@ public abstract class PluginBase extends JavaPlugin {
         try {
             return (T) services.get(handle);
         } catch (ClassCastException e) {
-            e.printStackTrace();
+            ConsoleHelper.printError("Service with handle " + handle + " cannot be cast to the specified type.");
             return null;
         }
     }

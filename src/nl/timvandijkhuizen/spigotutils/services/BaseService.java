@@ -3,17 +3,17 @@ package nl.timvandijkhuizen.spigotutils.services;
 public abstract class BaseService implements Service {
 
     @Override
-    public void init() throws Exception {
+    public void init() throws Throwable {
 
     }
 
     @Override
-    public void load() throws Exception {
+    public void load() throws Throwable {
 
     }
 
     @Override
-    public void unload() throws Exception {
+    public void unload() throws Throwable {
 
     }
 

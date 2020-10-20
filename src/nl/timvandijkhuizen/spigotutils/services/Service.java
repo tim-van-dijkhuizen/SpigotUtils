@@ -14,20 +14,20 @@ public interface Service {
      * 
      * @throws Exception
      */
-    public void init() throws Exception;
+    public void init() throws Throwable;
     
     /**
      * Called when the service is loaded.
      * 
      * @throws Exception
      */
-    public void load() throws Exception;
+    public void load() throws Throwable;
 
     /**
      * Called when the service is unloaded.
      * 
      * @throws Exception
      */
-    public void unload() throws Exception;
+    public void unload() throws Throwable;
 
 }
