@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Color;
 import org.bukkit.Material;
@@ -17,6 +16,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
 import org.bukkit.inventory.meta.SkullMeta;
 
+import com.cryptomorin.xseries.SkullUtils;
 import com.cryptomorin.xseries.XMaterial;
 
 @SuppressWarnings("deprecation")
@@ -323,8 +323,7 @@ public class ItemBuilder {
 
         if(meta instanceof SkullMeta) {
             SkullMeta skullMeta = (SkullMeta) meta;
-            
-            skullMeta.setOwningPlayer(Bukkit.getOfflinePlayer(uuid));
+            skullMeta = SkullUtils.applySkin(skullMeta, uuid);
             itemStack.setItemMeta(skullMeta);
         }
 
