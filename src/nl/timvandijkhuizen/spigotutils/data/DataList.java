@@ -53,7 +53,10 @@ public class DataList<E> implements Iterable<E> {
     }
 
     public Set<E> getByAction(DataAction action) {
-        return items.entrySet().stream().filter(i -> i.getValue() == action).map(i -> i.getKey()).collect(Collectors.toSet());
+        return items.entrySet().stream()
+            .filter(i -> i.getValue() == action)
+            .map(i -> i.getKey())
+            .collect(Collectors.toSet());
     }
 
     public void clearPending() {

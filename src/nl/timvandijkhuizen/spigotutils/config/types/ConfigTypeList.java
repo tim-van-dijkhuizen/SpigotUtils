@@ -87,7 +87,9 @@ public class ConfigTypeList<T extends ConfigObject> implements ConfigType<List<T
 
     @Override
     public String getValueLore(OptionConfig config, ConfigOption<List<T>> option) {
-        String[] items = getValue(config, option).stream().map(i -> i.getItemName()).toArray(String[]::new);
+        String[] items = getValue(config, option).stream()
+            .map(i -> i.getItemName())
+            .toArray(String[]::new);
 
         return String.join(", ", items);
     }
