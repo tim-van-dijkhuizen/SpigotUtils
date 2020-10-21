@@ -13,5 +13,5 @@ public class ConfigTypePassword extends ConfigTypeString {
     public String getValueLore(OptionConfig config, ConfigOption<String> option) {
         return !isValueEmpty(config, option) ? StringUtils.repeat(PASSWORD_CHARACTER, getValue(config, option).length()) : "";
     }
-    
+
 }

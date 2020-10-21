@@ -32,7 +32,7 @@ public class ConfigTypeInteger implements ConfigType<Integer> {
     public String getValueLore(OptionConfig config, ConfigOption<Integer> option) {
         return "" + getValue(config, option);
     }
-    
+
     @Override
     public boolean isValueEmpty(OptionConfig config, ConfigOption<Integer> option) {
         return !config.contains(option.getPath());

@@ -17,13 +17,13 @@ import nl.timvandijkhuizen.spigotutils.menu.types.PagedMenu;
 import nl.timvandijkhuizen.spigotutils.ui.UI;
 
 public class ConfigTypeCurrency implements ConfigType<Currency> {
-    
+
     @Override
     public Currency getValue(OptionConfig config, ConfigOption<Currency> option) {
         try {
             String currencyCode = config.getString(option.getPath());
             return Currency.getInstance(currencyCode);
-        } catch(Exception e) {
+        } catch (Exception e) {
             return null;
         }
     }
@@ -32,7 +32,7 @@ public class ConfigTypeCurrency implements ConfigType<Currency> {
     public void setValue(OptionConfig config, ConfigOption<Currency> option, Currency value) {
         config.set(option.getPath(), value != null ? value.getCurrencyCode() : null);
     }
-    
+
     @Override
     public String getValueLore(OptionConfig config, ConfigOption<Currency> option) {
         return !isValueEmpty(config, option) ? getValue(config, option).getDisplayName() : "";
@@ -61,7 +61,7 @@ public class ConfigTypeCurrency implements ConfigType<Currency> {
 
             menu.addPagedButton(item);
         }
-        
+
         menu.open(player);
     }
 

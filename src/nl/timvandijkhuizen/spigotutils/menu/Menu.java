@@ -77,7 +77,7 @@ public class Menu implements InventoryHolder {
     public MenuItemBuilder getButton(int slot) {
         return items.get(slot);
     }
-    
+
     /**
      * Sets an item at the specified slot.
      * 
@@ -107,30 +107,30 @@ public class Menu implements InventoryHolder {
         items.remove(slot);
         return this;
     }
-    
+
     public Menu disableButtons() {
         disableButtons = true;
         return this;
     }
-    
+
     public Menu enableButtons() {
         disableButtons = false;
         return this;
     }
-    
+
     /**
      * Re-draw the menu.
      */
     public void refresh() {
         draw();
-       
-        for(HumanEntity viewer : inventory.getViewers()) {
-            if(viewer instanceof Player) {
+
+        for (HumanEntity viewer : inventory.getViewers()) {
+            if (viewer instanceof Player) {
                 ((Player) viewer).updateInventory();
             }
         }
     }
-    
+
     /**
      * Opens the menu.
      * 
@@ -140,7 +140,7 @@ public class Menu implements InventoryHolder {
         this.draw();
         player.openInventory(inventory);
     }
-    
+
     /**
      * Close the menu.
      * 
@@ -154,18 +154,18 @@ public class Menu implements InventoryHolder {
     public Inventory getInventory() {
         return inventory;
     }
-    
+
     /**
      * Clears the inventory and adds the items.
      */
     protected void draw() {
         inventory.clear();
-        
-        for(Entry<Integer, MenuItemBuilder> item : items.entrySet()) {
+
+        for (Entry<Integer, MenuItemBuilder> item : items.entrySet()) {
             inventory.setItem(item.getKey(), item.getValue().toItemStack());
         }
     }
-    
+
     /**
      * Handles a click while the menu is active.
      * 

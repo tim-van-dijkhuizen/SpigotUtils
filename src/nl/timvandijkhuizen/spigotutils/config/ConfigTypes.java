@@ -22,5 +22,5 @@ public class ConfigTypes {
     public static final ConfigType<Locale> LOCALE = new ConfigTypeLocale();
     public static final ConfigType<String> DOMAIN = new ConfigTypeDomain();
     public static final ConfigType<String> MESSAGE = new ConfigTypeMessage();
-    
+
 }

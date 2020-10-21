@@ -15,26 +15,26 @@ public class ConfigOption<T> {
     private String name;
     private Material icon;
     private ConfigType<T> type;
-    
+
     private T defaultValue = null;
     private boolean required = false;
     private DataArguments meta = new DataArguments();
-    
+
     public ConfigOption(String path, String name, ConfigType<T> type) {
         this(path, name, XMaterial.COMPARATOR, type);
     }
-    
+
     public ConfigOption(String path, String name, Material icon, ConfigType<T> type) {
         this.path = path;
         this.name = name;
         this.icon = icon;
         this.type = type;
     }
-    
+
     public ConfigOption(String path, String name, XMaterial icon, ConfigType<T> type) {
         this(path, name, icon.parseMaterial(true), type);
     }
-    
+
     /**
      * Sets the default value.
      * 
@@ -45,7 +45,7 @@ public class ConfigOption<T> {
         this.defaultValue = defaultValue;
         return this;
     }
-    
+
     /**
      * Sets whether this option is required.
      * 
@@ -56,7 +56,7 @@ public class ConfigOption<T> {
         this.required = required;
         return this;
     }
-    
+
     /**
      * Sets the option meta.
      * 
@@ -66,7 +66,7 @@ public class ConfigOption<T> {
         this.meta = meta;
         return this;
     }
-    
+
     /**
      * Returns this option's value.
      * 
@@ -74,13 +74,13 @@ public class ConfigOption<T> {
      * @return
      */
     public T getValue(OptionConfig config) {
-        if(type.isValueEmpty(config, this)) {
+        if (type.isValueEmpty(config, this)) {
             return defaultValue;
         }
-        
+
         return type.getValue(config, this);
     }
-    
+
     /**
      * Sets this option's value.
      * 
@@ -90,7 +90,7 @@ public class ConfigOption<T> {
     public void setValue(OptionConfig config, T value) {
         type.setValue(config, this, value);
     }
-    
+
     /**
      * Sets the value to the default value.
      * 
@@ -99,7 +99,7 @@ public class ConfigOption<T> {
     public void resetValue(OptionConfig config) {
         setValue(config, defaultValue);
     }
-    
+
     /**
      * Returns the value lore.
      * 
@@ -119,7 +119,7 @@ public class ConfigOption<T> {
     public boolean isValueEmpty(OptionConfig config) {
         return type.isValueEmpty(config, this);
     }
-    
+
     /**
      * Asks the specified player for input.
      * 
@@ -130,7 +130,7 @@ public class ConfigOption<T> {
     public void getValueInput(OptionConfig config, MenuItemClick event, Consumer<T> callback) {
         type.getValueInput(config, this, event, callback);
     }
-    
+
     /**
      * Returns the option path.
      * 
@@ -139,7 +139,7 @@ public class ConfigOption<T> {
     public String getPath() {
         return path;
     }
-    
+
     /**
      * Returns the name.
      * 
@@ -148,7 +148,7 @@ public class ConfigOption<T> {
     public String getName() {
         return name;
     }
-    
+
     /**
      * Returns the icon.
      * 
@@ -157,7 +157,7 @@ public class ConfigOption<T> {
     public Material getIcon() {
         return icon;
     }
-    
+
     /**
      * Returns the default value.
      * 
@@ -166,7 +166,7 @@ public class ConfigOption<T> {
     public T getDefaultValue() {
         return defaultValue;
     }
-    
+
     /**
      * This returns whether this option is required.
      * 
@@ -175,10 +175,9 @@ public class ConfigOption<T> {
     public boolean isRequired() {
         return required;
     }
-    
+
     /**
-     * Returns the option's meta data.
-     * This data can be used to store more info
+     * Returns the option's meta data. This data can be used to store more info
      * per option, for example a description.
      * 
      * @return
@@ -186,5 +185,5 @@ public class ConfigOption<T> {
     public DataArguments getMeta() {
         return meta;
     }
-    
+
 }

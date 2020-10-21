@@ -26,44 +26,44 @@ public class JsonConfig implements Configuration, OptionConfig {
 
     private JsonObject json;
     private Collection<ConfigOption<?>> options = new LinkedHashSet<>();
-    
+
     public JsonConfig(JsonObject json) {
         this.json = json;
     }
-    
+
     public JsonConfig() {
         this.json = new JsonObject();
     }
-    
+
     public JsonObject getJson() {
         return json;
     }
-    
+
     @Override
     public void addOption(ConfigOption<?> option) {
         options.add(option);
     }
-    
+
     @Override
     public void addOptions(Collection<ConfigOption<?>> options) {
         this.options.addAll(options);
     }
-    
+
     @Override
     public Collection<ConfigOption<?>> getOptions() {
         return options;
     }
-    
+
     @Override
     @SuppressWarnings("unchecked")
     public <T> ConfigOption<T> getOption(String path) {
         return getOptions().stream().filter(i -> i.getPath().equals(path)).map(i -> (ConfigOption<T>) i).findFirst().orElse(null);
     }
-    
+
     @Override
     public void setDefaultOptions() {
-        for(ConfigOption<?> option : getOptions()) {
-            if(option.isValueEmpty(this)) {
+        for (ConfigOption<?> option : getOptions()) {
+            if (option.isValueEmpty(this)) {
                 option.resetValue(this);
             }
         }
@@ -126,13 +126,13 @@ public class JsonConfig implements Configuration, OptionConfig {
 
     @Override
     public void set(String path, Object value) {
-        if(value instanceof Boolean) {
+        if (value instanceof Boolean) {
             json.addProperty(path, (Boolean) value);
-        } else if(value instanceof Character) {
+        } else if (value instanceof Character) {
             json.addProperty(path, (Character) value);
-        } else if(value instanceof Number) {
+        } else if (value instanceof Number) {
             json.addProperty(path, (Number) value);
-        } else if(value instanceof String) {
+        } else if (value instanceof String) {
             json.addProperty(path, (String) value);
         } else {
             throw new IllegalArgumentException("Unsupported data type");
@@ -152,11 +152,11 @@ public class JsonConfig implements Configuration, OptionConfig {
     @Override
     public String getString(String path) {
         JsonElement element = json.get(path);
-        
-        if(element == null) {
+
+        if (element == null) {
             return null;
         }
-        
+
         return element.getAsString();
     }
 
@@ -173,11 +173,11 @@ public class JsonConfig implements Configuration, OptionConfig {
     @Override
     public int getInt(String path) {
         JsonElement element = json.get(path);
-        
-        if(element == null) {
+
+        if (element == null) {
             return 0;
         }
-        
+
         return element.getAsInt();
     }
 
@@ -194,11 +194,11 @@ public class JsonConfig implements Configuration, OptionConfig {
     @Override
     public boolean getBoolean(String path) {
         JsonElement element = json.get(path);
-        
-        if(element == null) {
+
+        if (element == null) {
             return false;
         }
-        
+
         return element.getAsBoolean();
     }
 
@@ -215,11 +215,11 @@ public class JsonConfig implements Configuration, OptionConfig {
     @Override
     public double getDouble(String path) {
         JsonElement element = json.get(path);
-        
-        if(element == null) {
+
+        if (element == null) {
             return 0;
         }
-        
+
         return element.getAsDouble();
     }
 
@@ -236,11 +236,11 @@ public class JsonConfig implements Configuration, OptionConfig {
     @Override
     public long getLong(String path) {
         JsonElement element = json.get(path);
-        
-        if(element == null) {
+
+        if (element == null) {
             return 0;
         }
-        
+
         return element.getAsLong();
     }
 
@@ -458,5 +458,5 @@ public class JsonConfig implements Configuration, OptionConfig {
     public ConfigurationOptions options() {
         throw new UnsupportedOperationException();
     }
-    
+
 }

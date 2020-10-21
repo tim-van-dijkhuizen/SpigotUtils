@@ -7,7 +7,7 @@ import javax.naming.ConfigurationException;
 import nl.timvandijkhuizen.spigotutils.menu.items.MenuItemClick;
 
 public interface ConfigType<T> {
-    
+
     /**
      * Deserializes and returns the value.
      * 
@@ -17,7 +17,7 @@ public interface ConfigType<T> {
      * @throws ConfigurationException
      */
     T getValue(OptionConfig config, ConfigOption<T> option);
-    
+
     /**
      * Serializes and sets the value.
      * 
@@ -26,17 +26,16 @@ public interface ConfigType<T> {
      * @param value
      */
     void setValue(OptionConfig config, ConfigOption<T> option, T value);
-    
+
     /**
-     * Returns the lore lines used
-     * to display the current value.
+     * Returns the lore lines used to display the current value.
      * 
      * @param config
      * @param option
      * @return
      */
     String getValueLore(OptionConfig config, ConfigOption<T> option);
-    
+
     /**
      * Returns whether the value is empty.
      * 
@@ -45,7 +44,7 @@ public interface ConfigType<T> {
      * @return
      */
     boolean isValueEmpty(OptionConfig config, ConfigOption<T> option);
-    
+
     /**
      * Returns the input value for this option.
      * 

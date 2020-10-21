@@ -22,7 +22,7 @@ import nl.timvandijkhuizen.spigotutils.ui.UI;
 public class ConfigTypeLocale implements ConfigType<Locale> {
 
     public static final Locale[] LOCALES = Arrays.stream(Locale.getAvailableLocales()).filter(i -> i != Locale.ROOT).toArray(Locale[]::new);
-    
+
     @Override
     public Locale getValue(OptionConfig config, ConfigOption<Locale> option) {
         String rawLocale = config.getString(option.getPath());
@@ -33,7 +33,7 @@ public class ConfigTypeLocale implements ConfigType<Locale> {
     public void setValue(OptionConfig config, ConfigOption<Locale> option, Locale value) {
         config.set(option.getPath(), value != null ? LocaleHelper.serializeLocale(value) : null);
     }
-    
+
     @Override
     public String getValueLore(OptionConfig config, ConfigOption<Locale> option) {
         return !isValueEmpty(config, option) ? getValue(config, option).getDisplayName() : "";
@@ -56,7 +56,7 @@ public class ConfigTypeLocale implements ConfigType<Locale> {
             // Format values
             String localeValue = LocaleHelper.serializeLocale(locale);
             String currencyValue = currency.getDisplayName() + "(" + currency.getCurrencyCode() + ")";
-            
+
             item.setName(UI.color(locale.getDisplayName(), UI.COLOR_PRIMARY, ChatColor.BOLD));
             item.setLore(UI.color("Code: ", UI.COLOR_TEXT) + UI.color(localeValue, UI.COLOR_SECONDARY));
             item.setLore(UI.color("Currency: ", UI.COLOR_TEXT) + UI.color(currencyValue, UI.COLOR_SECONDARY));
@@ -68,10 +68,8 @@ public class ConfigTypeLocale implements ConfigType<Locale> {
 
             menu.addPagedButton(item);
         }
-        
+
         menu.open(player);
     }
-    
 
-    
 }

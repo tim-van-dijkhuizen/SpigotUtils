@@ -33,8 +33,8 @@ public abstract class BaseCommand implements CommandExecutor {
     public abstract String getUsage();
 
     /**
-     * Returns the permission required to execute
-     * this command. This can be null.
+     * Returns the permission required to execute this command. This can be
+     * null.
      * 
      * @return
      */

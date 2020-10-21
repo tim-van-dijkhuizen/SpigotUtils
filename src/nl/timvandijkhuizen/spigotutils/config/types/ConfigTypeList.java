@@ -29,56 +29,56 @@ public class ConfigTypeList<T extends ConfigObject> implements ConfigType<List<T
     private Class<T> clazz;
     private String menuTitle;
     private Material menuIcon;
-    
+
     public ConfigTypeList(Class<T> clazz, String menuTitle, Material menuIcon) {
         this.clazz = clazz;
         this.menuTitle = menuTitle;
         this.menuIcon = menuIcon;
     }
-    
+
     public ConfigTypeList(Class<T> clazz, String menuTitle, XMaterial menuIcon) {
         this(clazz, menuTitle, menuIcon.parseMaterial(true));
     }
-    
+
     public ConfigTypeList(Class<T> clazz, String menuTitle) {
         this(clazz, menuTitle, XMaterial.PAPER);
     }
-    
+
     @Override
     public List<T> getValue(OptionConfig config, ConfigOption<List<T>> option) {
         List<T> output = new ArrayList<>();
-        
-        for(Map<?, ?> rawObject : config.getMapList(option.getPath())) {
+
+        for (Map<?, ?> rawObject : config.getMapList(option.getPath())) {
             T object;
-            
+
             try {
                 ConfigObjectData data = new ConfigObjectData(rawObject);
-                
+
                 object = clazz.newInstance();
                 object.deserialize(data);
-            } catch(Exception e) {
-            	ConsoleHelper.printError("Failed to deserialize config object: " + rawObject.toString(), e);
+            } catch (Exception e) {
+                ConsoleHelper.printError("Failed to deserialize config object: " + rawObject.toString(), e);
                 continue;
             }
-            
+
             output.add(object);
         }
-        
+
         return output;
     }
 
     @Override
     public void setValue(OptionConfig config, ConfigOption<List<T>> option, List<T> value) {
-        if(value != null) {
+        if (value != null) {
             List<Map<String, Object>> output = new ArrayList<>();
-            
-            for(T object : value) {
+
+            for (T object : value) {
                 ConfigObjectData data = new ConfigObjectData();
-                
+
                 object.serialize(data);
                 output.add(data.toMap());
             }
-            
+
             config.set(option.getPath(), output);
         } else {
             config.set(option.getPath(), null);
@@ -87,10 +87,8 @@ public class ConfigTypeList<T extends ConfigObject> implements ConfigType<List<T
 
     @Override
     public String getValueLore(OptionConfig config, ConfigOption<List<T>> option) {
-        String[] items = getValue(config, option).stream()
-            .map(i -> i.getItemName())
-            .toArray(String[]::new);
-        
+        String[] items = getValue(config, option).stream().map(i -> i.getItemName()).toArray(String[]::new);
+
         return String.join(", ", items);
     }
 
@@ -130,14 +128,14 @@ public class ConfigTypeList<T extends ConfigObject> implements ConfigType<List<T
         createButton.setClickListener(createClick -> {
             try {
                 T object = clazz.newInstance();
-                
+
                 UI.playSound(player, UI.SOUND_CLICK);
                 player.closeInventory();
-                
+
                 object.getInput(player, () -> {
                     addObjectButton(player, menu, objects, object);
                     objects.add(object);
-                    
+
                     UI.playSound(player, UI.SOUND_CLICK);
                     menu.open(player);
                 });
@@ -147,17 +145,17 @@ public class ConfigTypeList<T extends ConfigObject> implements ConfigType<List<T
         });
 
         menu.setButton(createButton, menu.getSize().getSlots() - 9 + 5);
-        
+
         // Open menu
         menu.open(player);
     }
-    
+
     private void addObjectButton(Player player, PagedMenu menu, List<T> objects, T object) {
         MenuItemBuilder item = new MenuItemBuilder(menuIcon);
 
         item.setName(UI.color(object.getItemName(), UI.COLOR_PRIMARY, ChatColor.BOLD));
         item.setLore(object.getItemLore());
-        
+
         item.addLore("", UI.color("Use left-click to edit.", UI.COLOR_SECONDARY, ChatColor.ITALIC));
         item.addLore(UI.color("Use right-click to delete.", UI.COLOR_SECONDARY, ChatColor.ITALIC));
 
@@ -166,19 +164,19 @@ public class ConfigTypeList<T extends ConfigObject> implements ConfigType<List<T
 
             if (clickType == ClickType.RIGHT) {
                 UI.playSound(player, UI.SOUND_DELETE);
-                
+
                 objects.remove(object);
-                
+
                 menu.removePagedButton(item);
                 menu.refresh();
             } else {
                 UI.playSound(player, UI.SOUND_CLICK);
                 player.closeInventory();
-                
+
                 object.getInput(player, () -> {
                     item.setName(UI.color(object.getItemName(), UI.COLOR_PRIMARY, ChatColor.BOLD));
                     item.setLore(object.getItemLore());
-                    
+
                     UI.playSound(player, UI.SOUND_CLICK);
                     menu.open(player);
                 });

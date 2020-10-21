@@ -18,7 +18,7 @@ public class PagedMenu extends Menu {
     private int columns;
     private int rowOffset;
     private int columnOffset;
-    
+
     private MenuItemBuilder previousButton;
     private MenuItemBuilder nextButton;
     private MenuItemBuilder currentButton;
@@ -47,12 +47,12 @@ public class PagedMenu extends Menu {
         if (nextButtonOffset < 0 || nextButtonOffset > 8) {
             throw new RuntimeException("Next button outside range");
         }
-        
+
         // Fill bottom row with background items
         for (int i = 0; i < 9; i++) {
             setButton(MenuItems.BACKGROUND, size.getSlots() - 9 + i);
         }
-        
+
         // Add previous button
         previousButton = MenuItems.PREVIOUS.clone().setClickListener(event -> {
             Player whoClicked = event.getPlayer();
@@ -63,12 +63,12 @@ public class PagedMenu extends Menu {
                 refresh();
             }
         });
-        
+
         setButton(previousButton, size.getSlots() - 9 + previousButtonOffset);
 
         // Add current button
         setButton(currentButton = MenuItems.CURRENT.clone(), size.getSlots() - 9 + currentButtonOffset);
-        
+
         // Add next button
         nextButton = MenuItems.NEXT.clone().setClickListener(event -> {
             Player whoClicked = event.getPlayer();
@@ -79,7 +79,7 @@ public class PagedMenu extends Menu {
                 refresh();
             }
         });
-        
+
         setButton(nextButton, size.getSlots() - 9 + nextButtonOffset);
     }
 
@@ -100,23 +100,23 @@ public class PagedMenu extends Menu {
     }
 
     public List<MenuItemBuilder> getPagedButtons() {
-    	return pagedButtons;
+        return pagedButtons;
     }
-    
+
     public PagedMenu addPagedButton(MenuItemBuilder item) {
-    	pagedButtons.add(item);
+        pagedButtons.add(item);
         return this;
     }
 
     public PagedMenu removePagedButton(MenuItemBuilder item) {
-    	pagedButtons.remove(item);
+        pagedButtons.remove(item);
         return this;
     }
-    
+
     public void setPage(int page) {
-    	this.page = parsedPage(page);
+        this.page = parsedPage(page);
     }
-    
+
     public void open(Player player, int page) {
         setPage(page);
         open(player);
@@ -124,9 +124,9 @@ public class PagedMenu extends Menu {
 
     @Override
     protected void draw() {
-    	page = parsedPage(page);
-    	
-    	// Add paged buttons
+        page = parsedPage(page);
+
+        // Add paged buttons
         int rowStart = rowOffset;
         int columnStart = columnOffset;
         int itemIndex = page * (rows * columns);
@@ -135,27 +135,27 @@ public class PagedMenu extends Menu {
         for (int row = rowStart; row < (rowStart + rows); row++) {
             for (int column = columnStart; column < (columnStart + columns); column++) {
                 int slot = row * 9 + column;
-                
+
                 // Clear slot
                 removeButton(slot);
-                
+
                 // Set paged item if we've got one
                 if (itemIndex < pagedButtons.size()) {
                     setButton(pagedButtons.get(itemIndex++), slot);
                 }
             }
         }
-        
+
         // Update current button
         currentButton.setName(UI.color("Page " + (page + 1) + "/" + getPageCount(), UI.COLOR_SECONDARY, ChatColor.BOLD));
-        
+
         // Draw menu
         super.draw();
     }
 
     /**
-     * Find the best fitting menu size depending
-     * on the amount of rows and columns.
+     * Find the best fitting menu size depending on the amount of rows and
+     * columns.
      * 
      * @param rows
      * @param columns
@@ -173,24 +173,24 @@ public class PagedMenu extends Menu {
 
         return MenuSize.XXL;
     }
-    
+
     private int getPageCount() {
-    	return 1 + (int) (getPagedButtons().size() / Double.valueOf(rows * columns));
+        return 1 + (int) (getPagedButtons().size() / Double.valueOf(rows * columns));
     }
-    
+
     private int parsedPage(int page) {
-    	if(page < 0) {
-    		return 0;
-    	}
-    	
-    	// Check if its over the max
-    	int max = getPageCount() - 1;
-    	
-    	if(page > max) {
-    		return max;
-    	}
-    	
-    	return page;
+        if (page < 0) {
+            return 0;
+        }
+
+        // Check if its over the max
+        int max = getPageCount() - 1;
+
+        if (page > max) {
+            return max;
+        }
+
+        return page;
     }
 
 }

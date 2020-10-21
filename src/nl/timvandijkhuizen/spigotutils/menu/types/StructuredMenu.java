@@ -15,7 +15,7 @@ import nl.timvandijkhuizen.spigotutils.ui.UI;
 public class StructuredMenu extends Menu {
 
     private int[] buttonSlots;
-    
+
     private MenuItemBuilder previousButton;
     private MenuItemBuilder nextButton;
     private MenuItemBuilder currentButton;
@@ -35,12 +35,12 @@ public class StructuredMenu extends Menu {
         if (nextButtonOffset < 0 || nextButtonOffset > 8) {
             throw new RuntimeException("Next button outside range");
         }
-        
+
         // Fill bottom row with background items
         for (int i = 0; i < 9; i++) {
             setButton(MenuItems.BACKGROUND, size.getSlots() - 9 + i);
         }
-        
+
         // Add previous button
         previousButton = MenuItems.PREVIOUS.clone().setClickListener(event -> {
             Player whoClicked = event.getPlayer();
@@ -51,12 +51,12 @@ public class StructuredMenu extends Menu {
                 refresh();
             }
         });
-        
+
         setButton(previousButton, size.getSlots() - 9 + previousButtonOffset);
 
         // Add current button
         setButton(currentButton = MenuItems.CURRENT.clone(), size.getSlots() - 9 + currentButtonOffset);
-        
+
         // Add next button
         nextButton = MenuItems.NEXT.clone().setClickListener(event -> {
             Player whoClicked = event.getPlayer();
@@ -67,7 +67,7 @@ public class StructuredMenu extends Menu {
                 refresh();
             }
         });
-        
+
         setButton(nextButton, size.getSlots() - 9 + nextButtonOffset);
     }
 
@@ -88,7 +88,7 @@ public class StructuredMenu extends Menu {
         structuredItems.remove(item);
         return this;
     }
-    
+
     public void open(Player player, int page) {
         this.page = page;
         open(player);
@@ -100,18 +100,18 @@ public class StructuredMenu extends Menu {
 
         for (int buttonSlot : buttonSlots) {
             removeButton(buttonSlot);
-            
+
             // Set structured item if we've got one
             if (itemIndex < structuredItems.size()) {
                 setButton(structuredItems.get(itemIndex++), buttonSlot);
             }
         }
-        
+
         // Update current button
         int max = 1 + (int) (structuredItems.size() / Double.valueOf(buttonSlots.length));
-        
+
         currentButton.setName(UI.color("Page " + (page + 1) + "/" + max, UI.COLOR_SECONDARY, ChatColor.BOLD));
-        
+
         // Draw menu
         super.draw();
     }

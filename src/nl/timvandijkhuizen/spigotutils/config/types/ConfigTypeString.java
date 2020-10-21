@@ -27,7 +27,7 @@ public class ConfigTypeString implements ConfigType<String> {
     public void setValue(OptionConfig config, ConfigOption<String> option, String value) {
         config.set(option.getPath(), value);
     }
-    
+
     @Override
     public String getValueLore(OptionConfig config, ConfigOption<String> option) {
         return !isValueEmpty(config, option) ? getValue(config, option) : "";
@@ -38,7 +38,7 @@ public class ConfigTypeString implements ConfigType<String> {
         String value = getValue(config, option);
         return value == null || value.length() == 0;
     }
-    
+
     @Override
     public void getValueInput(OptionConfig config, ConfigOption<String> option, MenuItemClick event, Consumer<String> callback) {
         ConversationFactory factory = new ConversationFactory(PluginBase.getInstance());

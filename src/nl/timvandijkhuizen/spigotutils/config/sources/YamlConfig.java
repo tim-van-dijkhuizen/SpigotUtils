@@ -52,7 +52,7 @@ public class YamlConfig extends YamlConfiguration implements OptionConfig {
         Object value = get(key);
         return type.cast(value);
     }
-    
+
     public void save() {
         try {
             this.save(this.file);
@@ -60,32 +60,32 @@ public class YamlConfig extends YamlConfiguration implements OptionConfig {
             Bukkit.getLogger().log(Level.WARNING, "Failed to save config " + file.getName() + ", error: " + e.getMessage());
         }
     }
-    
+
     @Override
     public void addOption(ConfigOption<?> option) {
         options.add(option);
     }
-    
+
     @Override
     public void addOptions(Collection<ConfigOption<?>> options) {
         options.addAll(options);
     }
-    
+
     @Override
     public Collection<ConfigOption<?>> getOptions() {
         return options;
     }
-    
+
     @Override
     @SuppressWarnings("unchecked")
     public <T> ConfigOption<T> getOption(String path) {
         return options.stream().filter(i -> i.getPath().equals(path)).map(i -> (ConfigOption<T>) i).findFirst().orElse(null);
     }
-    
+
     @Override
     public void setDefaultOptions() {
-        for(ConfigOption<?> option : getOptions()) {
-            if(option.isValueEmpty(this)) {
+        for (ConfigOption<?> option : getOptions()) {
+            if (option.isValueEmpty(this)) {
                 option.resetValue(this);
             }
         }

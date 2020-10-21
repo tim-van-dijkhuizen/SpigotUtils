@@ -11,8 +11,9 @@ public class DataValue extends TypedValue<Object> {
     public DataValue(Object value) {
         this.value = value;
     }
-    
-    public DataValue() { }
+
+    public DataValue() {
+    }
 
     public String asString() {
         return String.class.cast(value);
@@ -57,7 +58,7 @@ public class DataValue extends TypedValue<Object> {
     public <T> List<T> asList(Class<T> type) {
         return (List<T>) value;
     }
-    
+
     public Set<?> asSet() {
         return (Set<?>) value;
     }

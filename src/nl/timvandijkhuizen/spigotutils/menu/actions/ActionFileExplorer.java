@@ -17,31 +17,31 @@ import nl.timvandijkhuizen.spigotutils.ui.UI;
 
 public class ActionFileExplorer implements MenuItemAction {
 
-	private File root;
-	private Pattern[] allowed;
-	private File selected;
-	private Consumer<File> callback;
-	private Menu returnMenu;
-	
-	public ActionFileExplorer(File root, File selected, Consumer<File> callback) {
-		this(root, selected, null, callback, null);
-	}
-	
-	public ActionFileExplorer(File root, File selected, Pattern[] allowed, Consumer<File> callback, Menu returnMenu) {
-		this.root = root;
-		this.allowed = allowed;
-		this.selected = selected;
-		this.callback = callback;
-		this.returnMenu = returnMenu;
-	}
-	
-	@Override
-	public void onClick(MenuItemClick event) {
-		FileExplorereMenu menu = new FileExplorereMenu(root, selected, allowed, callback, returnMenu);
+    private File root;
+    private Pattern[] allowed;
+    private File selected;
+    private Consumer<File> callback;
+    private Menu returnMenu;
+
+    public ActionFileExplorer(File root, File selected, Consumer<File> callback) {
+        this(root, selected, null, callback, null);
+    }
+
+    public ActionFileExplorer(File root, File selected, Pattern[] allowed, Consumer<File> callback, Menu returnMenu) {
+        this.root = root;
+        this.allowed = allowed;
+        this.selected = selected;
+        this.callback = callback;
+        this.returnMenu = returnMenu;
+    }
+
+    @Override
+    public void onClick(MenuItemClick event) {
+        FileExplorereMenu menu = new FileExplorereMenu(root, selected, allowed, callback, returnMenu);
         Player whoClicked = event.getPlayer();
         Menu activeMenu = event.getMenu();
         MenuItemBuilder clickedItem = event.getItem();
-        
+
         // Get current lore
         List<String> oldLore = clickedItem.getLore();
         Supplier<List<String>> oldLoreGenerator = clickedItem.getLoreGenerator();
@@ -53,12 +53,12 @@ public class ActionFileExplorer implements MenuItemAction {
 
         // Create menu
         menu.loadDirectory(root, () -> {
-        	clickedItem.setLore(oldLore);
-        	clickedItem.setLoreGenerator(oldLoreGenerator);
+            clickedItem.setLore(oldLore);
+            clickedItem.setLoreGenerator(oldLoreGenerator);
             activeMenu.enableButtons();
-            
+
             menu.open(whoClicked);
         });
-	}
+    }
 
 }

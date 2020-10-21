@@ -15,7 +15,7 @@ public interface Service {
      * @throws Exception
      */
     public void init() throws Throwable;
-    
+
     /**
      * Called when the service is loaded.
      * 

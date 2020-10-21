@@ -31,7 +31,7 @@ public class ItemBuilder {
     public ItemBuilder(Material material, int amount) {
         itemStack = new ItemStack(material, amount);
     }
-    
+
     public ItemBuilder(XMaterial material) {
         this(material, 1);
     }
@@ -63,14 +63,14 @@ public class ItemBuilder {
     }
 
     public Material getType() {
-    	return itemStack.getType();
+        return itemStack.getType();
     }
-    
+
     public ItemBuilder setType(Material material) {
         itemStack.setType(material);
         return this;
     }
-    
+
     public ItemBuilder setType(XMaterial material) {
         return setType(material.parseMaterial(true));
     }
@@ -170,7 +170,7 @@ public class ItemBuilder {
 
         return this;
     }
-    
+
     public ItemBuilder removeEnchantGlow() {
         ItemMeta meta = itemStack.getItemMeta();
 
@@ -308,9 +308,9 @@ public class ItemBuilder {
     public ItemBuilder setLeatherArmorColor(Color color) {
         ItemMeta meta = itemStack.getItemMeta();
 
-        if(meta instanceof LeatherArmorMeta) {
+        if (meta instanceof LeatherArmorMeta) {
             LeatherArmorMeta leatherMeta = (LeatherArmorMeta) meta;
-            
+
             leatherMeta.setColor(color);
             itemStack.setItemMeta(leatherMeta);
         }
@@ -321,7 +321,7 @@ public class ItemBuilder {
     public ItemBuilder setSkullOwner(UUID uuid) {
         ItemMeta meta = itemStack.getItemMeta();
 
-        if(meta instanceof SkullMeta) {
+        if (meta instanceof SkullMeta) {
             SkullMeta skullMeta = (SkullMeta) meta;
             skullMeta = SkullUtils.applySkin(skullMeta, uuid);
             itemStack.setItemMeta(skullMeta);

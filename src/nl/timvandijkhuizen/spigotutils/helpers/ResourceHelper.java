@@ -6,8 +6,8 @@ import nl.timvandijkhuizen.spigotutils.PluginBase;
 
 public class ResourceHelper {
 
-	public static InputStream getStream(String path) {
-		return PluginBase.class.getClassLoader().getResourceAsStream(path);
-	}
-	
+    public static InputStream getStream(String path) {
+        return PluginBase.class.getClassLoader().getResourceAsStream(path);
+    }
+
 }

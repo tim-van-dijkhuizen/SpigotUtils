@@ -17,29 +17,29 @@ public class DataList<E> implements Iterable<E> {
     }
 
     public DataList(Collection<E> items) {
-        for(E item : items) {
+        for (E item : items) {
             this.items.put(item, DataAction.UPDATE);
         }
     }
 
     public void add(E item) {
         DataAction action = items.get(item);
-        
-        if(action == null) {
+
+        if (action == null) {
             items.put(item, DataAction.CREATE);
-        } else if(action == DataAction.DELETE) {
+        } else if (action == DataAction.DELETE) {
             items.put(item, DataAction.UPDATE);
         }
     }
 
     public void remove(E item) {
         DataAction action = items.get(item);
-        
-        if(action == DataAction.CREATE) {
+
+        if (action == DataAction.CREATE) {
             items.remove(item);
             return;
         }
-        
+
         items.put(item, DataAction.DELETE);
     }
 
@@ -53,24 +53,21 @@ public class DataList<E> implements Iterable<E> {
     }
 
     public Set<E> getByAction(DataAction action) {
-        return items.entrySet().stream()
-            .filter(i -> i.getValue() == action)
-            .map(i -> i.getKey())
-            .collect(Collectors.toSet());
+        return items.entrySet().stream().filter(i -> i.getValue() == action).map(i -> i.getKey()).collect(Collectors.toSet());
     }
-    
+
     public void clearPending() {
         Set<Entry<E, DataAction>> items = this.items.entrySet();
-        
+
         // Change CREATE to UPDATE
-        for(Entry<E, DataAction> entry : items) {
+        for (Entry<E, DataAction> entry : items) {
             DataAction action = entry.getValue();
-            
-            if(action == DataAction.CREATE) {
+
+            if (action == DataAction.CREATE) {
                 entry.setValue(DataAction.UPDATE);
             }
         }
-        
+
         // Remove DELETE
         items.removeIf(i -> i.getValue() == DataAction.DELETE);
     }

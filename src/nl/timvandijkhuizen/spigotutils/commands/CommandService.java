@@ -24,7 +24,7 @@ public class CommandService extends BaseService {
         plugin.getCommand(command.getCommand()).setExecutor(command);
         commands.add(command);
     }
-    
+
     public Set<BaseCommand> getCommands() {
         return commands;
     }

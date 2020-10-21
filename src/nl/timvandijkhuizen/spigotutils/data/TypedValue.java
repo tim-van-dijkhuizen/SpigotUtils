@@ -7,8 +7,9 @@ public class TypedValue<T> {
     public TypedValue(T value) {
         this.value = value;
     }
-    
-    public TypedValue() { }
+
+    public TypedValue() {
+    }
 
     public T get() {
         return value;
@@ -17,5 +18,5 @@ public class TypedValue<T> {
     public void set(T value) {
         this.value = value;
     }
-    
+
 }

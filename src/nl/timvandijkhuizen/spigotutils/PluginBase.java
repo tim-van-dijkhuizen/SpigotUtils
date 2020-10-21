@@ -13,14 +13,14 @@ import nl.timvandijkhuizen.spigotutils.services.Service;
 public abstract class PluginBase extends JavaPlugin {
 
     private static PluginBase instance;
-    
+
     private Map<String, Service> services = new HashMap<>();
     private Map<String, String> serviceErrors = new HashMap<>();
 
     @Override
     public void onEnable() {
         instance = this;
-        
+
         try {
             init();
 
@@ -28,14 +28,14 @@ public abstract class PluginBase extends JavaPlugin {
                 services.put(service.getHandle(), service);
                 service.init();
             }
-            
+
             // Load plug-in and services
             load();
-            
-            for(Service service : services.values()) {
-            	loadService(service);
+
+            for (Service service : services.values()) {
+                loadService(service);
             }
-            
+
             ready();
         } catch (Throwable e) {
             ConsoleHelper.printError("Failed to load plugin.", e);
@@ -48,7 +48,7 @@ public abstract class PluginBase extends JavaPlugin {
             unloadService(service);
         }
 
-       try {
+        try {
             unload();
         } catch (Throwable e) {
             ConsoleHelper.printError("Failed to unload plugin.", e);
@@ -60,28 +60,32 @@ public abstract class PluginBase extends JavaPlugin {
      * 
      * @throws Throwable
      */
-    public void init() throws Throwable { }
-    
+    public void init() throws Throwable {
+    }
+
     /**
      * Called when the plugin is loaded. Services are loaded after this.
      * 
      * @throws Throwable
      */
-    public void load() throws Throwable { }
+    public void load() throws Throwable {
+    }
 
     /**
      * Called after the plugin and its services have been loaded.
      * 
      * @throws Throwable
      */
-    public void ready() throws Throwable { }
-    
+    public void ready() throws Throwable {
+    }
+
     /**
      * Called when the plugin is unloaded. Services are unloaded before this.
      * 
      * @throws Throwable
      */
-    public void unload() throws Throwable { }
+    public void unload() throws Throwable {
+    }
 
     /**
      * Reloads all services.
@@ -89,32 +93,31 @@ public abstract class PluginBase extends JavaPlugin {
     public void reload() {
         try {
             unload();
-        } catch(Throwable e) {
+        } catch (Throwable e) {
             ConsoleHelper.printError("Failed to unload plugin.", e);
         }
-        
+
         for (Service service : services.values()) {
             reloadService(service);
         }
-        
+
         try {
             load();
-        } catch(Throwable e) {
+        } catch (Throwable e) {
             ConsoleHelper.printError("Failed to load plugin.", e);
         }
     }
-    
+
     /**
-     * Returns the instance of this plugin. Extending plugins
-     * will need to add their own static instance method to
-     * be able to access their own methods.
+     * Returns the instance of this plugin. Extending plugins will need to add
+     * their own static instance method to be able to access their own methods.
      * 
      * @return
      */
     public static PluginBase getInstance() {
         return instance;
     }
-    
+
     /**
      * Returns all registered services.
      * 
@@ -131,7 +134,7 @@ public abstract class PluginBase extends JavaPlugin {
     private void loadService(Service service) {
         try {
             service.load();
-            
+
             // Register as listener
             if (service instanceof Listener) {
                 getServer().getPluginManager().registerEvents((Listener) service, this);
@@ -154,7 +157,7 @@ public abstract class PluginBase extends JavaPlugin {
             ConsoleHelper.printError("Failed to unload service: " + service.getHandle(), e);
         }
     }
-    
+
     /**
      * Reloads a service.
      * 
@@ -162,7 +165,7 @@ public abstract class PluginBase extends JavaPlugin {
      */
     private void reloadService(Service service) {
         serviceErrors.remove(service.getHandle());
-        
+
         try {
             service.unload();
             service.load();
@@ -186,11 +189,11 @@ public abstract class PluginBase extends JavaPlugin {
             return null;
         }
     }
-    
+
     public Map<String, String> getServiceErrors() {
         return serviceErrors;
     }
-    
+
     public String getServiceError(String handle) {
         return serviceErrors.get(handle);
     }

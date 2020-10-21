@@ -18,7 +18,7 @@ public class MenuItemBuilder extends ItemBuilder {
 
     private MenuItemAction listeners;
     private boolean disabled;
-    
+
     // Dynamic content
     private Supplier<Material> typeGenerator;
     private Supplier<String> nameGenerator;
@@ -38,7 +38,7 @@ public class MenuItemBuilder extends ItemBuilder {
     public MenuItemBuilder(Material material, int amount) {
         super(material, amount);
     }
-    
+
     public MenuItemBuilder(XMaterial material) {
         super(material);
     }
@@ -69,7 +69,7 @@ public class MenuItemBuilder extends ItemBuilder {
         super.setType(material);
         return this;
     }
-    
+
     public MenuItemBuilder setType(XMaterial material) {
         super.setType(material);
         return this;
@@ -114,7 +114,7 @@ public class MenuItemBuilder extends ItemBuilder {
         super.addEnchantGlow();
         return this;
     }
-    
+
     public MenuItemBuilder removeEnchantGlow() {
         super.removeEnchantGlow();
         return this;
@@ -184,7 +184,7 @@ public class MenuItemBuilder extends ItemBuilder {
         super.setSkullOwner(uuid);
         return this;
     }
-    
+
     public boolean isDisabled() {
         return disabled;
     }
@@ -192,84 +192,84 @@ public class MenuItemBuilder extends ItemBuilder {
     public void setDisabled(boolean disabled) {
         this.disabled = disabled;
     }
-    
+
     @Override
     public ItemStack toItemStack() {
-        if(typeGenerator != null) {
+        if (typeGenerator != null) {
             setType(typeGenerator.get());
         }
-        
-        if(nameGenerator != null) {
+
+        if (nameGenerator != null) {
             setName(nameGenerator.get());
         }
-        
-        if(amountGenerator != null) {
+
+        if (amountGenerator != null) {
             setAmount(amountGenerator.get());
         }
-        
-        if(loreGenerator != null) {
+
+        if (loreGenerator != null) {
             setLore(loreGenerator.get());
         }
-        
-        if(glowGenerator != null) {
-            if(glowGenerator.get()) {
+
+        if (glowGenerator != null) {
+            if (glowGenerator.get()) {
                 addEnchantGlow();
             } else {
                 removeEnchantGlow();
             }
         }
-        
-        if(disabledGenerator != null) {
+
+        if (disabledGenerator != null) {
             setDisabled(disabledGenerator.get());
         }
-        
+
         return super.toItemStack();
     }
-    
+
     public Supplier<Material> getTypeGenerator() {
-    	return typeGenerator;
+        return typeGenerator;
     }
-    
+
     public void setTypeGenerator(Supplier<Material> typeGenerator) {
         this.typeGenerator = typeGenerator;
     }
-    
+
     public Supplier<String> getNameGenerator() {
-    	return nameGenerator;
+        return nameGenerator;
     }
-    
+
     public void setNameGenerator(Supplier<String> nameGenerator) {
         this.nameGenerator = nameGenerator;
     }
-    
+
     public Supplier<Integer> getAmountGenerator() {
-    	return amountGenerator;
+        return amountGenerator;
     }
-    
+
     public void setAmountGenerator(Supplier<Integer> amountGenerator) {
         this.amountGenerator = amountGenerator;
     }
-    
+
     public Supplier<List<String>> getLoreGenerator() {
-    	return loreGenerator;
+        return loreGenerator;
     }
-    
+
     public void setLoreGenerator(Supplier<List<String>> loreGenerator) {
         this.loreGenerator = loreGenerator;
     }
-    
+
     public Supplier<Boolean> getGlowGenerator() {
-    	return glowGenerator;
+        return glowGenerator;
     }
-    
+
     public void setGlowGenerator(Supplier<Boolean> glowGenerator) {
         this.glowGenerator = glowGenerator;
     }
-    
+
     public Supplier<Boolean> getDisabledGenerator() {
-    	return disabledGenerator;
+        return disabledGenerator;
     }
-    
+
     public void setDisabledGenerator(Supplier<Boolean> disabledGenerator) {
         this.disabledGenerator = disabledGenerator;
     }

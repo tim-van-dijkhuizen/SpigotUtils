@@ -18,9 +18,9 @@ import nl.timvandijkhuizen.spigotutils.menu.items.MenuItemClick;
 import nl.timvandijkhuizen.spigotutils.ui.UI;
 
 public class ConfigTypeDomain extends ConfigTypeString {
-	
-	public static final Pattern DOMAIN_REGEX = Pattern.compile("^[0-9\\p{L}][0-9\\p{L}-\\.]{1,61}[0-9\\p{L}]\\.[0-9\\p{L}][\\p{L}-]*[0-9\\p{L}]+$");
-	
+
+    public static final Pattern DOMAIN_REGEX = Pattern.compile("^[0-9\\p{L}][0-9\\p{L}-\\.]{1,61}[0-9\\p{L}]\\.[0-9\\p{L}][\\p{L}-]*[0-9\\p{L}]+$");
+
     @Override
     public void getValueInput(OptionConfig config, ConfigOption<String> option, MenuItemClick event, Consumer<String> callback) {
         ConversationFactory factory = new ConversationFactory(PluginBase.getInstance());
@@ -34,20 +34,20 @@ public class ConfigTypeDomain extends ConfigTypeString {
 
             @Override
             public Prompt acceptInput(ConversationContext context, String input) {
-            	Matcher domainMatch = DOMAIN_REGEX.matcher(input);
-            	
-            	if(!domainMatch.matches()) {
-            		context.getForWhom().sendRawMessage(UI.color("You must specify a valid domain, please try again.", UI.COLOR_ERROR));
-            		return this;
-            	}
-            	
-        		callback.accept(input);
-        		return null;
+                Matcher domainMatch = DOMAIN_REGEX.matcher(input);
+
+                if (!domainMatch.matches()) {
+                    context.getForWhom().sendRawMessage(UI.color("You must specify a valid domain, please try again.", UI.COLOR_ERROR));
+                    return this;
+                }
+
+                callback.accept(input);
+                return null;
             }
         }).withLocalEcho(false).buildConversation(player);
 
         player.closeInventory();
         conversation.begin();
     }
-	
+
 }

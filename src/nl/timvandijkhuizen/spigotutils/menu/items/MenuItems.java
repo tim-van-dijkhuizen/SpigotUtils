@@ -13,9 +13,9 @@ public class MenuItems {
     public static final MenuItemBuilder CANCEL = new MenuItemBuilder(XMaterial.GRAY_DYE.parseItem(true)).setName(UI.color("Cancel", ChatColor.GRAY, ChatColor.BOLD));
     public static final MenuItemBuilder SAVE = new MenuItemBuilder(XMaterial.LIME_DYE.parseItem(true)).setName(UI.color("Save", ChatColor.GREEN, ChatColor.BOLD));
     public static final MenuItemBuilder BACKGROUND = new MenuItemBuilder(XMaterial.GRAY_STAINED_GLASS_PANE.parseItem(true));
-    
+
     public static final MenuItemBuilder PREVIOUS = new MenuItemBuilder(XMaterial.ARROW.parseItem(true)).setName(UI.color("Previous Page", UI.COLOR_SECONDARY, ChatColor.BOLD));
     public static final MenuItemBuilder NEXT = new MenuItemBuilder(XMaterial.ARROW.parseItem(true)).setName(UI.color("Next Page", UI.COLOR_SECONDARY, ChatColor.BOLD));
     public static final MenuItemBuilder CURRENT = new MenuItemBuilder(XMaterial.MAP.parseItem(true));
-    
+
 }
