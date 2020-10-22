@@ -56,18 +56,18 @@ public abstract class BaseCommand implements CommandExecutor {
      * 
      * @param player
      * @param args
-     * @throws Exception
+     * @throws Throwable
      */
-    public abstract void onPlayerUse(Player player, String[] args) throws Exception;
+    public abstract void onPlayerUse(Player player, String[] args) throws Throwable;
 
     /**
      * Call when the console executes the command.
      * 
      * @param console
      * @param args
-     * @throws Exception
+     * @throws Throwable
      */
-    public abstract void onConsoleUse(CommandSender console, String[] args) throws Exception;
+    public abstract void onConsoleUse(CommandSender console, String[] args) throws Throwable;
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
@@ -106,7 +106,7 @@ public abstract class BaseCommand implements CommandExecutor {
             } else {
                 onConsoleUse(sender, args);
             }
-        } catch (Exception e) {
+        } catch (Throwable e) {
             e.printStackTrace();
             sender.sendMessage(UI.color(MESSAGE_ERROR, UI.COLOR_ERROR));
         }

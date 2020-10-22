@@ -12,21 +12,21 @@ public interface Service {
     /**
      * Called when the service is created.
      * 
-     * @throws Exception
+     * @throws Throwable
      */
     public void init() throws Throwable;
 
     /**
      * Called when the service is loaded.
      * 
-     * @throws Exception
+     * @throws Throwable
      */
     public void load() throws Throwable;
 
     /**
      * Called when the service is unloaded.
      * 
-     * @throws Exception
+     * @throws Throwable
      */
     public void unload() throws Throwable;
 
