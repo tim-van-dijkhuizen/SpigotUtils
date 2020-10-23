@@ -1,10 +1,12 @@
 package nl.timvandijkhuizen.spigotutils.config;
 
+import java.text.SimpleDateFormat;
 import java.util.Currency;
 import java.util.Locale;
 
 import nl.timvandijkhuizen.spigotutils.config.types.ConfigTypeBoolean;
 import nl.timvandijkhuizen.spigotutils.config.types.ConfigTypeCurrency;
+import nl.timvandijkhuizen.spigotutils.config.types.ConfigTypeDateFormat;
 import nl.timvandijkhuizen.spigotutils.config.types.ConfigTypeDomain;
 import nl.timvandijkhuizen.spigotutils.config.types.ConfigTypeInteger;
 import nl.timvandijkhuizen.spigotutils.config.types.ConfigTypeLocale;
@@ -22,5 +24,6 @@ public class ConfigTypes {
     public static final ConfigType<Locale> LOCALE = new ConfigTypeLocale();
     public static final ConfigType<String> DOMAIN = new ConfigTypeDomain();
     public static final ConfigType<String> MESSAGE = new ConfigTypeMessage();
+    public static final ConfigType<SimpleDateFormat> DATE_FORMAT = new ConfigTypeDateFormat();
 
 }
