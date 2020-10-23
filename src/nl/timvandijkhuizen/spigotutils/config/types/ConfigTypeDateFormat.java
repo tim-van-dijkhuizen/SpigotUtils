@@ -63,6 +63,7 @@ public class ConfigTypeDateFormat implements ConfigType<SimpleDateFormat> {
                     return null;
                 } catch(IllegalArgumentException e) {
                     context.getForWhom().sendRawMessage(UI.color("You must specify a valid dateformat, please try again.", UI.COLOR_ERROR));
+                    UI.playSound(player, UI.SOUND_ERROR);
                     return this;
                 }
             }

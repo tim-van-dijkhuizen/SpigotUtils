@@ -4,9 +4,9 @@ import org.bukkit.entity.Player;
 
 public interface ConfigObject {
 
-    void serialize(ConfigObjectData output);
+    void serialize(ConfigObjectData output) throws Throwable;
 
-    void deserialize(ConfigObjectData input);
+    void deserialize(ConfigObjectData input) throws Throwable;
 
     String getItemName();
 

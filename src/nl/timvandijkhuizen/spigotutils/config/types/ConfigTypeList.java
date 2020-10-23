@@ -56,12 +56,11 @@ public class ConfigTypeList<T extends ConfigObject> implements ConfigType<List<T
 
                 object = clazz.newInstance();
                 object.deserialize(data);
-            } catch (Exception e) {
+                
+                output.add(object);
+            } catch (Throwable e) {
                 ConsoleHelper.printError("Failed to deserialize config object: " + rawObject.toString(), e);
-                continue;
             }
-
-            output.add(object);
         }
 
         return output;
@@ -75,8 +74,12 @@ public class ConfigTypeList<T extends ConfigObject> implements ConfigType<List<T
             for (T object : value) {
                 ConfigObjectData data = new ConfigObjectData();
 
-                object.serialize(data);
-                output.add(data.toMap());
+                try {
+                    object.serialize(data);
+                    output.add(data.toMap());
+                } catch (Throwable e) {
+                    ConsoleHelper.printError("Failed to serialize config object: " + data.toString(), e);
+                }
             }
 
             config.set(option.getPath(), output);

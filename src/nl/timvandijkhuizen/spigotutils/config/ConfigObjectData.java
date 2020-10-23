@@ -22,6 +22,10 @@ public class ConfigObjectData {
     public String getString(String key) {
         return getValue(key, raw -> (String) raw);
     }
+    
+    public char getChar(String key) {
+        return getValue(key, raw -> raw.charAt(0));
+    }
 
     public int getInteger(String key) {
         return getValue(key, raw -> Integer.valueOf(raw));

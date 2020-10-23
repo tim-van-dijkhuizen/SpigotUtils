@@ -38,6 +38,7 @@ public class ConfigTypeDomain extends ConfigTypeString {
 
                 if (!domainMatch.matches()) {
                     context.getForWhom().sendRawMessage(UI.color("You must specify a valid domain, please try again.", UI.COLOR_ERROR));
+                    UI.playSound(player, UI.SOUND_ERROR);
                     return this;
                 }
 
