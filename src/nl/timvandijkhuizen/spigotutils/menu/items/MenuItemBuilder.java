@@ -1,7 +1,7 @@
 package nl.timvandijkhuizen.spigotutils.menu.items;
 
+import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 import java.util.function.Supplier;
 
@@ -60,19 +60,13 @@ public class MenuItemBuilder extends ItemBuilder {
         return new MenuItemBuilder(itemStack.clone());
     }
 
-    public MenuItemBuilder setDurability(short durability) {
-        super.setDurability(durability);
-        return this;
-    }
-
     public MenuItemBuilder setType(Material material) {
         super.setType(material);
         return this;
     }
 
     public MenuItemBuilder setType(XMaterial material) {
-        super.setType(material);
-        return this;
+        return setType(material.parseMaterial(true));
     }
 
     public MenuItemBuilder setName(String name) {
@@ -84,29 +78,24 @@ public class MenuItemBuilder extends ItemBuilder {
         super.setAmount(amount);
         return this;
     }
-
-    public MenuItemBuilder removeLore() {
-        super.removeLore();
+    
+    public MenuItemBuilder setDurability(short durability) {
+        super.setDurability(durability);
         return this;
     }
-
-    public MenuItemBuilder hideAttributes() {
-        super.hideAttributes();
-        return this;
-    }
-
-    public MenuItemBuilder addUnsafeEnchantment(Enchantment enchantment, int level) {
-        super.addUnsafeEnchantment(enchantment, level);
-        return this;
-    }
-
-    public MenuItemBuilder removeEnchantment(Enchantment enchantment) {
-        super.removeEnchantment(enchantment);
+    
+    public MenuItemBuilder setUnbreakable(boolean unbreakable) {
+        super.setUnbreakable(unbreakable);
         return this;
     }
 
     public MenuItemBuilder addEnchant(Enchantment enchantment, int level) {
         super.addEnchant(enchantment, level);
+        return this;
+    }
+    
+    public MenuItemBuilder removeEnchantment(Enchantment enchantment) {
+        super.removeEnchantment(enchantment);
         return this;
     }
 
@@ -119,60 +108,54 @@ public class MenuItemBuilder extends ItemBuilder {
         super.removeEnchantGlow();
         return this;
     }
-
-    public MenuItemBuilder addEnchantments(Map<Enchantment, Integer> enchantments) {
-        super.addEnchantments(enchantments);
-        return this;
-    }
-
-    public MenuItemBuilder setInfinityDurability() {
-        super.setInfinityDurability();
+    
+    public MenuItemBuilder hideAttributes() {
+        super.hideAttributes();
         return this;
     }
 
     public MenuItemBuilder setLore(String... lore) {
-        super.setLore(lore);
-        return this;
+        return setLore(Arrays.asList(lore));
     }
 
     public MenuItemBuilder setLore(List<String> lore) {
         super.setLore(lore);
         return this;
     }
-
-    public MenuItemBuilder addLore(List<String> line) {
-        super.addLore(line);
-        return this;
-    }
-
-    public MenuItemBuilder setUnbreakable(boolean value) {
-        super.setUnbreakable(value);
-        return this;
+    
+    public MenuItemBuilder setLore(int position, String line) {
+        List<String> lore = getLore();
+        
+        lore.set(position, line);
+        
+        return setLore(lore);
     }
 
     public MenuItemBuilder addLore(String... lines) {
-        super.addLore(lines);
-        return this;
+        return addLore(Arrays.asList(lines));
     }
 
-    public MenuItemBuilder removeLore(String line) {
-        super.removeLore(line);
-        return this;
+    public MenuItemBuilder addLore(List<String> lines) {
+        List<String> lore = getLore();
+
+        for (String line : lines) {
+            lore.add(line);
+        }
+
+        return setLore(lore);
     }
 
+    public MenuItemBuilder removeLore() {
+        setLore();
+        return this;
+    }
+    
     public MenuItemBuilder removeLore(int index) {
-        super.removeLore(index);
-        return this;
-    }
+        List<String> lore = getLore();
+        
+        lore.remove(index);
 
-    public MenuItemBuilder addLore(String line) {
-        super.addLore(line);
-        return this;
-    }
-
-    public MenuItemBuilder setLore(String line, int pos) {
-        super.setLore(line, pos);
-        return this;
+        return setLore(lore);
     }
 
     public MenuItemBuilder setLeatherArmorColor(Color color) {

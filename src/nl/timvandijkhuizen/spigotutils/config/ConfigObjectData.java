@@ -6,7 +6,6 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.function.Function;
 
-@SuppressWarnings("unchecked")
 public class ConfigObjectData {
 
     private Map<String, Object> params;

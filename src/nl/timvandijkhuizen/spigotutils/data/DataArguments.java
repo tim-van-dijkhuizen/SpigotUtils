@@ -5,7 +5,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 
-@SuppressWarnings("unchecked")
 public class DataArguments {
 
     private Object[] arguments;

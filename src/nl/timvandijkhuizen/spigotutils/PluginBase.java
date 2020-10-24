@@ -9,7 +9,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 import nl.timvandijkhuizen.spigotutils.helpers.ConsoleHelper;
 import nl.timvandijkhuizen.spigotutils.services.Service;
 
-@SuppressWarnings("unchecked")
 public abstract class PluginBase extends JavaPlugin {
 
     private static PluginBase instance;

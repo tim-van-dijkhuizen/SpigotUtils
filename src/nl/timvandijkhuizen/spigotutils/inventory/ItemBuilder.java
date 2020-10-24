@@ -3,15 +3,14 @@ package nl.timvandijkhuizen.spigotutils.inventory;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 
-import org.bukkit.ChatColor;
 import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
 import org.bukkit.inventory.meta.SkullMeta;
@@ -19,7 +18,6 @@ import org.bukkit.inventory.meta.SkullMeta;
 import com.cryptomorin.xseries.SkullUtils;
 import com.cryptomorin.xseries.XMaterial;
 
-@SuppressWarnings("deprecation")
 public class ItemBuilder {
 
     protected ItemStack itemStack;
@@ -52,16 +50,6 @@ public class ItemBuilder {
         return itemStack;
     }
 
-    public ItemBuilder setDurability(short durability) {
-        if (durability == 0) {
-            return this;
-        }
-
-        itemStack.setDurability(durability);
-
-        return this;
-    }
-
     public Material getType() {
         return itemStack.getType();
     }
@@ -78,12 +66,10 @@ public class ItemBuilder {
     public ItemBuilder setName(String name) {
         ItemMeta meta = itemStack.getItemMeta();
 
-        if (meta == null) {
-            return this;
+        if (meta != null) {
+            meta.setDisplayName(name);
+            itemStack.setItemMeta(meta);
         }
-
-        meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', name));
-        itemStack.setItemMeta(meta);
 
         return this;
     }
@@ -92,81 +78,53 @@ public class ItemBuilder {
         itemStack.setAmount(amount);
         return this;
     }
-
-    public List<String> getLore() {
+    
+    public ItemBuilder setDurability(short durability) {
         ItemMeta meta = itemStack.getItemMeta();
 
-        if (meta == null) {
-            return new ArrayList<>();
+        if (meta != null && meta instanceof Damageable) {
+            ((Damageable) meta).setDamage(durability);
+            itemStack.setItemMeta(meta);
         }
-
-        return meta.getLore();
-    }
-
-    public ItemBuilder removeLore() {
-        ItemMeta meta = itemStack.getItemMeta();
-
-        if (meta == null || !meta.hasLore() || meta.getLore() == null) {
-            return this;
-        }
-
-        // Remove lore
-        meta.setLore(new ArrayList<>());
-        itemStack.setItemMeta(meta);
 
         return this;
     }
-
-    public ItemBuilder hideAttributes() {
+    
+    public ItemBuilder setUnbreakable(boolean unbreakable) {
         ItemMeta meta = itemStack.getItemMeta();
 
-        if (meta == null) {
-            return this;
+        if (meta != null) {
+            meta.setUnbreakable(unbreakable);
+            itemStack.setItemMeta(meta);
         }
 
-        meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-        meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-        meta.addItemFlags(ItemFlag.HIDE_PLACED_ON);
-        meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
-        meta.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
-        itemStack.setItemMeta(meta);
-
-        return this;
-    }
-
-    public ItemBuilder addUnsafeEnchantment(Enchantment enchantment, int level) {
-        itemStack.addUnsafeEnchantment(enchantment, level);
-        return this;
-    }
-
-    public ItemBuilder removeEnchantment(Enchantment enchantment) {
-        itemStack.removeEnchantment(enchantment);
         return this;
     }
 
     public ItemBuilder addEnchant(Enchantment enchantment, int level) {
         ItemMeta meta = itemStack.getItemMeta();
 
-        if (meta == null) {
-            return this;
+        if (meta != null) {
+            meta.addEnchant(enchantment, level, true);
+            itemStack.setItemMeta(meta);
         }
 
-        meta.addEnchant(enchantment, level, true);
-        itemStack.setItemMeta(meta);
-
+        return this;
+    }
+    
+    public ItemBuilder removeEnchantment(Enchantment enchantment) {
+        itemStack.removeEnchantment(enchantment);
         return this;
     }
 
     public ItemBuilder addEnchantGlow() {
         ItemMeta meta = itemStack.getItemMeta();
 
-        if (meta == null) {
-            return this;
+        if (meta != null) {
+            meta.addEnchant(Enchantment.DURABILITY, 1, true);
+            meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+            itemStack.setItemMeta(meta);
         }
-
-        meta.addEnchant(Enchantment.DURABILITY, 1, true);
-        meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-        itemStack.setItemMeta(meta);
 
         return this;
     }
@@ -174,25 +132,38 @@ public class ItemBuilder {
     public ItemBuilder removeEnchantGlow() {
         ItemMeta meta = itemStack.getItemMeta();
 
-        if (meta == null) {
-            return this;
+        if (meta != null) {
+            meta.removeEnchant(Enchantment.DURABILITY);
+            meta.removeItemFlags(ItemFlag.HIDE_ENCHANTS);
+            itemStack.setItemMeta(meta);
         }
 
-        meta.removeEnchant(Enchantment.DURABILITY);
-        meta.removeItemFlags(ItemFlag.HIDE_ENCHANTS);
-        itemStack.setItemMeta(meta);
+        return this;
+    }
+    
+    public ItemBuilder hideAttributes() {
+        ItemMeta meta = itemStack.getItemMeta();
+
+        if (meta != null) {
+            meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+            meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+            meta.addItemFlags(ItemFlag.HIDE_PLACED_ON);
+            meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
+            meta.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
+            itemStack.setItemMeta(meta);
+        }
 
         return this;
     }
 
-    public ItemBuilder addEnchantments(Map<Enchantment, Integer> enchantments) {
-        itemStack.addEnchantments(enchantments);
-        return this;
-    }
+    public List<String> getLore() {
+        ItemMeta meta = itemStack.getItemMeta();
 
-    public ItemBuilder setInfinityDurability() {
-        itemStack.setDurability(Short.MAX_VALUE);
-        return this;
+        if (meta != null) {
+            return meta.getLore();
+        }
+
+        return new ArrayList<>();
     }
 
     public ItemBuilder setLore(String... lore) {
@@ -202,115 +173,54 @@ public class ItemBuilder {
     public ItemBuilder setLore(List<String> lore) {
         ItemMeta meta = itemStack.getItemMeta();
 
-        if (meta == null) {
-            return this;
+        if (meta != null) {
+            meta.setLore(lore);
+            itemStack.setItemMeta(meta);
         }
 
-        meta.setLore(lore);
-        itemStack.setItemMeta(meta);
-
         return this;
+    }
+    
+    public ItemBuilder setLore(int position, String line) {
+        List<String> lore = getLore();
+        
+        lore.set(position, line);
+        
+        return setLore(lore);
     }
 
     public ItemBuilder addLore(String... lines) {
         return addLore(Arrays.asList(lines));
     }
 
-    public ItemBuilder addLore(List<String> line) {
-        ItemMeta meta = itemStack.getItemMeta();
+    public ItemBuilder addLore(List<String> lines) {
+        List<String> lore = getLore();
 
-        if (meta == null) {
-            return this;
+        for (String line : lines) {
+            lore.add(line);
         }
 
-        // Add lore
-        List<String> lore = meta.getLore() != null ? meta.getLore() : new ArrayList<>();
-
-        for (String s : line) {
-            lore.add(ChatColor.translateAlternateColorCodes('&', s));
-        }
-
-        meta.setLore(lore);
-        itemStack.setItemMeta(meta);
-
-        return this;
+        return setLore(lore);
     }
 
-    public ItemBuilder setUnbreakable(boolean value) {
-        ItemMeta meta = itemStack.getItemMeta();
-
-        if (meta == null) {
-            return this;
-        }
-
-        meta.setUnbreakable(value);
-        itemStack.setItemMeta(meta);
-
+    public ItemBuilder removeLore() {
+        setLore();
         return this;
     }
-
-    public ItemBuilder removeLore(String line) {
-        ItemMeta meta = itemStack.getItemMeta();
-        List<String> lore = meta.getLore();
-
-        if (!lore.contains(line)) {
-            return this;
-        }
-
-        lore.remove(line);
-        meta.setLore(lore);
-        itemStack.setItemMeta(meta);
-
-        return this;
-    }
-
+    
     public ItemBuilder removeLore(int index) {
-        ItemMeta meta = itemStack.getItemMeta();
-        List<String> lore = meta.getLore();
-
-        if (index < 0 || index > lore.size()) {
-            return this;
-        }
-
+        List<String> lore = getLore();
+        
         lore.remove(index);
-        meta.setLore(lore);
-        itemStack.setItemMeta(meta);
 
-        return this;
-    }
-
-    public ItemBuilder addLore(String line) {
-        ItemMeta meta = itemStack.getItemMeta();
-        List<String> lore = new ArrayList<>();
-
-        if (meta.hasLore()) {
-            lore.addAll(meta.getLore());
-        }
-
-        lore.add(line);
-        meta.setLore(lore);
-        itemStack.setItemMeta(meta);
-
-        return this;
-    }
-
-    public ItemBuilder setLore(String line, int position) {
-        ItemMeta meta = itemStack.getItemMeta();
-        List<String> lore = meta.getLore();
-
-        lore.set(position, line);
-        meta.setLore(lore);
-        itemStack.setItemMeta(meta);
-
-        return this;
+        return setLore(lore);
     }
 
     public ItemBuilder setLeatherArmorColor(Color color) {
         ItemMeta meta = itemStack.getItemMeta();
 
-        if (meta instanceof LeatherArmorMeta) {
+        if (meta != null && meta instanceof LeatherArmorMeta) {
             LeatherArmorMeta leatherMeta = (LeatherArmorMeta) meta;
-
             leatherMeta.setColor(color);
             itemStack.setItemMeta(leatherMeta);
         }
@@ -321,7 +231,7 @@ public class ItemBuilder {
     public ItemBuilder setSkullOwner(UUID uuid) {
         ItemMeta meta = itemStack.getItemMeta();
 
-        if (meta instanceof SkullMeta) {
+        if (meta != null && meta instanceof SkullMeta) {
             SkullMeta skullMeta = (SkullMeta) meta;
             skullMeta = SkullUtils.applySkin(skullMeta, uuid);
             itemStack.setItemMeta(skullMeta);

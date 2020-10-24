@@ -5,7 +5,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 
-@SuppressWarnings("unchecked")
 public class DataValue extends TypedValue<Object> {
 
     public DataValue(Object value) {
