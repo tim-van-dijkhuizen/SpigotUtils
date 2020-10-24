@@ -159,7 +159,7 @@ public class ItemBuilder {
     public List<String> getLore() {
         ItemMeta meta = itemStack.getItemMeta();
 
-        if (meta != null) {
+        if (meta != null && meta.hasLore()) {
             return meta.getLore();
         }
 

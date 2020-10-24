@@ -16,6 +16,7 @@ import nl.timvandijkhuizen.spigotutils.config.OptionConfig;
 import nl.timvandijkhuizen.spigotutils.helpers.LocaleHelper;
 import nl.timvandijkhuizen.spigotutils.menu.items.MenuItemBuilder;
 import nl.timvandijkhuizen.spigotutils.menu.items.MenuItemClick;
+import nl.timvandijkhuizen.spigotutils.menu.items.MenuItems;
 import nl.timvandijkhuizen.spigotutils.menu.types.PagedMenu;
 import nl.timvandijkhuizen.spigotutils.ui.UI;
 
@@ -46,8 +47,10 @@ public class ConfigTypeLocale implements ConfigType<Locale> {
 
     @Override
     public void getValueInput(OptionConfig config, ConfigOption<Locale> option, MenuItemClick event, Consumer<Locale> callback) {
-        PagedMenu menu = new PagedMenu("Select Locale", 3, 7, 1, 1);
+        PagedMenu menu = new PagedMenu("Select Locale", 3, 7, 1, 1, 1, 5, 7);
         Player player = event.getPlayer();
+        Locale selected = getValue(config, option);
+        String selectedValue = selected != null ? LocaleHelper.serializeLocale(selected) : null;
 
         for (Locale locale : LOCALES) {
             MenuItemBuilder item = new MenuItemBuilder(XMaterial.SUNFLOWER);
@@ -61,6 +64,10 @@ public class ConfigTypeLocale implements ConfigType<Locale> {
             item.setLore(UI.color("Code: ", UI.COLOR_TEXT) + UI.color(localeValue, UI.COLOR_SECONDARY));
             item.setLore(UI.color("Currency: ", UI.COLOR_TEXT) + UI.color(currencyValue, UI.COLOR_SECONDARY));
 
+            if(selectedValue != null && localeValue.equals(selectedValue)) {
+                item.addEnchantGlow();
+            }
+            
             item.setClickListener(itemClick -> {
                 UI.playSound(player, UI.SOUND_CLICK);
                 callback.accept(locale);
@@ -69,6 +76,16 @@ public class ConfigTypeLocale implements ConfigType<Locale> {
             menu.addPagedButton(item);
         }
 
+        // Go back button
+        MenuItemBuilder backButton = MenuItems.BACK.clone();
+
+        backButton.setClickListener(backEvent -> {
+            UI.playSound(player, UI.SOUND_CLICK);
+            callback.accept(selected);
+        });
+
+        menu.setButton(backButton, menu.getSize().getSlots() - 9 + 3);
+        
         menu.open(player);
     }
 

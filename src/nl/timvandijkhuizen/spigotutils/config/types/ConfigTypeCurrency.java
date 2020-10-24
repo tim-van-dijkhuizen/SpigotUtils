@@ -13,6 +13,7 @@ import nl.timvandijkhuizen.spigotutils.config.ConfigType;
 import nl.timvandijkhuizen.spigotutils.config.OptionConfig;
 import nl.timvandijkhuizen.spigotutils.menu.items.MenuItemBuilder;
 import nl.timvandijkhuizen.spigotutils.menu.items.MenuItemClick;
+import nl.timvandijkhuizen.spigotutils.menu.items.MenuItems;
 import nl.timvandijkhuizen.spigotutils.menu.types.PagedMenu;
 import nl.timvandijkhuizen.spigotutils.ui.UI;
 
@@ -45,8 +46,9 @@ public class ConfigTypeCurrency implements ConfigType<Currency> {
 
     @Override
     public void getValueInput(OptionConfig config, ConfigOption<Currency> option, MenuItemClick event, Consumer<Currency> callback) {
-        PagedMenu menu = new PagedMenu("Select Currency", 3, 7, 1, 1);
+        PagedMenu menu = new PagedMenu("Select Currency", 3, 7, 1, 1, 1, 5, 7);
         Player player = event.getPlayer();
+        Currency selected = getValue(config, option);
 
         for (Currency currency : Currency.getAvailableCurrencies()) {
             MenuItemBuilder item = new MenuItemBuilder(XMaterial.SUNFLOWER);
@@ -54,6 +56,10 @@ public class ConfigTypeCurrency implements ConfigType<Currency> {
             item.setName(UI.color(currency.getDisplayName(), UI.COLOR_PRIMARY, ChatColor.BOLD));
             item.setLore(UI.color("Code: ", UI.COLOR_TEXT) + UI.color(currency.getCurrencyCode(), UI.COLOR_SECONDARY));
 
+            if(selected != null && currency.getCurrencyCode().equals(selected.getCurrencyCode())) {
+                item.addEnchantGlow();
+            }
+            
             item.setClickListener(itemClick -> {
                 UI.playSound(player, UI.SOUND_CLICK);
                 callback.accept(currency);
@@ -62,6 +68,16 @@ public class ConfigTypeCurrency implements ConfigType<Currency> {
             menu.addPagedButton(item);
         }
 
+        // Go back button
+        MenuItemBuilder backButton = MenuItems.BACK.clone();
+
+        backButton.setClickListener(backEvent -> {
+            UI.playSound(player, UI.SOUND_CLICK);
+            callback.accept(selected);
+        });
+
+        menu.setButton(backButton, menu.getSize().getSlots() - 9 + 3);
+        
         menu.open(player);
     }
 
