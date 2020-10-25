@@ -10,8 +10,8 @@ public class ConfigTypePassword extends ConfigTypeString {
     public static final String PASSWORD_CHARACTER = "•";
 
     @Override
-    public String getValueLore(OptionConfig config, ConfigOption<String> option) {
-        return !isValueEmpty(config, option) ? StringUtils.repeat(PASSWORD_CHARACTER, getValue(config, option).length()) : "";
+    public String getDisplayValue(OptionConfig config, ConfigOption<String> option) {
+        return StringUtils.repeat(PASSWORD_CHARACTER, getRawValue(config, option).length());
     }
 
 }

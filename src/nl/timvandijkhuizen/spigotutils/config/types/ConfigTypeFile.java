@@ -49,9 +49,14 @@ public class ConfigTypeFile implements ConfigType<File> {
     }
 
     @Override
-    public String getValueLore(OptionConfig config, ConfigOption<File> option) {
+    public String getRawValue(OptionConfig config, ConfigOption<File> option) {
         File value = getValue(config, option);
         return value != null ? value.getPath() : "";
+    }
+    
+    @Override
+    public String getDisplayValue(OptionConfig config, ConfigOption<File> option) {
+        return getRawValue(config, option);
     }
 
     @Override

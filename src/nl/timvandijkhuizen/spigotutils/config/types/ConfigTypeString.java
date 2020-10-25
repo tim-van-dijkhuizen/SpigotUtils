@@ -29,9 +29,15 @@ public class ConfigTypeString implements ConfigType<String> {
     }
 
     @Override
-    public String getValueLore(OptionConfig config, ConfigOption<String> option) {
+    public String getRawValue(OptionConfig config, ConfigOption<String> option) {
         return !isValueEmpty(config, option) ? getValue(config, option) : "";
     }
+    
+    @Override
+    public String getDisplayValue(OptionConfig config, ConfigOption<String> option) {
+        return getRawValue(config, option);
+    }
+
 
     @Override
     public boolean isValueEmpty(OptionConfig config, ConfigOption<String> option) {

@@ -101,13 +101,23 @@ public class ConfigOption<T> {
     }
 
     /**
+     * Serializes T to a String.
+     * 
+     * @param value
+     * @return
+     */
+    public String getRawValue(OptionConfig config) {
+        return type.getRawValue(config, this);
+    }
+    
+    /**
      * Returns the value lore.
      * 
      * @param config
      * @return
      */
-    public String getValueLore(OptionConfig config) {
-        return type.getValueLore(config, this);
+    public String getDisplayValue(OptionConfig config) {
+        return type.getDisplayValue(config, this);
     }
 
     /**

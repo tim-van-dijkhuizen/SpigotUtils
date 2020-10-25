@@ -36,8 +36,13 @@ public class ConfigTypeDateFormat implements ConfigType<SimpleDateFormat> {
     }
 
     @Override
-    public String getValueLore(OptionConfig config, ConfigOption<SimpleDateFormat> option) {
+    public String getRawValue(OptionConfig config, ConfigOption<SimpleDateFormat> option) {
         return !isValueEmpty(config, option) ? getValue(config, option).toPattern() : "";
+    }
+    
+    @Override
+    public String getDisplayValue(OptionConfig config, ConfigOption<SimpleDateFormat> option) {
+        return getRawValue(config, option);
     }
 
     @Override

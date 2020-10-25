@@ -20,7 +20,12 @@ public class ConfigTypeBoolean implements ConfigType<Boolean> {
     }
 
     @Override
-    public String getValueLore(OptionConfig config, ConfigOption<Boolean> option) {
+    public String getRawValue(OptionConfig config, ConfigOption<Boolean> option) {
+        return getValue(config, option) ? "true" : "false";
+    }
+    
+    @Override
+    public String getDisplayValue(OptionConfig config, ConfigOption<Boolean> option) {
         return getValue(config, option) ? "Yes" : "No";
     }
 

@@ -36,7 +36,17 @@ public class ConfigTypeLocale implements ConfigType<Locale> {
     }
 
     @Override
-    public String getValueLore(OptionConfig config, ConfigOption<Locale> option) {
+    public String getRawValue(OptionConfig config, ConfigOption<Locale> option) {
+        if(!isValueEmpty(config, option)) {
+            Locale value = getValue(config, option);
+            return LocaleHelper.serializeLocale(value);
+        }
+        
+        return "";
+    }
+    
+    @Override
+    public String getDisplayValue(OptionConfig config, ConfigOption<Locale> option) {
         return !isValueEmpty(config, option) ? getValue(config, option).getDisplayName() : "";
     }
 

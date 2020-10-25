@@ -27,10 +27,16 @@ public class ConfigTypeInteger implements ConfigType<Integer> {
     public void setValue(OptionConfig config, ConfigOption<Integer> option, Integer value) {
         config.set(option.getPath(), value);
     }
+    
+    @Override
+    public String getRawValue(OptionConfig config, ConfigOption<Integer> option) {
+        int value = getValue(config, option);
+        return Integer.toString(value);
+    }
 
     @Override
-    public String getValueLore(OptionConfig config, ConfigOption<Integer> option) {
-        return "" + getValue(config, option);
+    public String getDisplayValue(OptionConfig config, ConfigOption<Integer> option) {
+        return getRawValue(config, option);
     }
 
     @Override

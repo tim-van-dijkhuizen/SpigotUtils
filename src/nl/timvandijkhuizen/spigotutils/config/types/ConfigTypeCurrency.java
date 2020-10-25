@@ -35,10 +35,15 @@ public class ConfigTypeCurrency implements ConfigType<Currency> {
     }
 
     @Override
-    public String getValueLore(OptionConfig config, ConfigOption<Currency> option) {
+    public String getRawValue(OptionConfig config, ConfigOption<Currency> option) {
+        return !isValueEmpty(config, option) ? getValue(config, option).getCurrencyCode() : "";
+    }
+    
+    @Override
+    public String getDisplayValue(OptionConfig config, ConfigOption<Currency> option) {
         return !isValueEmpty(config, option) ? getValue(config, option).getDisplayName() : "";
     }
-
+    
     @Override
     public boolean isValueEmpty(OptionConfig config, ConfigOption<Currency> option) {
         return !config.contains(option.getPath()) || getValue(config, option) == null;

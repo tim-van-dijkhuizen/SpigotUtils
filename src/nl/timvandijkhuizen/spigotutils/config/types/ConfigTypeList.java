@@ -89,7 +89,12 @@ public class ConfigTypeList<T extends ConfigObject> implements ConfigType<List<T
     }
 
     @Override
-    public String getValueLore(OptionConfig config, ConfigOption<List<T>> option) {
+    public String getRawValue(OptionConfig config, ConfigOption<List<T>> option) {
+        throw new UnsupportedOperationException();
+    }
+    
+    @Override
+    public String getDisplayValue(OptionConfig config, ConfigOption<List<T>> option) {
         String[] items = getValue(config, option).stream()
             .map(i -> i.getItemName())
             .toArray(String[]::new);
