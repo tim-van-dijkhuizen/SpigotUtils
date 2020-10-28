@@ -17,6 +17,7 @@ import nl.timvandijkhuizen.spigotutils.config.ConfigObjectData;
 import nl.timvandijkhuizen.spigotutils.config.ConfigOption;
 import nl.timvandijkhuizen.spigotutils.config.ConfigType;
 import nl.timvandijkhuizen.spigotutils.config.OptionConfig;
+import nl.timvandijkhuizen.spigotutils.data.TypedValue;
 import nl.timvandijkhuizen.spigotutils.helpers.ConsoleHelper;
 import nl.timvandijkhuizen.spigotutils.menu.items.MenuItemBuilder;
 import nl.timvandijkhuizen.spigotutils.menu.items.MenuItemClick;
@@ -137,19 +138,20 @@ public class ConfigTypeList<T extends ConfigObject> implements ConfigType<List<T
 
         createButton.setClickListener(createClick -> {
             try {
-                T object = clazz.newInstance();
+                T object = createObject(null);
 
                 UI.playSound(player, UI.SOUND_CLICK);
                 player.closeInventory();
 
-                object.getInput(createClick, () -> {
-                    addObjectButton(player, menu, objects, object);
-                    objects.add(object);
+                object.getInput(createClick, save -> {
+                    if(save) {
+                        addObjectButton(player, menu, objects, object);
+                        objects.add(object);
+                    }
 
-                    UI.playSound(player, UI.SOUND_CLICK);
                     menu.open(player);
                 });
-            } catch (InstantiationException | IllegalAccessException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         });
@@ -195,13 +197,48 @@ public class ConfigTypeList<T extends ConfigObject> implements ConfigType<List<T
                 UI.playSound(player, UI.SOUND_CLICK);
                 player.closeInventory();
 
-                object.getInput(event, () -> {
+                // Create clone
+                TypedValue<T> clone = new TypedValue<>();
+                
+                try {
+                    clone.set(createObject(object));
+                } catch(Exception e) {
+                    ConsoleHelper.printError("Failed to create object clone", e);
+                    return;
+                }
+                
+                clone.get().getInput(event, save -> {
+                    if(save) {
+                        copyObjectData(clone.get(), object);
+                    }
+                    
                     menu.open(player);
                 });
             }
         });
 
         menu.addPagedButton(item);
+    }
+    
+    private T createObject(T base) throws Exception {
+        T object = clazz.newInstance();
+        
+        if(base != null) {
+            copyObjectData(base, object);
+        }
+        
+        return object;
+    }
+    
+    private void copyObjectData(T source, T target) {
+        ConfigObjectData data = new ConfigObjectData();
+        
+        try {
+            source.serialize(data);
+            target.deserialize(data);
+        } catch(Throwable e) {
+            ConsoleHelper.printError("Failed to copy config object data", e);
+        }
     }
 
 }

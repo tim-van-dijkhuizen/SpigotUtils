@@ -1,5 +1,7 @@
 package nl.timvandijkhuizen.spigotutils.config;
 
+import java.util.function.Consumer;
+
 import nl.timvandijkhuizen.spigotutils.menu.items.MenuItemClick;
 
 public interface ConfigObject {
@@ -12,6 +14,6 @@ public interface ConfigObject {
 
     String[] getItemLore();
 
-    void getInput(MenuItemClick event, Runnable callback);
+    void getInput(MenuItemClick event, Consumer<Boolean> callback);
 
 }
