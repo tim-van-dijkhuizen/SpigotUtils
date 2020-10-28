@@ -17,10 +17,12 @@ public class UI {
     public static final ChatColor COLOR_ERROR = ChatColor.RED;
 
     // UI sounds
-    public static final PredefinedSound SOUND_CLICK = new PredefinedSound(XSound.UI_BUTTON_CLICK, 1, 1);
-    public static final PredefinedSound SOUND_SUCCESS = new PredefinedSound(XSound.ENTITY_PLAYER_LEVELUP, 1, 1.5f);
-    public static final PredefinedSound SOUND_ERROR = new PredefinedSound(XSound.BLOCK_NOTE_BLOCK_BASS, 10.0F, 1.0F);
-    public static final PredefinedSound SOUND_DELETE = new PredefinedSound(XSound.ENTITY_ITEM_BREAK, 1, 1);
+    public static final PredefinedSound SOUND_CLICK = new PredefinedSound(XSound.UI_BUTTON_CLICK, 1f, 1f);
+    public static final PredefinedSound SOUND_SUCCESS = new PredefinedSound(XSound.ENTITY_PLAYER_LEVELUP, 1f, 1.5f);
+    public static final PredefinedSound SOUND_ERROR = new PredefinedSound(XSound.BLOCK_NOTE_BLOCK_BASS, 10f, 1f);
+    public static final PredefinedSound SOUND_DELETE = new PredefinedSound(XSound.ENTITY_ITEM_BREAK, 1f, 1f);
+    public static final PredefinedSound SOUND_CANCEL = new PredefinedSound(XSound.BLOCK_ANVIL_PLACE, .5f, 1f);
+    public static final PredefinedSound SOUND_CONFIRM = new PredefinedSound(XSound.BLOCK_NOTE_BLOCK_BELL, 1f, 1f);
 
     public static String color(String text, ChatColor... colors) {
         String colorString = "" + ChatColor.RESET;

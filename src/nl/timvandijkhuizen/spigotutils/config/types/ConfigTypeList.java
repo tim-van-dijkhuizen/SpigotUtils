@@ -142,7 +142,7 @@ public class ConfigTypeList<T extends ConfigObject> implements ConfigType<List<T
                 UI.playSound(player, UI.SOUND_CLICK);
                 player.closeInventory();
 
-                object.getInput(player, () -> {
+                object.getInput(createClick, () -> {
                     addObjectButton(player, menu, objects, object);
                     objects.add(object);
 
@@ -163,11 +163,23 @@ public class ConfigTypeList<T extends ConfigObject> implements ConfigType<List<T
     private void addObjectButton(Player player, PagedMenu menu, List<T> objects, T object) {
         MenuItemBuilder item = new MenuItemBuilder(menuIcon);
 
-        item.setName(UI.color(object.getItemName(), UI.COLOR_PRIMARY, ChatColor.BOLD));
-        item.setLore(object.getItemLore());
+        item.setNameGenerator(() -> {
+            return UI.color(object.getItemName(), UI.COLOR_PRIMARY, ChatColor.BOLD);
+        });
+        
+        item.setLoreGenerator(() -> {
+            List<String> lore = new ArrayList<>();
+            
+            for(String line : object.getItemLore()) {
+                lore.add(line);
+            }
 
-        item.addLore("", UI.color("Use left-click to edit.", UI.COLOR_SECONDARY, ChatColor.ITALIC));
-        item.addLore(UI.color("Use right-click to delete.", UI.COLOR_SECONDARY, ChatColor.ITALIC));
+            lore.add("");
+            lore.add(UI.color("Use left-click to edit.", UI.COLOR_SECONDARY, ChatColor.ITALIC));
+            lore.add(UI.color("Use right-click to delete.", UI.COLOR_SECONDARY, ChatColor.ITALIC));
+            
+            return lore;
+        });
 
         item.setClickListener(event -> {
             ClickType clickType = event.getClickType();
@@ -176,18 +188,14 @@ public class ConfigTypeList<T extends ConfigObject> implements ConfigType<List<T
                 UI.playSound(player, UI.SOUND_DELETE);
 
                 objects.remove(object);
-
                 menu.removePagedButton(item);
+                
                 menu.refresh();
             } else {
                 UI.playSound(player, UI.SOUND_CLICK);
                 player.closeInventory();
 
-                object.getInput(player, () -> {
-                    item.setName(UI.color(object.getItemName(), UI.COLOR_PRIMARY, ChatColor.BOLD));
-                    item.setLore(object.getItemLore());
-
-                    UI.playSound(player, UI.SOUND_CLICK);
+                object.getInput(event, () -> {
                     menu.open(player);
                 });
             }

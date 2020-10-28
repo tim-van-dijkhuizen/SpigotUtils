@@ -1,6 +1,6 @@
 package nl.timvandijkhuizen.spigotutils.config;
 
-import org.bukkit.entity.Player;
+import nl.timvandijkhuizen.spigotutils.menu.items.MenuItemClick;
 
 public interface ConfigObject {
 
@@ -12,6 +12,6 @@ public interface ConfigObject {
 
     String[] getItemLore();
 
-    void getInput(Player player, Runnable callback);
+    void getInput(MenuItemClick event, Runnable callback);
 
 }
