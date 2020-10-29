@@ -12,6 +12,7 @@ import org.bukkit.inventory.ItemStack;
 
 import com.cryptomorin.xseries.XMaterial;
 
+import nl.timvandijkhuizen.spigotutils.helpers.ConsoleHelper;
 import nl.timvandijkhuizen.spigotutils.inventory.ItemBuilder;
 
 public class MenuItemBuilder extends ItemBuilder {
@@ -28,7 +29,7 @@ public class MenuItemBuilder extends ItemBuilder {
     private Supplier<Boolean> disabledGenerator;
 
     public MenuItemBuilder() {
-        this(Material.AIR, 1);
+        this(XMaterial.BARRIER, 1);
     }
     
     public MenuItemBuilder(Material material) {

@@ -63,6 +63,16 @@ public class ItemBuilder {
         return setType(material.parseMaterial(true));
     }
 
+    public String getName() {
+        ItemMeta meta = itemStack.getItemMeta();
+
+        if (meta != null) {
+            return meta.getDisplayName();
+        }
+
+        return null;
+    }
+    
     public ItemBuilder setName(String name) {
         ItemMeta meta = itemStack.getItemMeta();
 
