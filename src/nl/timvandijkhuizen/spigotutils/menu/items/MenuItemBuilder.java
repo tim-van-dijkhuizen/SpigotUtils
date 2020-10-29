@@ -27,12 +27,12 @@ public class MenuItemBuilder extends ItemBuilder {
     private Supplier<Boolean> glowGenerator;
     private Supplier<Boolean> disabledGenerator;
 
-    public MenuItemBuilder(ItemStack itemStack) {
-        super(itemStack);
+    public MenuItemBuilder() {
+        this(Material.AIR, 1);
     }
-
+    
     public MenuItemBuilder(Material material) {
-        super(material);
+        super(material, 1);
     }
 
     public MenuItemBuilder(Material material, int amount) {
@@ -40,11 +40,15 @@ public class MenuItemBuilder extends ItemBuilder {
     }
 
     public MenuItemBuilder(XMaterial material) {
-        super(material);
+        super(material, 1);
     }
 
     public MenuItemBuilder(XMaterial material, int amount) {
-        super(material, amount);
+        super(material.parseMaterial(true), amount);
+    }
+
+    public MenuItemBuilder(ItemStack itemStack) {
+        super(itemStack);
     }
 
     public MenuItemBuilder setClickListener(MenuItemAction listener) {
