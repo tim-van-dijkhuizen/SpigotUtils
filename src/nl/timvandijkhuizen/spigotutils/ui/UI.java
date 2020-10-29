@@ -1,5 +1,6 @@
 package nl.timvandijkhuizen.spigotutils.ui;
 
+import org.apache.commons.lang.StringUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
@@ -8,6 +9,7 @@ import com.cryptomorin.xseries.XSound;
 public class UI {
 
     public static final String TAB = "  ";
+    public static final String LINE = StringUtils.repeat(Icon.SQUARE, 75);
 
     // UI colors
     public static final ChatColor COLOR_PRIMARY = ChatColor.GREEN;
