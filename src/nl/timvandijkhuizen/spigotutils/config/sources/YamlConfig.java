@@ -7,45 +7,33 @@ import java.util.LinkedHashSet;
 import java.util.logging.Level;
 
 import org.bukkit.Bukkit;
-import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import nl.timvandijkhuizen.spigotutils.PluginBase;
 import nl.timvandijkhuizen.spigotutils.config.ConfigOption;
 import nl.timvandijkhuizen.spigotutils.config.OptionConfig;
-import nl.timvandijkhuizen.spigotutils.helpers.ConsoleHelper;
 
 public class YamlConfig extends YamlConfiguration implements OptionConfig {
 
     private File file;
-    private boolean isLoaded;
     private Collection<ConfigOption<?>> options = new LinkedHashSet<>();
 
-    public YamlConfig(PluginBase plugin) {
-        this(plugin, "config.yml", "config.yml");
+    public YamlConfig(PluginBase plugin) throws Throwable {
+        this(plugin, "config.yml", null);
     }
 
-    public YamlConfig(PluginBase plugin, String fileName, String defaults) {
+    public YamlConfig(PluginBase plugin, String fileName, String defaults) throws Throwable {
         this(plugin, new File(plugin.getDataFolder(), fileName), defaults);
     }
 
-    public YamlConfig(PluginBase plugin, File file, String defaults) {
+    public YamlConfig(PluginBase plugin, File file, String defaults) throws Throwable {
         this.file = file;
 
-        if (!file.exists()) {
+        if (file.exists()) {
+            load(file);
+        } else if(defaults != null) {
             plugin.saveResource(defaults, false);
         }
-
-        try {
-            load(file);
-            isLoaded = true;
-        } catch (IOException | InvalidConfigurationException e) {
-            ConsoleHelper.printError("Failed to load configuration file: " + e.getMessage(), e);
-        }
-    }
-
-    public boolean isLoaded() {
-        return isLoaded;
     }
 
     public <T> T get(String key, Class<T> type) {
