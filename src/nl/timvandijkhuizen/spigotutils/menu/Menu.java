@@ -170,22 +170,30 @@ public class Menu implements InventoryHolder {
      * Handles a click while the menu is active.
      * 
      * @param event
+     * @return boolean
      */
-    void handleClick(InventoryClickEvent event) {
+    boolean handleClick(InventoryClickEvent event) {
         MenuItemBuilder item = items.get(event.getSlot());
         Player player = (Player) event.getWhoClicked();
 
         // Ignore if empty or disabled
         if (item == null || disableButtons) {
-            return;
+            return true;
         }
 
         // Check if item has a click listener
         MenuItemAction listener = item.getClickListener();
 
         if (listener != null && !item.isDisabled()) {
-            listener.onClick(new MenuItemClick(player, this, item, event.getClick()));
+            MenuItemClick click = new MenuItemClick(player, this, item, event.getClick());
+            
+            // Handle click
+            listener.onClick(click);
+            
+            return click.isCancelled();
         }
+        
+        return true;
     }
 
 }

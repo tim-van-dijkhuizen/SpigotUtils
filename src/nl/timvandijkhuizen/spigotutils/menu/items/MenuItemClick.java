@@ -11,12 +11,14 @@ public class MenuItemClick {
     private Menu menu;
     private MenuItemBuilder item;
     private ClickType clickType;
-
+    private boolean cancelled;
+    
     public MenuItemClick(Player player, Menu menu, MenuItemBuilder item, ClickType clickType) {
         this.player = player;
         this.menu = menu;
         this.item = item;
         this.clickType = clickType;
+        this.cancelled = true;
     }
 
     public Player getPlayer() {
@@ -33,6 +35,14 @@ public class MenuItemClick {
 
     public ClickType getClickType() {
         return clickType;
+    }
+
+    public boolean isCancelled() {
+        return cancelled;
+    }
+
+    public void setCancelled(boolean cancel) {
+        this.cancelled = cancel;
     }
 
 }

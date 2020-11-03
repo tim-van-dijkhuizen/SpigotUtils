@@ -22,9 +22,9 @@ public class MenuService extends BaseService implements Listener {
 
         if (holder != null && holder instanceof Menu) {
             Menu menu = (Menu) holder;
+            boolean cancelled = menu.handleClick(event);
 
-            event.setCancelled(true);
-            menu.handleClick(event);
+            event.setCancelled(cancelled);
         }
     }
 

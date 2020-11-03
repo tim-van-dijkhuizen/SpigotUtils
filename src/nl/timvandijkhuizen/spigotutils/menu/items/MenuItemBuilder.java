@@ -12,7 +12,6 @@ import org.bukkit.inventory.ItemStack;
 
 import com.cryptomorin.xseries.XMaterial;
 
-import nl.timvandijkhuizen.spigotutils.helpers.ConsoleHelper;
 import nl.timvandijkhuizen.spigotutils.inventory.ItemBuilder;
 
 public class MenuItemBuilder extends ItemBuilder {
