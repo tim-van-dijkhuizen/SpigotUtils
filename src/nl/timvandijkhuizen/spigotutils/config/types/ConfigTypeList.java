@@ -19,8 +19,8 @@ import nl.timvandijkhuizen.spigotutils.config.ConfigType;
 import nl.timvandijkhuizen.spigotutils.config.OptionConfig;
 import nl.timvandijkhuizen.spigotutils.data.TypedValue;
 import nl.timvandijkhuizen.spigotutils.helpers.ConsoleHelper;
+import nl.timvandijkhuizen.spigotutils.menu.MenuClick;
 import nl.timvandijkhuizen.spigotutils.menu.items.MenuItemBuilder;
-import nl.timvandijkhuizen.spigotutils.menu.items.MenuItemClick;
 import nl.timvandijkhuizen.spigotutils.menu.items.MenuItems;
 import nl.timvandijkhuizen.spigotutils.menu.types.PagedMenu;
 import nl.timvandijkhuizen.spigotutils.ui.UI;
@@ -109,7 +109,7 @@ public class ConfigTypeList<T extends ConfigObject> implements ConfigType<List<T
     }
 
     @Override
-    public void getValueInput(OptionConfig config, ConfigOption<List<T>> option, MenuItemClick event, Consumer<List<T>> callback) {
+    public void getValueInput(OptionConfig config, ConfigOption<List<T>> option, MenuClick event, Consumer<List<T>> callback) {
         PagedMenu menu = new PagedMenu(menuTitle, 3, 7, 1, 1);
         List<T> objects = getValue(config, option);
         Player player = event.getPlayer();
@@ -128,7 +128,7 @@ public class ConfigTypeList<T extends ConfigObject> implements ConfigType<List<T
             callback.accept(objects);
         });
 
-        menu.setButton(backButton, menu.getSize().getSlots() - 9 + 3);
+        menu.setItem(backButton, menu.getSize().getSlots() - 9 + 3);
 
         // Create button
         // ===========================
@@ -156,7 +156,7 @@ public class ConfigTypeList<T extends ConfigObject> implements ConfigType<List<T
             }
         });
 
-        menu.setButton(createButton, menu.getSize().getSlots() - 9 + 5);
+        menu.setItem(createButton, menu.getSize().getSlots() - 9 + 5);
 
         // Open menu
         menu.open(player);
@@ -190,7 +190,7 @@ public class ConfigTypeList<T extends ConfigObject> implements ConfigType<List<T
                 UI.playSound(player, UI.SOUND_DELETE);
 
                 objects.remove(object);
-                menu.removePagedButton(item);
+                menu.removePagedItem(item);
                 
                 menu.refresh();
             } else {
@@ -217,7 +217,7 @@ public class ConfigTypeList<T extends ConfigObject> implements ConfigType<List<T
             }
         });
 
-        menu.addPagedButton(item);
+        menu.addPagedItem(item);
     }
     
     private T createObject(T base) throws Exception {

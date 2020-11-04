@@ -13,10 +13,11 @@ import org.bukkit.inventory.ItemStack;
 import com.cryptomorin.xseries.XMaterial;
 
 import nl.timvandijkhuizen.spigotutils.inventory.ItemBuilder;
+import nl.timvandijkhuizen.spigotutils.menu.MenuClickListener;
 
 public class MenuItemBuilder extends ItemBuilder {
 
-    private MenuItemAction listeners;
+    private MenuClickListener listener;
     private boolean disabled;
 
     // Dynamic content
@@ -51,13 +52,13 @@ public class MenuItemBuilder extends ItemBuilder {
         super(itemStack);
     }
 
-    public MenuItemBuilder setClickListener(MenuItemAction listener) {
-        this.listeners = listener;
+    public MenuItemBuilder setClickListener(MenuClickListener listener) {
+        this.listener = listener;
         return this;
     }
 
-    public MenuItemAction getClickListener() {
-        return listeners;
+    public MenuClickListener getClickListener() {
+        return listener;
     }
 
     public MenuItemBuilder clone() {

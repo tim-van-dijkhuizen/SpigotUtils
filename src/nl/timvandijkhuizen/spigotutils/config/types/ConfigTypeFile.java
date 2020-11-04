@@ -7,8 +7,8 @@ import java.util.regex.Pattern;
 import nl.timvandijkhuizen.spigotutils.config.ConfigOption;
 import nl.timvandijkhuizen.spigotutils.config.ConfigType;
 import nl.timvandijkhuizen.spigotutils.config.OptionConfig;
+import nl.timvandijkhuizen.spigotutils.menu.MenuClick;
 import nl.timvandijkhuizen.spigotutils.menu.actions.ActionFileExplorer;
-import nl.timvandijkhuizen.spigotutils.menu.items.MenuItemClick;
 
 public class ConfigTypeFile implements ConfigType<File> {
 
@@ -66,7 +66,7 @@ public class ConfigTypeFile implements ConfigType<File> {
     }
 
     @Override
-    public void getValueInput(OptionConfig config, ConfigOption<File> option, MenuItemClick event, Consumer<File> callback) {
+    public void getValueInput(OptionConfig config, ConfigOption<File> option, MenuClick event, Consumer<File> callback) {
         new ActionFileExplorer(root, getValue(config, option), allowed, callback, event.getMenu()).onClick(event);
     }
 

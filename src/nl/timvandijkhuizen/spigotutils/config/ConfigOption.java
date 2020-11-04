@@ -7,7 +7,7 @@ import org.bukkit.Material;
 import com.cryptomorin.xseries.XMaterial;
 
 import nl.timvandijkhuizen.spigotutils.data.DataArguments;
-import nl.timvandijkhuizen.spigotutils.menu.items.MenuItemClick;
+import nl.timvandijkhuizen.spigotutils.menu.MenuClick;
 
 public class ConfigOption<T> {
 
@@ -137,7 +137,7 @@ public class ConfigOption<T> {
      * @param value
      * @param callback
      */
-    public void getValueInput(OptionConfig config, MenuItemClick event, Consumer<T> callback) {
+    public void getValueInput(OptionConfig config, MenuClick event, Consumer<T> callback) {
         type.getValueInput(config, this, event, callback);
     }
 

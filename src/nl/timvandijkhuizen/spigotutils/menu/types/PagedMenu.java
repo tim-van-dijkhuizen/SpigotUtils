@@ -19,14 +19,14 @@ public class PagedMenu extends Menu {
     private int rowOffset;
     private int columnOffset;
 
-    private MenuItemBuilder previousButton;
-    private MenuItemBuilder nextButton;
-    private MenuItemBuilder currentButton;
+    private MenuItemBuilder previousItem;
+    private MenuItemBuilder nextItem;
+    private MenuItemBuilder currentItem;
 
-    private List<MenuItemBuilder> pagedButtons = new ArrayList<>();
+    private List<MenuItemBuilder> pagedItems = new ArrayList<>();
     private int page;
 
-    public PagedMenu(String title, int rows, int columns, int rowOffset, int columnOffset, int previousButtonOffset, int currentButtonOffset, int nextButtonOffset) {
+    public PagedMenu(String title, int rows, int columns, int rowOffset, int columnOffset, int previousItemOffset, int currentItemOffset, int nextItemOffset) {
         super(title, findMenuSize(rows, columns, rowOffset, columnOffset));
 
         // Set values
@@ -40,21 +40,21 @@ public class PagedMenu extends Menu {
             throw new RuntimeException("Invalid menu sizes");
         }
 
-        if (previousButtonOffset < 0 || previousButtonOffset > 8) {
-            throw new RuntimeException("Previous button outside range");
+        if (previousItemOffset < 0 || previousItemOffset > 8) {
+            throw new RuntimeException("Previous item outside range");
         }
 
-        if (nextButtonOffset < 0 || nextButtonOffset > 8) {
-            throw new RuntimeException("Next button outside range");
+        if (nextItemOffset < 0 || nextItemOffset > 8) {
+            throw new RuntimeException("Next item outside range");
         }
 
         // Fill bottom row with background items
         for (int i = 0; i < 9; i++) {
-            setButton(MenuItems.BACKGROUND, size.getSlots() - 9 + i);
+            setItem(MenuItems.BACKGROUND, size.getSlots() - 9 + i);
         }
 
-        // Add previous button
-        previousButton = MenuItems.PREVIOUS.clone().setClickListener(event -> {
+        // Add previous item
+        previousItem = MenuItems.PREVIOUS.clone().setClickListener(event -> {
             Player whoClicked = event.getPlayer();
 
             if (page > 0) {
@@ -64,23 +64,23 @@ public class PagedMenu extends Menu {
             }
         });
 
-        setButton(previousButton, size.getSlots() - 9 + previousButtonOffset);
+        setItem(previousItem, size.getSlots() - 9 + previousItemOffset);
 
-        // Add current button
-        setButton(currentButton = MenuItems.CURRENT.clone(), size.getSlots() - 9 + currentButtonOffset);
+        // Add current item
+        setItem(currentItem = MenuItems.CURRENT.clone(), size.getSlots() - 9 + currentItemOffset);
 
-        // Add next button
-        nextButton = MenuItems.NEXT.clone().setClickListener(event -> {
+        // Add next item
+        nextItem = MenuItems.NEXT.clone().setClickListener(event -> {
             Player whoClicked = event.getPlayer();
 
-            if (((page + 1) * (rows * columns)) < getPagedButtons().size()) {
+            if (((page + 1) * (rows * columns)) < getPagedItems().size()) {
                 UI.playSound(whoClicked, UI.SOUND_CLICK);
                 page += 1;
                 refresh();
             }
         });
 
-        setButton(nextButton, size.getSlots() - 9 + nextButtonOffset);
+        setItem(nextItem, size.getSlots() - 9 + nextItemOffset);
     }
 
     public PagedMenu(String title, int rows, int columns, int rowOffset, int columnOffset) {
@@ -99,17 +99,17 @@ public class PagedMenu extends Menu {
         return columns;
     }
 
-    public List<MenuItemBuilder> getPagedButtons() {
-        return pagedButtons;
+    public List<MenuItemBuilder> getPagedItems() {
+        return pagedItems;
     }
 
-    public PagedMenu addPagedButton(MenuItemBuilder item) {
-        pagedButtons.add(item);
+    public PagedMenu addPagedItem(MenuItemBuilder item) {
+        pagedItems.add(item);
         return this;
     }
 
-    public PagedMenu removePagedButton(MenuItemBuilder item) {
-        pagedButtons.remove(item);
+    public PagedMenu removePagedItem(MenuItemBuilder item) {
+        pagedItems.remove(item);
         return this;
     }
 
@@ -126,28 +126,28 @@ public class PagedMenu extends Menu {
     protected void draw() {
         page = parsedPage(page);
 
-        // Add paged buttons
+        // Add paged items
         int rowStart = rowOffset;
         int columnStart = columnOffset;
         int itemIndex = page * (rows * columns);
-        List<MenuItemBuilder> pagedButtons = getPagedButtons();
+        List<MenuItemBuilder> pagedItems = getPagedItems();
 
         for (int row = rowStart; row < (rowStart + rows); row++) {
             for (int column = columnStart; column < (columnStart + columns); column++) {
                 int slot = row * 9 + column;
 
                 // Clear slot
-                removeButton(slot);
+                removeItem(slot);
 
                 // Set paged item if we've got one
-                if (itemIndex < pagedButtons.size()) {
-                    setButton(pagedButtons.get(itemIndex++), slot);
+                if (itemIndex < pagedItems.size()) {
+                    setItem(pagedItems.get(itemIndex++), slot);
                 }
             }
         }
 
-        // Update current button
-        currentButton.setName(UI.color("Page " + (page + 1) + "/" + getPageCount(), UI.COLOR_SECONDARY, ChatColor.BOLD));
+        // Update current item
+        currentItem.setName(UI.color("Page " + (page + 1) + "/" + getPageCount(), UI.COLOR_SECONDARY, ChatColor.BOLD));
 
         // Draw menu
         super.draw();
@@ -175,7 +175,7 @@ public class PagedMenu extends Menu {
     }
 
     private int getPageCount() {
-        return 1 + (int) (getPagedButtons().size() / Double.valueOf(rows * columns));
+        return 1 + (int) (getPagedItems().size() / Double.valueOf(rows * columns));
     }
 
     private int parsedPage(int page) {

@@ -14,7 +14,7 @@ import nl.timvandijkhuizen.spigotutils.PluginBase;
 import nl.timvandijkhuizen.spigotutils.config.ConfigOption;
 import nl.timvandijkhuizen.spigotutils.config.ConfigType;
 import nl.timvandijkhuizen.spigotutils.config.OptionConfig;
-import nl.timvandijkhuizen.spigotutils.menu.items.MenuItemClick;
+import nl.timvandijkhuizen.spigotutils.menu.MenuClick;
 import nl.timvandijkhuizen.spigotutils.ui.UI;
 
 public class ConfigTypeDateFormat implements ConfigType<SimpleDateFormat> {
@@ -51,7 +51,7 @@ public class ConfigTypeDateFormat implements ConfigType<SimpleDateFormat> {
     }
 
     @Override
-    public void getValueInput(OptionConfig config, ConfigOption<SimpleDateFormat> option, MenuItemClick event, Consumer<SimpleDateFormat> callback) {
+    public void getValueInput(OptionConfig config, ConfigOption<SimpleDateFormat> option, MenuClick event, Consumer<SimpleDateFormat> callback) {
         ConversationFactory factory = new ConversationFactory(PluginBase.getInstance());
         Player player = event.getPlayer();
 

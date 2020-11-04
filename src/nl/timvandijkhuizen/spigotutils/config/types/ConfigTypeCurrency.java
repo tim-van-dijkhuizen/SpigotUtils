@@ -11,8 +11,8 @@ import com.cryptomorin.xseries.XMaterial;
 import nl.timvandijkhuizen.spigotutils.config.ConfigOption;
 import nl.timvandijkhuizen.spigotutils.config.ConfigType;
 import nl.timvandijkhuizen.spigotutils.config.OptionConfig;
+import nl.timvandijkhuizen.spigotutils.menu.MenuClick;
 import nl.timvandijkhuizen.spigotutils.menu.items.MenuItemBuilder;
-import nl.timvandijkhuizen.spigotutils.menu.items.MenuItemClick;
 import nl.timvandijkhuizen.spigotutils.menu.items.MenuItems;
 import nl.timvandijkhuizen.spigotutils.menu.types.PagedMenu;
 import nl.timvandijkhuizen.spigotutils.ui.UI;
@@ -50,7 +50,7 @@ public class ConfigTypeCurrency implements ConfigType<Currency> {
     }
 
     @Override
-    public void getValueInput(OptionConfig config, ConfigOption<Currency> option, MenuItemClick event, Consumer<Currency> callback) {
+    public void getValueInput(OptionConfig config, ConfigOption<Currency> option, MenuClick event, Consumer<Currency> callback) {
         PagedMenu menu = new PagedMenu("Select Currency", 3, 7, 1, 1, 1, 5, 7);
         Player player = event.getPlayer();
         Currency selected = getValue(config, option);
@@ -70,7 +70,7 @@ public class ConfigTypeCurrency implements ConfigType<Currency> {
                 callback.accept(currency);
             });
 
-            menu.addPagedButton(item);
+            menu.addPagedItem(item);
         }
 
         // Go back button
@@ -81,7 +81,7 @@ public class ConfigTypeCurrency implements ConfigType<Currency> {
             callback.accept(selected);
         });
 
-        menu.setButton(backButton, menu.getSize().getSlots() - 9 + 3);
+        menu.setItem(backButton, menu.getSize().getSlots() - 9 + 3);
         
         menu.open(player);
     }

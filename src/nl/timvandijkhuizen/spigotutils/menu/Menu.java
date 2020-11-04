@@ -1,8 +1,10 @@
 package nl.timvandijkhuizen.spigotutils.menu;
 
 import java.util.HashMap;
+import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -13,17 +15,18 @@ import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 
-import nl.timvandijkhuizen.spigotutils.menu.items.MenuItemAction;
 import nl.timvandijkhuizen.spigotutils.menu.items.MenuItemBuilder;
-import nl.timvandijkhuizen.spigotutils.menu.items.MenuItemClick;
 
 public class Menu implements InventoryHolder {
 
     protected String title;
     protected MenuSize size;
     protected Inventory inventory;
+    protected boolean disableItems;
+    
     protected Map<Integer, MenuItemBuilder> items = new HashMap<>();
-    protected boolean disableButtons;
+    protected Set<MenuClickListener> clickListeners = new LinkedHashSet<>();
+    protected Set<Runnable> closeListeners = new LinkedHashSet<>();
 
     public Menu(String title) {
         this(title, MenuSize.MD);
@@ -69,12 +72,12 @@ public class Menu implements InventoryHolder {
     }
 
     /**
-     * Returns the button at the specified slot.
+     * Returns the item at the specified slot.
      * 
      * @param slot
      * @return
      */
-    public MenuItemBuilder getButton(int slot) {
+    public MenuItemBuilder getItem(int slot) {
         return items.get(slot);
     }
 
@@ -85,8 +88,19 @@ public class Menu implements InventoryHolder {
      * @param slot
      * @return
      */
-    public Menu setButton(MenuItemBuilder item, int slot) {
+    public Menu setItem(MenuItemBuilder item, int slot) {
         items.put(slot, item);
+        return this;
+    }
+
+    /**
+     * Removes the item at the specified slot.
+     * 
+     * @param slot
+     * @return
+     */
+    public Menu removeItem(int slot) {
+        items.remove(slot);
         return this;
     }
 
@@ -96,26 +110,62 @@ public class Menu implements InventoryHolder {
     public void clear() {
         items.clear();
     }
-
+    
     /**
-     * Removes the item at the specified slot.
+     * Disable all items in this menu.
      * 
-     * @param slot
      * @return
      */
-    public Menu removeButton(int slot) {
-        items.remove(slot);
+    public Menu disableItems() {
+        disableItems = true;
         return this;
     }
 
-    public Menu disableButtons() {
-        disableButtons = true;
+    /**
+     * Enable all items in this menu. If the item is
+     * disabled you still won't be able to click it.
+     * 
+     * @return
+     */
+    public Menu enableItems() {
+        disableItems = false;
         return this;
     }
-
-    public Menu enableButtons() {
-        disableButtons = false;
-        return this;
+    
+    /**
+     * Add a menu wide click listener.
+     * 
+     * @param listener
+     */
+    public void addClickListener(MenuClickListener listener) {
+        clickListeners.add(listener);
+    }
+    
+    /**
+     * Remove a menu wide click listener.
+     * 
+     * @param listener
+     */
+    public void removeClickListener(MenuClickListener listener) {
+        clickListeners.remove(listener);
+    }
+    
+    /**
+     * Add a menu close listener.
+     * 
+     * @param listener
+     */
+    public void addCloseListener(Runnable listener) {
+        closeListeners.add(listener);
+    }
+    
+    /**
+     * Remove a menu close listener.
+     * 
+     * @param listener
+     */
+    public void removeCloseListener(Runnable listener) {
+        closeListeners.remove(listener);
     }
 
     /**
@@ -148,6 +198,11 @@ public class Menu implements InventoryHolder {
      */
     public void close(Player player) {
         player.closeInventory();
+        
+        // Call close listeners
+        for(Runnable listener : closeListeners) {
+            listener.run();
+        }
     }
 
     @Override
@@ -161,6 +216,7 @@ public class Menu implements InventoryHolder {
     protected void draw() {
         inventory.clear();
 
+        // Draw menu items
         for (Entry<Integer, MenuItemBuilder> item : items.entrySet()) {
             inventory.setItem(item.getKey(), item.getValue().toItemStack());
         }
@@ -175,25 +231,25 @@ public class Menu implements InventoryHolder {
     boolean handleClick(InventoryClickEvent event) {
         MenuItemBuilder item = items.get(event.getSlot());
         Player player = (Player) event.getWhoClicked();
-
-        // Ignore if empty or disabled
-        if (item == null || disableButtons) {
-            return true;
-        }
-
-        // Check if item has a click listener
-        MenuItemAction listener = item.getClickListener();
-
-        if (listener != null && !item.isDisabled()) {
-            MenuItemClick click = new MenuItemClick(player, this, item, event.getClick());
-            
-            // Handle click
+        
+        // Create click
+        MenuClick click = new MenuClick(player, this, item, event.getClick());
+        
+        // Handle menu click
+        for(MenuClickListener listener : clickListeners) {
             listener.onClick(click);
-            
-            return click.isCancelled();
         }
         
-        return true;
+        // Handle item click
+        if (item != null && !disableItems) {
+            MenuClickListener listener = item.getClickListener();
+
+            if (listener != null && !item.isDisabled()) {
+                listener.onClick(click);
+            }
+        }
+
+        return click.isCancelled();
     }
 
 }

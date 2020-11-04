@@ -5,7 +5,7 @@ import java.util.function.Consumer;
 import nl.timvandijkhuizen.spigotutils.config.ConfigOption;
 import nl.timvandijkhuizen.spigotutils.config.ConfigType;
 import nl.timvandijkhuizen.spigotutils.config.OptionConfig;
-import nl.timvandijkhuizen.spigotutils.menu.items.MenuItemClick;
+import nl.timvandijkhuizen.spigotutils.menu.MenuClick;
 
 public class ConfigTypeBoolean implements ConfigType<Boolean> {
 
@@ -35,7 +35,7 @@ public class ConfigTypeBoolean implements ConfigType<Boolean> {
     }
 
     @Override
-    public void getValueInput(OptionConfig config, ConfigOption<Boolean> option, MenuItemClick event, Consumer<Boolean> callback) {
+    public void getValueInput(OptionConfig config, ConfigOption<Boolean> option, MenuClick event, Consumer<Boolean> callback) {
         callback.accept(!getValue(config, option));
     }
 

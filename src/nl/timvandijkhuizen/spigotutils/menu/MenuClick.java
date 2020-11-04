@@ -1,19 +1,19 @@
-package nl.timvandijkhuizen.spigotutils.menu.items;
+package nl.timvandijkhuizen.spigotutils.menu;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 
-import nl.timvandijkhuizen.spigotutils.menu.Menu;
+import nl.timvandijkhuizen.spigotutils.menu.items.MenuItemBuilder;
 
-public class MenuItemClick {
+public class MenuClick {
 
+    private MenuItemBuilder item;
     private Player player;
     private Menu menu;
-    private MenuItemBuilder item;
     private ClickType clickType;
     private boolean cancelled;
     
-    public MenuItemClick(Player player, Menu menu, MenuItemBuilder item, ClickType clickType) {
+    public MenuClick(Player player, Menu menu, MenuItemBuilder item, ClickType clickType) {
         this.player = player;
         this.menu = menu;
         this.item = item;
@@ -29,10 +29,6 @@ public class MenuItemClick {
         return menu;
     }
 
-    public MenuItemBuilder getItem() {
-        return item;
-    }
-
     public ClickType getClickType() {
         return clickType;
     }
@@ -43,6 +39,10 @@ public class MenuItemClick {
 
     public void setCancelled(boolean cancel) {
         this.cancelled = cancel;
+    }
+
+    public MenuItemBuilder getItem() {
+        return item;
     }
 
 }

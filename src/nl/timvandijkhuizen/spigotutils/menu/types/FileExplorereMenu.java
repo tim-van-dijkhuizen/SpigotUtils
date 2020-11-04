@@ -18,9 +18,9 @@ import com.cryptomorin.xseries.XMaterial;
 import com.google.common.io.Files;
 
 import nl.timvandijkhuizen.spigotutils.helpers.ThreadHelper;
+import nl.timvandijkhuizen.spigotutils.menu.MenuClick;
 import nl.timvandijkhuizen.spigotutils.menu.Menu;
 import nl.timvandijkhuizen.spigotutils.menu.items.MenuItemBuilder;
-import nl.timvandijkhuizen.spigotutils.menu.items.MenuItemClick;
 import nl.timvandijkhuizen.spigotutils.menu.items.MenuItems;
 import nl.timvandijkhuizen.spigotutils.ui.UI;
 
@@ -77,12 +77,12 @@ public class FileExplorereMenu extends PagedMenu {
         this.allowed = allowed;
         this.callback = callback;
 
-        // Create back button
-        MenuItemBuilder backButton = MenuItems.BACK.clone();
+        // Create back item
+        MenuItemBuilder backItem = MenuItems.BACK.clone();
 
-        backButton.setName(UI.color("Go back", UI.COLOR_SECONDARY, ChatColor.BOLD));
+        backItem.setName(UI.color("Go back", UI.COLOR_SECONDARY, ChatColor.BOLD));
 
-        backButton.setClickListener(event -> {
+        backItem.setClickListener(event -> {
             Player player = event.getPlayer();
 
             if (currentDirectory != null && !currentDirectory.getPath().equals(root.getPath())) {
@@ -96,22 +96,22 @@ public class FileExplorereMenu extends PagedMenu {
             }
         });
 
-        setButton(backButton, 48);
+        setItem(backItem, 48);
 
-        // Create current directory button
-        MenuItemBuilder currentButton = new MenuItemBuilder(FileExplorereMenu.DIRECTORY_ICON);
+        // Create current directory item
+        MenuItemBuilder currentItem = new MenuItemBuilder(FileExplorereMenu.DIRECTORY_ICON);
 
-        currentButton.setName(UI.color("Current Directory", UI.COLOR_SECONDARY, ChatColor.BOLD));
+        currentItem.setName(UI.color("Current Directory", UI.COLOR_SECONDARY, ChatColor.BOLD));
 
-        currentButton.setLoreGenerator(() -> {
+        currentItem.setLoreGenerator(() -> {
             return Arrays.asList(UI.color(currentDirectory != null ? currentDirectory.getPath() : "", UI.COLOR_TEXT));
         });
 
-        setButton(currentButton, 50);
+        setItem(currentItem, 50);
     }
 
     @Override
-    public List<MenuItemBuilder> getPagedButtons() {
+    public List<MenuItemBuilder> getPagedItems() {
         if (currentFiles == null) {
             return new ArrayList<>();
         }
@@ -119,7 +119,7 @@ public class FileExplorereMenu extends PagedMenu {
         return currentFiles;
     }
 
-    public void setCurrentDirectory(File directory, MenuItemClick event) {
+    public void setCurrentDirectory(File directory, MenuClick event) {
         Menu menu = event.getMenu();
         MenuItemBuilder item = event.getItem();
         List<String> oldLore = item.getLore();
@@ -136,12 +136,12 @@ public class FileExplorereMenu extends PagedMenu {
     public void loadDirectory(File directory, Runnable callback) {
         ThreadHelper.getAsync(() -> directory.listFiles(), files -> {
             currentDirectory = directory;
-            currentFiles = createPagedButtons(files);
+            currentFiles = createPagedItems(files);
             callback.run();
         });
     }
 
-    private List<MenuItemBuilder> createPagedButtons(File[] newFiles) {
+    private List<MenuItemBuilder> createPagedItems(File[] newFiles) {
         List<MenuItemBuilder> items = new ArrayList<>();
 
         // Get directories and files
