@@ -228,12 +228,15 @@ public class Menu implements InventoryHolder {
      * @param event
      * @return boolean
      */
-    boolean handleClick(InventoryClickEvent event) {
-        MenuItemBuilder item = items.get(event.getSlot());
-        Player player = (Player) event.getWhoClicked();
+    void handleClick(InventoryClickEvent event) {
+        int slot = event.getSlot();
         
         // Create click
-        MenuClick click = new MenuClick(player, this, item, event.getClick());
+        MenuItemBuilder item = items.get(slot);
+        MenuClick click = new MenuClick(event, this, item);
+        
+        // Deny by default
+        click.setCancelled(true);
         
         // Handle menu click
         for(MenuClickListener listener : clickListeners) {
@@ -248,8 +251,6 @@ public class Menu implements InventoryHolder {
                 listener.onClick(click);
             }
         }
-
-        return click.isCancelled();
     }
 
 }

@@ -21,10 +21,7 @@ public class MenuService extends BaseService implements Listener {
         InventoryHolder holder = inventory.getHolder();
 
         if (holder != null && holder instanceof Menu) {
-            Menu menu = (Menu) holder;
-            boolean cancelled = menu.handleClick(event);
-
-            event.setCancelled(cancelled);
+            ((Menu) holder).handleClick(event);
         }
     }
 

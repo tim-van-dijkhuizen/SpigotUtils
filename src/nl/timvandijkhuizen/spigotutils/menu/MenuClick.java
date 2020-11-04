@@ -2,45 +2,56 @@ package nl.timvandijkhuizen.spigotutils.menu;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
+import org.bukkit.event.inventory.InventoryAction;
+import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.inventory.ItemStack;
 
 import nl.timvandijkhuizen.spigotutils.menu.items.MenuItemBuilder;
 
 public class MenuClick {
 
-    private MenuItemBuilder item;
-    private Player player;
+    private InventoryClickEvent event;
     private Menu menu;
-    private ClickType clickType;
-    private boolean cancelled;
+    private MenuItemBuilder item;
     
-    public MenuClick(Player player, Menu menu, MenuItemBuilder item, ClickType clickType) {
-        this.player = player;
+    public MenuClick(InventoryClickEvent event, Menu menu, MenuItemBuilder item) {
+        this.event = event;
         this.menu = menu;
         this.item = item;
-        this.clickType = clickType;
-        this.cancelled = true;
+    }
+    
+    public Player getPlayer() {
+        return (Player) event.getWhoClicked();
     }
 
-    public Player getPlayer() {
-        return player;
+    public int getSlot() {
+        return event.getSlot();
+    }
+    
+    public ClickType getClickType() {
+        return event.getClick();
+    }
+
+    public ItemStack getCursor() {
+        return event.getCursor();
+    }
+    
+    public InventoryAction getAction() {
+        return event.getAction();
+    }
+    
+    public boolean isCancelled() {
+        return event.isCancelled();
+    }
+
+    public void setCancelled(boolean cancel) {
+        event.setCancelled(cancel);
     }
 
     public Menu getMenu() {
         return menu;
     }
-
-    public ClickType getClickType() {
-        return clickType;
-    }
-
-    public boolean isCancelled() {
-        return cancelled;
-    }
-
-    public void setCancelled(boolean cancel) {
-        this.cancelled = cancel;
-    }
-
+    
     public MenuItemBuilder getItem() {
         return item;
     }
