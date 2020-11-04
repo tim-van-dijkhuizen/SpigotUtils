@@ -18,10 +18,14 @@ public class MenuService extends BaseService implements Listener {
     @EventHandler
     public void onClickMenu(InventoryClickEvent event) {
         Inventory inventory = event.getClickedInventory();
-        InventoryHolder holder = inventory.getHolder();
 
-        if (holder != null && holder instanceof Menu) {
-            ((Menu) holder).handleClick(event);
+        // Handle click
+        if(inventory != null) {
+            InventoryHolder holder = inventory.getHolder();
+
+            if (holder != null && holder instanceof Menu) {
+                ((Menu) holder).handleClick(event);
+            }
         }
     }
 
