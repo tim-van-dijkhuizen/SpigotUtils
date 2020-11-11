@@ -155,7 +155,7 @@ public class JsonConfig implements Configuration, OptionConfig {
     public String getString(String path) {
         JsonElement element = json.get(path);
 
-        if (element == null) {
+        if (element == null || element instanceof JsonNull) {
             return null;
         }
 
@@ -176,7 +176,7 @@ public class JsonConfig implements Configuration, OptionConfig {
     public int getInt(String path) {
         JsonElement element = json.get(path);
 
-        if (element == null) {
+        if (element == null || element instanceof JsonNull) {
             return 0;
         }
 
@@ -197,7 +197,7 @@ public class JsonConfig implements Configuration, OptionConfig {
     public boolean getBoolean(String path) {
         JsonElement element = json.get(path);
 
-        if (element == null) {
+        if (element == null || element instanceof JsonNull) {
             return false;
         }
 
@@ -218,7 +218,7 @@ public class JsonConfig implements Configuration, OptionConfig {
     public double getDouble(String path) {
         JsonElement element = json.get(path);
 
-        if (element == null) {
+        if (element == null || element instanceof JsonNull) {
             return 0;
         }
 
@@ -239,7 +239,7 @@ public class JsonConfig implements Configuration, OptionConfig {
     public long getLong(String path) {
         JsonElement element = json.get(path);
 
-        if (element == null) {
+        if (element == null || element instanceof JsonNull) {
             return 0;
         }
 
