@@ -17,6 +17,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 
 import com.google.gson.JsonElement;
+import com.google.gson.JsonNull;
 import com.google.gson.JsonObject;
 
 import nl.timvandijkhuizen.spigotutils.config.ConfigOption;
@@ -125,7 +126,9 @@ public class JsonConfig implements Configuration, OptionConfig {
 
     @Override
     public void set(String path, Object value) {
-        if (value instanceof Boolean) {
+        if(value == null) {
+            json.add(path, JsonNull.INSTANCE);
+        } else if (value instanceof Boolean) {
             json.addProperty(path, (Boolean) value);
         } else if (value instanceof Character) {
             json.addProperty(path, (Character) value);
