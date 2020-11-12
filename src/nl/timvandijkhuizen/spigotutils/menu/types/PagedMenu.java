@@ -175,7 +175,8 @@ public class PagedMenu extends Menu {
     }
 
     private int getPageCount() {
-        return 1 + (int) (getPagedItems().size() / Double.valueOf(rows * columns));
+        double amount = getPagedItems().size();
+        return (int) Math.ceil(amount / (rows * columns));
     }
 
     private int parsedPage(int page) {
