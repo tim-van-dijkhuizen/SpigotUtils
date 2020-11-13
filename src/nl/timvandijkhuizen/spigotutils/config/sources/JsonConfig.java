@@ -61,6 +61,17 @@ public class JsonConfig implements Configuration, OptionConfig {
     }
 
     @Override
+    public <T> T getOptionValue(String path) {
+        ConfigOption<T> option = getOption(path);
+        
+        if(option == null) {
+            throw new RuntimeException("Option does not exist");
+        }
+        
+        return option.getValue(this);
+    }
+    
+    @Override
     public void setDefaultOptions() {
         for (ConfigOption<?> option : getOptions()) {
             if (option.isValueEmpty(this)) {

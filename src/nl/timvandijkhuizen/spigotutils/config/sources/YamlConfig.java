@@ -68,6 +68,17 @@ public class YamlConfig extends YamlConfiguration implements OptionConfig {
     public <T> ConfigOption<T> getOption(String path) {
         return options.stream().filter(i -> i.getPath().equals(path)).map(i -> (ConfigOption<T>) i).findFirst().orElse(null);
     }
+    
+    @Override
+    public <T> T getOptionValue(String path) {
+        ConfigOption<T> option = getOption(path);
+        
+        if(option == null) {
+            throw new RuntimeException("Option does not exist");
+        }
+        
+        return option.getValue(this);
+    }
 
     @Override
     public void setDefaultOptions() {

@@ -13,6 +13,8 @@ public interface OptionConfig extends Configuration {
     public Collection<ConfigOption<?>> getOptions();
 
     public <T> ConfigOption<T> getOption(String path);
+    
+    public <T> T getOptionValue(String path);
 
     public void setDefaultOptions();
 
