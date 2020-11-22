@@ -4,11 +4,11 @@ A collection of utilities and API's to make creating Spigot plug-ins easier.
 
 #### Available features
 
-* [Plugin API](docs/PLUGIN.md)
-* [Command API](docs/COMMANDS.md)
-* [Config API](docs/CONFIG.md)
-* [Helpers](docs/HELPERS.md)
-* [Inventory API](docs/INVENTORY.md)
-* [Menu API](docs/MENU.md)
-* [Services API](docs/SERVICE.md)
-* [UI](docs/UI.md)
+* [Plugin API](PLUGIN.md)
+* [Command API](COMMANDS.md)
+* [Config API](CONFIG.md)
+* [Helpers](HELPERS.md)
+* [Inventory API](INVENTORY.md)
+* [Menu API](MENU.md)
+* [Services API](SERVICE.md)
+* [UI](UI.md)
