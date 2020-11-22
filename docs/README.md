@@ -1,6 +1,6 @@
 # SpigotUtils
 
-A collection of utilities and API's to make creating Spigot plug-ins easier.
+A collection of utilities and API's to make creating Spigot plug-in's easier.
 
 #### Available features
 
