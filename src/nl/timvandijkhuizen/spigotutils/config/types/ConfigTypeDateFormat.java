@@ -10,6 +10,7 @@ import nl.timvandijkhuizen.spigotutils.config.ConfigType;
 import nl.timvandijkhuizen.spigotutils.config.OptionConfig;
 import nl.timvandijkhuizen.spigotutils.helpers.InputHelper;
 import nl.timvandijkhuizen.spigotutils.input.InvalidInputException;
+import nl.timvandijkhuizen.spigotutils.menu.Menu;
 import nl.timvandijkhuizen.spigotutils.menu.MenuClick;
 import nl.timvandijkhuizen.spigotutils.ui.UI;
 
@@ -49,6 +50,9 @@ public class ConfigTypeDateFormat implements ConfigType<SimpleDateFormat> {
     @Override
     public void getValueInput(OptionConfig config, ConfigOption<SimpleDateFormat> option, MenuClick event, Consumer<SimpleDateFormat> callback) {
         Player player = event.getPlayer();
+        Menu menu = event.getMenu();
+        
+        menu.close(player);
 
         InputHelper.getString(player, UI.color("What should be the new value?", UI.COLOR_PRIMARY), (ctx, input) -> {
             try {

@@ -8,6 +8,7 @@ import nl.timvandijkhuizen.spigotutils.config.ConfigOption;
 import nl.timvandijkhuizen.spigotutils.config.ConfigType;
 import nl.timvandijkhuizen.spigotutils.config.OptionConfig;
 import nl.timvandijkhuizen.spigotutils.helpers.InputHelper;
+import nl.timvandijkhuizen.spigotutils.menu.Menu;
 import nl.timvandijkhuizen.spigotutils.menu.MenuClick;
 import nl.timvandijkhuizen.spigotutils.ui.UI;
 
@@ -42,7 +43,10 @@ public class ConfigTypeInteger implements ConfigType<Integer> {
     @Override
     public void getValueInput(OptionConfig config, ConfigOption<Integer> option, MenuClick event, Consumer<Integer> callback) {
         Player player = event.getPlayer();
-
+        Menu menu = event.getMenu();
+        
+        menu.close(player);
+        
         InputHelper.getNumber(player, UI.color("What should be the new value?", UI.COLOR_PRIMARY), (ctx, input) -> {
             callback.accept(input.intValue());
             return null;
