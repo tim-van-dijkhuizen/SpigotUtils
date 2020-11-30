@@ -2,7 +2,7 @@
 
 A collection of utilities and API's to make creating Spigot plug-in's easier.
 
-#### Available features
+### Available features
 
 * [Plugin API](PLUGIN.md)
 * [Command API](COMMANDS.md)

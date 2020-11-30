@@ -79,6 +79,17 @@ public class YamlConfig extends YamlConfiguration implements OptionConfig {
         
         return option.getValue(this);
     }
+    
+    @Override
+    public <T> void setOptionValue(String path, T value) {
+        ConfigOption<T> option = getOption(path);
+        
+        if(option == null) {
+            throw new RuntimeException("Option does not exist");
+        }
+        
+        option.setValue(this, value);
+    }
 
     @Override
     public void setDefaultOptions() {

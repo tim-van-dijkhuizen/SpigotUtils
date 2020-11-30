@@ -1,7 +1,7 @@
 # Command API
 A basic API for creating commands in an object oriented way.
 
-###### Command example
+### Command example
 ```java
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -34,7 +34,7 @@ public class CommandAccount extends BaseCommand {
 }
 ```
 
-###### Registering your commands
+### Registering your commands
 
 ```java
 import nl.timvandijkhuizen.spigotutils.commands.CommandService;
