@@ -2,17 +2,12 @@ package nl.timvandijkhuizen.spigotutils.config.types;
 
 import java.util.function.Consumer;
 
-import org.bukkit.conversations.Conversation;
-import org.bukkit.conversations.ConversationContext;
-import org.bukkit.conversations.ConversationFactory;
-import org.bukkit.conversations.Prompt;
-import org.bukkit.conversations.StringPrompt;
 import org.bukkit.entity.Player;
 
-import nl.timvandijkhuizen.spigotutils.PluginBase;
 import nl.timvandijkhuizen.spigotutils.config.ConfigOption;
 import nl.timvandijkhuizen.spigotutils.config.ConfigType;
 import nl.timvandijkhuizen.spigotutils.config.OptionConfig;
+import nl.timvandijkhuizen.spigotutils.helpers.InputHelper;
 import nl.timvandijkhuizen.spigotutils.menu.MenuClick;
 import nl.timvandijkhuizen.spigotutils.ui.UI;
 
@@ -47,24 +42,12 @@ public class ConfigTypeString implements ConfigType<String> {
 
     @Override
     public void getValueInput(OptionConfig config, ConfigOption<String> option, MenuClick event, Consumer<String> callback) {
-        ConversationFactory factory = new ConversationFactory(PluginBase.getInstance());
         Player player = event.getPlayer();
 
-        Conversation conversation = factory.withFirstPrompt(new StringPrompt() {
-            @Override
-            public String getPromptText(ConversationContext context) {
-                return UI.color("What should be the new value?", UI.COLOR_PRIMARY);
-            }
-
-            @Override
-            public Prompt acceptInput(ConversationContext context, String input) {
-                callback.accept(input);
-                return null;
-            }
-        }).withLocalEcho(false).buildConversation(player);
-
-        player.closeInventory();
-        conversation.begin();
+        InputHelper.getString(player, UI.color("What should be the new value?", UI.COLOR_PRIMARY), (ctx, input) -> {
+            callback.accept(input);
+            return null;
+        });
     }
 
 }
