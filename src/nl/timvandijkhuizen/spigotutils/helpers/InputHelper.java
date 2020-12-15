@@ -8,7 +8,7 @@ import org.bukkit.conversations.Prompt;
 import org.bukkit.conversations.StringPrompt;
 import org.bukkit.entity.Player;
 
-import nl.timvandijkhuizen.spigotutils.PluginBase;
+import nl.timvandijkhuizen.spigotutils.SpigotUtils;
 import nl.timvandijkhuizen.spigotutils.input.InputHandler;
 import nl.timvandijkhuizen.spigotutils.input.InvalidInputException;
 import nl.timvandijkhuizen.spigotutils.ui.UI;
@@ -16,7 +16,7 @@ import nl.timvandijkhuizen.spigotutils.ui.UI;
 public class InputHelper {
 
     public static void getString(Player player, String question, InputHandler<String> callback) {
-        ConversationFactory factory = new ConversationFactory(PluginBase.getInstance());
+        ConversationFactory factory = new ConversationFactory(SpigotUtils.getInstance());
 
         Conversation conversation = factory.withFirstPrompt(new StringPrompt() {
             @Override
@@ -39,7 +39,7 @@ public class InputHelper {
     }
     
     public static void getNumber(Player player, String question, InputHandler<Number> callback) {
-        ConversationFactory factory = new ConversationFactory(PluginBase.getInstance());
+        ConversationFactory factory = new ConversationFactory(SpigotUtils.getInstance());
 
         Conversation conversation = factory.withFirstPrompt(new NumericPrompt() {
             @Override

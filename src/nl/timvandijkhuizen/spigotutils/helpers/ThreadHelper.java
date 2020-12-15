@@ -4,16 +4,14 @@ import java.util.function.Consumer;
 
 import org.bukkit.Bukkit;
 
-import nl.timvandijkhuizen.spigotutils.PluginBase;
+import nl.timvandijkhuizen.spigotutils.SpigotUtils;
 import nl.timvandijkhuizen.spigotutils.functions.UnsafeRunnable;
 import nl.timvandijkhuizen.spigotutils.functions.UnsafeSupplier;
 
 public class ThreadHelper {
 
-    private static PluginBase plugin;
-
     public static void execute(Runnable task) {
-        Bukkit.getScheduler().runTask(plugin, task);
+        Bukkit.getScheduler().runTask(SpigotUtils.getInstance(), task);
     }
 
     public static <T> void executeAsync(UnsafeRunnable task) {
@@ -25,7 +23,7 @@ public class ThreadHelper {
     }
 
     public static <T> void executeAsync(UnsafeRunnable task, Runnable onSuccess, Consumer<Throwable> onError) {
-        Bukkit.getScheduler().runTaskAsynchronously(PluginBase.getInstance(), () -> {
+        Bukkit.getScheduler().runTaskAsynchronously(SpigotUtils.getInstance(), () -> {
             try {
                 task.run();
 
@@ -45,7 +43,7 @@ public class ThreadHelper {
     }
 
     public static <T> void getAsync(UnsafeSupplier<T> task, Consumer<T> onSuccess, Consumer<Throwable> onError) {
-        Bukkit.getScheduler().runTaskAsynchronously(PluginBase.getInstance(), () -> {
+        Bukkit.getScheduler().runTaskAsynchronously(SpigotUtils.getInstance(), () -> {
             try {
                 T value = task.get();
 
@@ -58,10 +56,6 @@ public class ThreadHelper {
                 }
             }
         });
-    }
-
-    public static void setPlugin(PluginBase plugin) {
-        ThreadHelper.plugin = plugin;
     }
 
 }

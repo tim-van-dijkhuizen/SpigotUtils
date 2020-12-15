@@ -11,33 +11,51 @@ import nl.timvandijkhuizen.spigotutils.services.Service;
 
 public abstract class PluginBase extends JavaPlugin {
 
-    private static PluginBase instance;
-
     private Map<String, Service> services = new HashMap<>();
     private Map<String, String> serviceErrors = new HashMap<>();
 
     @Override
-    public void onEnable() {
-        instance = this;
-
+    public void onLoad() {
+        ConsoleHelper.printDebug("Initializing plugin " + getName() + "...");
+        
         try {
             init();
 
             for (Service service : registerServices()) {
+                ConsoleHelper.printDebug("Initializing service " + service.getHandle() + "...");
+                
                 services.put(service.getHandle(), service);
                 service.init();
+                
+                ConsoleHelper.printDebug("Successfully Initialized service " + service.getHandle() + ".");
             }
-
-            // Load plug-in and services
+            
+            ConsoleHelper.printDebug("Successfully Initialized plugin " + getName() + ".");
+        } catch (Throwable e) {
+            ConsoleHelper.printError("Failed to initialize plugin or service.", e);
+        }
+    }
+    
+    @Override
+    public void onEnable() {
+        ConsoleHelper.printDebug("Loading plugin " + getName() + "...");
+        
+        try {
             load();
 
             for (Service service : services.values()) {
+                ConsoleHelper.printDebug("Loading service " + service.getHandle() + "...");
+                
                 loadService(service);
+                
+                ConsoleHelper.printDebug("Successfully loaded service " + service.getHandle() + ".");
             }
 
             ready();
+            
+            ConsoleHelper.printDebug("Successfully loaded plugin " + getName() + ".");
         } catch (Throwable e) {
-            ConsoleHelper.printError("Failed to load plugin.", e);
+            ConsoleHelper.printError("Failed to load plugin or service.", e);
         }
     }
 
@@ -105,16 +123,6 @@ public abstract class PluginBase extends JavaPlugin {
         } catch (Throwable e) {
             ConsoleHelper.printError("Failed to load plugin.", e);
         }
-    }
-
-    /**
-     * Returns the instance of this plugin. Extending plugins will need to add
-     * their own static instance method to be able to access their own methods.
-     * 
-     * @return
-     */
-    public static PluginBase getInstance() {
-        return instance;
     }
 
     /**
