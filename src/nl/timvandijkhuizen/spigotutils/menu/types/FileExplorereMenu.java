@@ -18,8 +18,8 @@ import com.cryptomorin.xseries.XMaterial;
 import com.google.common.io.Files;
 
 import nl.timvandijkhuizen.spigotutils.helpers.ThreadHelper;
-import nl.timvandijkhuizen.spigotutils.menu.MenuClick;
 import nl.timvandijkhuizen.spigotutils.menu.Menu;
+import nl.timvandijkhuizen.spigotutils.menu.MenuClick;
 import nl.timvandijkhuizen.spigotutils.menu.items.MenuItemBuilder;
 import nl.timvandijkhuizen.spigotutils.menu.items.MenuItems;
 import nl.timvandijkhuizen.spigotutils.ui.UI;

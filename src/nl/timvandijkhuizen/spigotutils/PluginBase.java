@@ -16,44 +16,38 @@ public abstract class PluginBase extends JavaPlugin {
 
     @Override
     public void onLoad() {
-        ConsoleHelper.printDebug("Initializing plugin " + getName() + "...");
-        
         try {
-            init();
-
             for (Service service : registerServices()) {
-                ConsoleHelper.printDebug("Initializing service " + service.getHandle() + "...");
-                
                 services.put(service.getHandle(), service);
-                service.init();
-                
-                ConsoleHelper.printDebug("Successfully Initialized service " + service.getHandle() + ".");
+                ConsoleHelper.printDebug("Registered service " + service.getHandle());
             }
-            
-            ConsoleHelper.printDebug("Successfully Initialized plugin " + getName() + ".");
         } catch (Throwable e) {
-            ConsoleHelper.printError("Failed to initialize plugin or service.", e);
+            ConsoleHelper.printError("Failed to register services.", e);
         }
     }
     
     @Override
     public void onEnable() {
-        ConsoleHelper.printDebug("Loading plugin " + getName() + "...");
-        
+        try {
+            init();
+
+            for (Service service : services.values()) {
+                service.init();
+                ConsoleHelper.printDebug("Initialized service " + service.getHandle());
+            }
+        } catch (Throwable e) {
+            ConsoleHelper.printError("Failed to initialize plugin or service.", e);
+        }
+
         try {
             load();
 
             for (Service service : services.values()) {
-                ConsoleHelper.printDebug("Loading service " + service.getHandle() + "...");
-                
                 loadService(service);
-                
-                ConsoleHelper.printDebug("Successfully loaded service " + service.getHandle() + ".");
+                ConsoleHelper.printDebug("Loaded service " + service.getHandle());
             }
 
             ready();
-            
-            ConsoleHelper.printDebug("Successfully loaded plugin " + getName() + ".");
         } catch (Throwable e) {
             ConsoleHelper.printError("Failed to load plugin or service.", e);
         }
@@ -131,7 +125,9 @@ public abstract class PluginBase extends JavaPlugin {
      * @return
      * @throws Throwable
      */
-    public abstract Service[] registerServices() throws Throwable;
+    public Service[] registerServices() throws Throwable {
+        return new Service[] {};
+    }
 
     /**
      * Loads a service.
