@@ -90,6 +90,10 @@ public class PagedMenu extends Menu {
     public PagedMenu(String title, int rows, int columns) {
         this(title, rows, columns, 0, 0);
     }
+    
+    public PagedMenu(String title) {
+        this(title, 3, 7);
+    }
 
     public int getRows() {
         return rows;
