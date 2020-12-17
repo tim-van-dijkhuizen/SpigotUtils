@@ -24,6 +24,12 @@ public abstract class PluginBase extends JavaPlugin {
         } catch (Throwable e) {
             ConsoleHelper.printError("Failed to register services.", e);
         }
+        
+        try {
+            setup();
+        } catch (Throwable e) {
+            ConsoleHelper.printError("Failed to setup plugin.", e);
+        }
     }
     
     @Override
@@ -66,6 +72,14 @@ public abstract class PluginBase extends JavaPlugin {
         }
     }
 
+    /**
+     * Called during onLoad.
+     * 
+     * @throws Throwable
+     */
+    public void setup() throws Throwable {
+    }
+    
     /**
      * Called when the plugin is created.
      * 
