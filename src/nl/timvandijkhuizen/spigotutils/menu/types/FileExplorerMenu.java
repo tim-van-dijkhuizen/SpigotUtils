@@ -24,7 +24,7 @@ import nl.timvandijkhuizen.spigotutils.menu.items.MenuItemBuilder;
 import nl.timvandijkhuizen.spigotutils.menu.items.MenuItems;
 import nl.timvandijkhuizen.spigotutils.ui.UI;
 
-public class FileExplorereMenu extends PagedMenu {
+public class FileExplorerMenu extends PagedMenu {
 
     private static final XMaterial DIRECTORY_ICON = XMaterial.CHEST;
     private static final XMaterial DEFAULT_ICON = XMaterial.PAPER;
@@ -67,11 +67,11 @@ public class FileExplorereMenu extends PagedMenu {
     private File currentDirectory;
     private List<MenuItemBuilder> currentFiles;
 
-    public FileExplorereMenu(File root, File selected, Pattern[] allowed, Consumer<File> callback) {
+    public FileExplorerMenu(File root, File selected, Pattern[] allowed, Consumer<File> callback) {
         this(root, selected, allowed, callback, null);
     }
 
-    public FileExplorereMenu(File root, File selected, Pattern[] allowed, Consumer<File> callback, Menu returnMenu) {
+    public FileExplorerMenu(File root, File selected, Pattern[] allowed, Consumer<File> callback, Menu returnMenu) {
         super("File Explorer", 3, 7, 1, 1);
         this.selected = selected;
         this.allowed = allowed;
@@ -99,7 +99,7 @@ public class FileExplorereMenu extends PagedMenu {
         setItem(backItem, 48);
 
         // Create current directory item
-        MenuItemBuilder currentItem = new MenuItemBuilder(FileExplorereMenu.DIRECTORY_ICON);
+        MenuItemBuilder currentItem = new MenuItemBuilder(FileExplorerMenu.DIRECTORY_ICON);
 
         currentItem.setName(UI.color("Current Directory", UI.COLOR_SECONDARY, ChatColor.BOLD));
 
