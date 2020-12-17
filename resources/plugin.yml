@@ -1,5 +1,5 @@
 name: SpigotUtils
-description: A Spigot library to make plug-in development easier.
+description: A Spigot plug-in to make plug-in development easier.
 author: Tim van Dijkhuizen
 version: "1.0.0"
 api-version: 1.13
