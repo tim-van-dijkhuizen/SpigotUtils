@@ -42,27 +42,41 @@ public class ItemBuilder {
         this.itemStack = itemStack;
     }
 
-    public ItemBuilder clone() {
-        return new ItemBuilder(itemStack.clone());
-    }
-
-    public ItemStack toItemStack() {
-        return itemStack;
-    }
-
+    /**
+     * Returns the type.
+     * 
+     * @return
+     */
     public Material getType() {
         return itemStack.getType();
     }
 
+    /**
+     * Sets the type.
+     * 
+     * @param material
+     * @return
+     */
     public ItemBuilder setType(Material material) {
         itemStack.setType(material);
         return this;
     }
 
+    /**
+     * Sets the type (version safe).
+     * 
+     * @param material
+     * @return
+     */
     public ItemBuilder setType(XMaterial material) {
         return setType(material.parseMaterial(true));
     }
 
+    /**
+     * Returns the name.
+     * 
+     * @return
+     */
     public String getName() {
         ItemMeta meta = itemStack.getItemMeta();
 
@@ -73,6 +87,12 @@ public class ItemBuilder {
         return null;
     }
     
+    /**
+     * Sets the name.
+     * 
+     * @param name
+     * @return
+     */
     public ItemBuilder setName(String name) {
         ItemMeta meta = itemStack.getItemMeta();
 
@@ -84,11 +104,23 @@ public class ItemBuilder {
         return this;
     }
 
+    /**
+     * Sets the amount.
+     * 
+     * @param amount
+     * @return
+     */
     public ItemBuilder setAmount(int amount) {
         itemStack.setAmount(amount);
         return this;
     }
     
+    /**
+     * Sets the durability.
+     * 
+     * @param durability
+     * @return
+     */
     public ItemBuilder setDurability(short durability) {
         ItemMeta meta = itemStack.getItemMeta();
 
@@ -100,6 +132,12 @@ public class ItemBuilder {
         return this;
     }
     
+    /**
+     * Sets whether this item is unbreakable.
+     * 
+     * @param unbreakable
+     * @return
+     */
     public ItemBuilder setUnbreakable(boolean unbreakable) {
         ItemMeta meta = itemStack.getItemMeta();
 
@@ -111,6 +149,13 @@ public class ItemBuilder {
         return this;
     }
 
+    /**
+     * Adds an enchantment with the specified level.
+     * 
+     * @param enchantment
+     * @param level
+     * @return
+     */
     public ItemBuilder addEnchant(Enchantment enchantment, int level) {
         ItemMeta meta = itemStack.getItemMeta();
 
@@ -122,11 +167,22 @@ public class ItemBuilder {
         return this;
     }
     
+    /**
+     * Removes the specified enchantment
+     * 
+     * @param enchantment
+     * @return
+     */
     public ItemBuilder removeEnchantment(Enchantment enchantment) {
         itemStack.removeEnchantment(enchantment);
         return this;
     }
 
+    /**
+     * Adds an enchantment glow.
+     * 
+     * @return
+     */
     public ItemBuilder addEnchantGlow() {
         ItemMeta meta = itemStack.getItemMeta();
 
@@ -139,6 +195,11 @@ public class ItemBuilder {
         return this;
     }
 
+    /**
+     * Removes the enchantment glow.
+     * 
+     * @return
+     */
     public ItemBuilder removeEnchantGlow() {
         ItemMeta meta = itemStack.getItemMeta();
 
@@ -151,6 +212,11 @@ public class ItemBuilder {
         return this;
     }
     
+    /**
+     * Hides all item attributes.
+     * 
+     * @return
+     */
     public ItemBuilder hideAttributes() {
         ItemMeta meta = itemStack.getItemMeta();
 
@@ -166,6 +232,11 @@ public class ItemBuilder {
         return this;
     }
 
+    /**
+     * Returns the lore.
+     * 
+     * @return
+     */
     public List<String> getLore() {
         ItemMeta meta = itemStack.getItemMeta();
 
@@ -176,10 +247,22 @@ public class ItemBuilder {
         return new ArrayList<>();
     }
 
+    /**
+     * Sets the lore.
+     * 
+     * @param lore
+     * @return
+     */
     public ItemBuilder setLore(String... lore) {
         return setLore(Arrays.asList(lore));
     }
 
+    /**
+     * Sets the lore.
+     * 
+     * @param lore
+     * @return
+     */
     public ItemBuilder setLore(List<String> lore) {
         ItemMeta meta = itemStack.getItemMeta();
 
@@ -191,6 +274,13 @@ public class ItemBuilder {
         return this;
     }
     
+    /**
+     * Sets the specified lore line.
+     * 
+     * @param position
+     * @param line
+     * @return
+     */
     public ItemBuilder setLore(int position, String line) {
         List<String> lore = getLore();
         
@@ -199,10 +289,22 @@ public class ItemBuilder {
         return setLore(lore);
     }
 
+    /**
+     * Adds lines to the lore.
+     * 
+     * @param lines
+     * @return
+     */
     public ItemBuilder addLore(String... lines) {
         return addLore(Arrays.asList(lines));
     }
 
+    /**
+     * Adds lines to the lore.
+     * 
+     * @param lines
+     * @return
+     */
     public ItemBuilder addLore(List<String> lines) {
         List<String> lore = getLore();
 
@@ -213,11 +315,22 @@ public class ItemBuilder {
         return setLore(lore);
     }
 
+    /**
+     * Removes the entire lore.
+     * 
+     * @return
+     */
     public ItemBuilder removeLore() {
         setLore();
         return this;
     }
     
+    /**
+     * Removes the specified lore line.
+     * 
+     * @param index
+     * @return
+     */
     public ItemBuilder removeLore(int index) {
         List<String> lore = getLore();
         
@@ -226,6 +339,12 @@ public class ItemBuilder {
         return setLore(lore);
     }
 
+    /**
+     * Sets the color of leather armor.
+     * 
+     * @param color
+     * @return
+     */
     public ItemBuilder setLeatherArmorColor(Color color) {
         ItemMeta meta = itemStack.getItemMeta();
 
@@ -238,6 +357,12 @@ public class ItemBuilder {
         return this;
     }
 
+    /**
+     * Sets the texture of a skull.
+     * 
+     * @param uuid
+     * @return
+     */
     public ItemBuilder setSkullOwner(UUID uuid) {
         ItemMeta meta = itemStack.getItemMeta();
 
@@ -248,6 +373,14 @@ public class ItemBuilder {
         }
 
         return this;
+    }
+
+    public ItemBuilder clone() {
+        return new ItemBuilder(itemStack.clone());
+    }
+
+    public ItemStack build() {
+        return itemStack;
     }
 
 }

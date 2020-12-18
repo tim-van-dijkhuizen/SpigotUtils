@@ -218,7 +218,7 @@ public class Menu implements InventoryHolder {
 
         // Draw menu items
         for (Entry<Integer, MenuItemBuilder> item : items.entrySet()) {
-            inventory.setItem(item.getKey(), item.getValue().toItemStack());
+            inventory.setItem(item.getKey(), item.getValue().build());
         }
     }
 

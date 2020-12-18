@@ -1,6 +1,5 @@
 package nl.timvandijkhuizen.spigotutils.menu.items;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 import java.util.function.Supplier;
@@ -52,26 +51,14 @@ public class MenuItemBuilder extends ItemBuilder {
         super(itemStack);
     }
 
-    public MenuItemBuilder setClickListener(MenuClickListener listener) {
-        this.listener = listener;
-        return this;
-    }
-
-    public MenuClickListener getClickListener() {
-        return listener;
-    }
-
-    public MenuItemBuilder clone() {
-        return new MenuItemBuilder(itemStack.clone());
-    }
-
     public MenuItemBuilder setType(Material material) {
         super.setType(material);
         return this;
     }
 
     public MenuItemBuilder setType(XMaterial material) {
-        return setType(material.parseMaterial(true));
+        super.setType(material);
+        return this;
     }
 
     public MenuItemBuilder setName(String name) {
@@ -120,7 +107,8 @@ public class MenuItemBuilder extends ItemBuilder {
     }
 
     public MenuItemBuilder setLore(String... lore) {
-        return setLore(Arrays.asList(lore));
+        super.setLore(lore);
+        return this;
     }
 
     public MenuItemBuilder setLore(List<String> lore) {
@@ -129,38 +117,28 @@ public class MenuItemBuilder extends ItemBuilder {
     }
     
     public MenuItemBuilder setLore(int position, String line) {
-        List<String> lore = getLore();
-        
-        lore.set(position, line);
-        
-        return setLore(lore);
+        super.setLore(position, line);
+        return this;
     }
 
     public MenuItemBuilder addLore(String... lines) {
-        return addLore(Arrays.asList(lines));
+        super.addLore(lines);
+        return this;
     }
 
     public MenuItemBuilder addLore(List<String> lines) {
-        List<String> lore = getLore();
-
-        for (String line : lines) {
-            lore.add(line);
-        }
-
-        return setLore(lore);
+        super.addLore(lines);
+        return this;
     }
 
     public MenuItemBuilder removeLore() {
-        setLore();
+        super.removeLore();
         return this;
     }
     
     public MenuItemBuilder removeLore(int index) {
-        List<String> lore = getLore();
-        
-        lore.remove(index);
-
-        return setLore(lore);
+        super.removeLore(index);
+        return this;
     }
 
     public MenuItemBuilder setLeatherArmorColor(Color color) {
@@ -173,6 +151,15 @@ public class MenuItemBuilder extends ItemBuilder {
         return this;
     }
 
+    public MenuItemBuilder setClickListener(MenuClickListener listener) {
+        this.listener = listener;
+        return this;
+    }
+
+    public MenuClickListener getClickListener() {
+        return listener;
+    }
+    
     public boolean isDisabled() {
         return disabled;
     }
@@ -180,40 +167,7 @@ public class MenuItemBuilder extends ItemBuilder {
     public void setDisabled(boolean disabled) {
         this.disabled = disabled;
     }
-
-    @Override
-    public ItemStack toItemStack() {
-        if (typeGenerator != null) {
-            setType(typeGenerator.get());
-        }
-
-        if (nameGenerator != null) {
-            setName(nameGenerator.get());
-        }
-
-        if (amountGenerator != null) {
-            setAmount(amountGenerator.get());
-        }
-
-        if (loreGenerator != null) {
-            setLore(loreGenerator.get());
-        }
-
-        if (glowGenerator != null) {
-            if (glowGenerator.get()) {
-                addEnchantGlow();
-            } else {
-                removeEnchantGlow();
-            }
-        }
-
-        if (disabledGenerator != null) {
-            setDisabled(disabledGenerator.get());
-        }
-
-        return super.toItemStack();
-    }
-
+    
     public Supplier<Material> getTypeGenerator() {
         return typeGenerator;
     }
@@ -260,6 +214,43 @@ public class MenuItemBuilder extends ItemBuilder {
 
     public void setDisabledGenerator(Supplier<Boolean> disabledGenerator) {
         this.disabledGenerator = disabledGenerator;
+    }
+    
+    public MenuItemBuilder clone() {
+        return new MenuItemBuilder(itemStack.clone());
+    }
+
+    @Override
+    public ItemStack build() {
+        if (typeGenerator != null) {
+            setType(typeGenerator.get());
+        }
+
+        if (nameGenerator != null) {
+            setName(nameGenerator.get());
+        }
+
+        if (amountGenerator != null) {
+            setAmount(amountGenerator.get());
+        }
+
+        if (loreGenerator != null) {
+            setLore(loreGenerator.get());
+        }
+
+        if (glowGenerator != null) {
+            if (glowGenerator.get()) {
+                addEnchantGlow();
+            } else {
+                removeEnchantGlow();
+            }
+        }
+
+        if (disabledGenerator != null) {
+            setDisabled(disabledGenerator.get());
+        }
+
+        return super.build();
     }
 
 }
