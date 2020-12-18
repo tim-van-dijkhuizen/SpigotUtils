@@ -116,7 +116,7 @@ public class ConfigTypeList<T extends ConfigObject> implements ConfigType<List<T
 
         // Add command buttons
         for (T object : objects) {
-            addObjectButton(player, menu, objects, object);
+            addObjectButton(player, menu, objects, object, option.isRequired());
         }
 
         // Back button
@@ -145,7 +145,7 @@ public class ConfigTypeList<T extends ConfigObject> implements ConfigType<List<T
 
                 object.getInput(createClick, save -> {
                     if(save) {
-                        addObjectButton(player, menu, objects, object);
+                        addObjectButton(player, menu, objects, object, option.isRequired());
                         objects.add(object);
                     }
 
@@ -162,7 +162,7 @@ public class ConfigTypeList<T extends ConfigObject> implements ConfigType<List<T
         menu.open(player);
     }
 
-    private void addObjectButton(Player player, PagedMenu menu, List<T> objects, T object) {
+    private void addObjectButton(Player player, PagedMenu menu, List<T> objects, T object, boolean required) {
         MenuItemBuilder item = new MenuItemBuilder(menuIcon);
 
         item.setNameGenerator(() -> {
@@ -178,7 +178,10 @@ public class ConfigTypeList<T extends ConfigObject> implements ConfigType<List<T
 
             lore.add("");
             lore.add(UI.color("Use left-click to edit.", UI.COLOR_SECONDARY, ChatColor.ITALIC));
-            lore.add(UI.color("Use right-click to delete.", UI.COLOR_SECONDARY, ChatColor.ITALIC));
+            
+            if(!required || objects.size() > 1) {
+                lore.add(UI.color("Use right-click to delete.", UI.COLOR_SECONDARY, ChatColor.ITALIC));
+            }
             
             return lore;
         });
@@ -187,12 +190,14 @@ public class ConfigTypeList<T extends ConfigObject> implements ConfigType<List<T
             ClickType clickType = event.getClickType();
 
             if (clickType == ClickType.RIGHT) {
-                UI.playSound(player, UI.SOUND_DELETE);
-
-                objects.remove(object);
-                menu.removePagedItem(item);
-                
-                menu.refresh();
+                if(!required || objects.size() > 1) {
+                    UI.playSound(player, UI.SOUND_DELETE);
+    
+                    objects.remove(object);
+                    menu.removePagedItem(item);
+                    
+                    menu.refresh();
+                }
             } else {
                 UI.playSound(player, UI.SOUND_CLICK);
                 player.closeInventory();
