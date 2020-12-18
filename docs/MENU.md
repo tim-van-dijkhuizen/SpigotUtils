@@ -6,6 +6,9 @@ An API for creating advanced menu's in an object oriented way.
 * Paged menu
 * Structured menu
 
+### MenuItemBuilder
+MenuItemBuilder extends [ItemBuilder](ITEM_BUILDER.md). This class adds the following features: Click listener, disabled state, dynamic content generators.
+
 ### Examples
 ##### Menu
 ```java
