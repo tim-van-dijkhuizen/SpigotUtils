@@ -12,43 +12,43 @@ import nl.timvandijkhuizen.spigotutils.menu.Menu;
 import nl.timvandijkhuizen.spigotutils.menu.MenuClick;
 import nl.timvandijkhuizen.spigotutils.ui.UI;
 
-public class ConfigTypeInteger implements ConfigType<Integer> {
+public class ConfigTypeDouble implements ConfigType<Double> {
 
     @Override
-    public Integer getValue(OptionConfig config, ConfigOption<Integer> option) {
-        return config.getInt(option.getPath());
+    public Double getValue(OptionConfig config, ConfigOption<Double> option) {
+        return config.getDouble(option.getPath());
     }
 
     @Override
-    public void setValue(OptionConfig config, ConfigOption<Integer> option, Integer value) {
+    public void setValue(OptionConfig config, ConfigOption<Double> option, Double value) {
         config.set(option.getPath(), value);
     }
     
     @Override
-    public String getRawValue(OptionConfig config, ConfigOption<Integer> option) {
-        Integer value = getValue(config, option);
+    public String getRawValue(OptionConfig config, ConfigOption<Double> option) {
+        Double value = getValue(config, option);
         return value.toString();
     }
 
     @Override
-    public String getDisplayValue(OptionConfig config, ConfigOption<Integer> option) {
+    public String getDisplayValue(OptionConfig config, ConfigOption<Double> option) {
         return getRawValue(config, option);
     }
 
     @Override
-    public boolean isValueEmpty(OptionConfig config, ConfigOption<Integer> option) {
+    public boolean isValueEmpty(OptionConfig config, ConfigOption<Double> option) {
         return !config.contains(option.getPath());
     }
 
     @Override
-    public void getValueInput(OptionConfig config, ConfigOption<Integer> option, MenuClick event, Consumer<Integer> callback) {
+    public void getValueInput(OptionConfig config, ConfigOption<Double> option, MenuClick event, Consumer<Double> callback) {
         Player player = event.getPlayer();
         Menu menu = event.getMenu();
         
         menu.close(player);
         
         InputHelper.getNumber(player, UI.color("What should be the new value?", UI.COLOR_PRIMARY), (ctx, input) -> {
-            callback.accept(input.intValue());
+            callback.accept(input.doubleValue());
             return null;
         });
     }
