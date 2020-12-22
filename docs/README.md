@@ -1,6 +1,6 @@
 # SpigotUtils
 
-A Spigot plugin to make plugin development easier.
+A Spigot plugin to make plugin development easier. You can download it [here](https://www.spigotmc.org/resources/spigotutils.86830/).
 
 ### Available features
 
