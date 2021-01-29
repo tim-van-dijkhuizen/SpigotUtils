@@ -7,7 +7,10 @@ public interface Service {
      * 
      * @return
      */
-    public String getHandle();
+    @Deprecated(since = "1.2.0", forRemoval = true)
+    public default String getHandle() {
+        throw new RuntimeException("Handle has not been set");
+    }
 
     /**
      * Called when the service is created.

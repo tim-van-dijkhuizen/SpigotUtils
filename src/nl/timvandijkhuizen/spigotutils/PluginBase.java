@@ -12,10 +12,11 @@ import nl.timvandijkhuizen.spigotutils.services.Service;
 public abstract class PluginBase extends JavaPlugin {
 
     private Map<Class<? extends Service>, Service> services = new HashMap<>();
-    private Map<String, Service> serviceHandles = new HashMap<>();
-    
-    private Map<String, String> serviceErrors = new HashMap<>();
+    private Map<Class<? extends Service>, String> serviceErrors = new HashMap<>();
 
+    private Map<String, Service> serviceHandles = new HashMap<>();
+    private Map<String, String> serviceErrorHandles = new HashMap<>();
+    
     @Override
     public void onLoad() {
         try {
@@ -23,7 +24,7 @@ public abstract class PluginBase extends JavaPlugin {
                 serviceHandles.put(service.getHandle(), service);
                 services.put(service.getClass(), service);
                 
-                ConsoleHelper.printDebug("Registered service " + service.getHandle());
+                ConsoleHelper.printDebug("Registered service " + service.getClass().getSimpleName());
             }
         } catch (Throwable e) {
             ConsoleHelper.printError("Failed to register services.", e);
@@ -43,7 +44,7 @@ public abstract class PluginBase extends JavaPlugin {
 
             for (Service service : services.values()) {
                 service.init();
-                ConsoleHelper.printDebug("Initialized service " + service.getHandle());
+                ConsoleHelper.printDebug("Initialized service " + service.getClass().getSimpleName());
             }
         } catch (Throwable e) {
             ConsoleHelper.printError("Failed to initialize plugin or service.", e);
@@ -54,7 +55,7 @@ public abstract class PluginBase extends JavaPlugin {
 
             for (Service service : services.values()) {
                 loadService(service);
-                ConsoleHelper.printDebug("Loaded service " + service.getHandle());
+                ConsoleHelper.printDebug("Loaded service " + service.getClass().getSimpleName());
             }
 
             ready();
@@ -161,8 +162,9 @@ public abstract class PluginBase extends JavaPlugin {
                 getServer().getPluginManager().registerEvents((Listener) service, this);
             }
         } catch (Throwable e) {
-            ConsoleHelper.printError("Failed to load service: " + service.getHandle(), e);
-            serviceErrors.put(service.getHandle(), e.getMessage());
+            ConsoleHelper.printError("Failed to load service: " + service.getClass().getSimpleName(), e);
+            serviceErrors.put(service.getClass(), e.getMessage());
+            serviceErrorHandles.put(service.getHandle(), e.getMessage());
         }
     }
 
@@ -175,7 +177,7 @@ public abstract class PluginBase extends JavaPlugin {
         try {
             service.unload();
         } catch (Throwable e) {
-            ConsoleHelper.printError("Failed to unload service: " + service.getHandle(), e);
+            ConsoleHelper.printError("Failed to unload service: " + service.getClass().getSimpleName(), e);
         }
     }
 
@@ -185,14 +187,16 @@ public abstract class PluginBase extends JavaPlugin {
      * @param service
      */
     private void reloadService(Service service) {
-        serviceErrors.remove(service.getHandle());
+        serviceErrors.remove(service.getClass());
+        serviceErrorHandles.remove(service.getHandle());
 
         try {
             service.unload();
             service.load();
         } catch (Throwable e) {
-            ConsoleHelper.printError("Failed to reload service: " + service.getHandle(), e);
-            serviceErrors.put(service.getHandle(), e.getMessage());
+            ConsoleHelper.printError("Failed to reload service: " + service.getClass().getSimpleName(), e);
+            serviceErrors.put(service.getClass(), e.getMessage());
+            serviceErrorHandles.put(service.getHandle(), e.getMessage());
         }
     }
 
@@ -204,6 +208,14 @@ public abstract class PluginBase extends JavaPlugin {
      */
     public <T extends Service> T getService(Class<T> service) {
         return service.cast(services.get(service));
+    }
+    
+    public Map<Class<? extends Service>, String> getAllServiceErrors() {
+        return serviceErrors;
+    }
+
+    public String getServiceErrors(Class<? extends Service> service) {
+        return serviceErrors.get(service);
     }
     
     /**
@@ -223,12 +235,14 @@ public abstract class PluginBase extends JavaPlugin {
         }
     }
 
+    @Deprecated(since = "1.2.0", forRemoval = true)
     public Map<String, String> getServiceErrors() {
-        return serviceErrors;
+        return serviceErrorHandles;
     }
 
+    @Deprecated(since = "1.2.0", forRemoval = true)
     public String getServiceError(String handle) {
-        return serviceErrors.get(handle);
+        return serviceErrorHandles.get(handle);
     }
 
 }
