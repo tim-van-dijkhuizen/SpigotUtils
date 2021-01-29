@@ -10,6 +10,7 @@ public class ConfigObjectData {
 
     private Map<String, Object> params;
 
+    @SuppressWarnings("unchecked")
     public ConfigObjectData(Map<?, ?> rawObject) {
         this.params = (Map<String, Object>) rawObject;
     }

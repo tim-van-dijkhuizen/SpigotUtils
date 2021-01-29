@@ -56,8 +56,13 @@ public class JsonConfig implements Configuration, OptionConfig {
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public <T> ConfigOption<T> getOption(String path) {
-        return getOptions().stream().filter(i -> i.getPath().equals(path)).map(i -> (ConfigOption<T>) i).findFirst().orElse(null);
+        return getOptions().stream()
+            .filter(i -> i.getPath().equals(path))
+            .map(i -> (ConfigOption<T>) i)
+            .findFirst()
+            .orElse(null);
     }
 
     @Override

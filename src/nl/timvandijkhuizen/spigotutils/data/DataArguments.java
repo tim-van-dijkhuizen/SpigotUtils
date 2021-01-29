@@ -13,6 +13,7 @@ public class DataArguments {
         this.arguments = arguments;
     }
 
+    @SuppressWarnings("unchecked")
     private <T> T getValue(int index, T defaultValue) {
         if (arguments.length <= index) {
             return defaultValue;

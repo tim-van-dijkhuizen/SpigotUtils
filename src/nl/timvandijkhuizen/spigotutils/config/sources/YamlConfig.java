@@ -65,8 +65,13 @@ public class YamlConfig extends YamlConfiguration implements OptionConfig {
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public <T> ConfigOption<T> getOption(String path) {
-        return options.stream().filter(i -> i.getPath().equals(path)).map(i -> (ConfigOption<T>) i).findFirst().orElse(null);
+        return options.stream()
+            .filter(i -> i.getPath().equals(path))
+            .map(i -> (ConfigOption<T>) i)
+            .findFirst()
+            .orElse(null);
     }
     
     @Override

@@ -14,20 +14,26 @@ public interface Service {
      * 
      * @throws Throwable
      */
-    public void init() throws Throwable;
+    public default void init() throws Throwable {
+        
+    }
 
     /**
      * Called when the service is loaded.
      * 
      * @throws Throwable
      */
-    public void load() throws Throwable;
+    public default void load() throws Throwable {
+        
+    }
 
     /**
      * Called when the service is unloaded.
      * 
      * @throws Throwable
      */
-    public void unload() throws Throwable;
+    public default void unload() throws Throwable {
+        
+    }
 
 }

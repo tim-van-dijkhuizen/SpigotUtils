@@ -11,14 +11,18 @@ import nl.timvandijkhuizen.spigotutils.services.Service;
 
 public abstract class PluginBase extends JavaPlugin {
 
-    private Map<String, Service> services = new HashMap<>();
+    private Map<Class<? extends Service>, Service> services = new HashMap<>();
+    private Map<String, Service> serviceHandles = new HashMap<>();
+    
     private Map<String, String> serviceErrors = new HashMap<>();
 
     @Override
     public void onLoad() {
         try {
             for (Service service : registerServices()) {
-                services.put(service.getHandle(), service);
+                serviceHandles.put(service.getHandle(), service);
+                services.put(service.getClass(), service);
+                
                 ConsoleHelper.printDebug("Registered service " + service.getHandle());
             }
         } catch (Throwable e) {
@@ -193,14 +197,26 @@ public abstract class PluginBase extends JavaPlugin {
     }
 
     /**
+     * Returns a service by its class.
+     * 
+     * @param class
+     * @return
+     */
+    public <T extends Service> T getService(Class<T> service) {
+        return service.cast(services.get(service));
+    }
+    
+    /**
      * Returns a service by its handle.
      * 
      * @param handle
      * @return
      */
+    @SuppressWarnings("unchecked")
+    @Deprecated(since = "1.2.0", forRemoval = true)
     public <T extends Service> T getService(String handle) {
         try {
-            return (T) services.get(handle);
+            return (T) serviceHandles.get(handle);
         } catch (ClassCastException e) {
             ConsoleHelper.printError("Service with handle " + handle + " cannot be cast to the specified type.");
             return null;
