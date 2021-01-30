@@ -225,7 +225,7 @@ public abstract class PluginBase extends JavaPlugin {
      * @return
      */
     @SuppressWarnings("unchecked")
-    @Deprecated(since = "1.2.0", forRemoval = true)
+    @Deprecated
     public <T extends Service> T getService(String handle) {
         try {
             return (T) serviceHandles.get(handle);
@@ -235,12 +235,12 @@ public abstract class PluginBase extends JavaPlugin {
         }
     }
 
-    @Deprecated(since = "1.2.0", forRemoval = true)
+    @Deprecated
     public Map<String, String> getServiceErrors() {
         return serviceErrorHandles;
     }
 
-    @Deprecated(since = "1.2.0", forRemoval = true)
+    @Deprecated
     public String getServiceError(String handle) {
         return serviceErrorHandles.get(handle);
     }
