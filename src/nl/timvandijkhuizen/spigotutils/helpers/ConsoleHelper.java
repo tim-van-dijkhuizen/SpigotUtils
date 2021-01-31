@@ -7,15 +7,19 @@ import org.bukkit.Bukkit;
 
 public class ConsoleHelper {
 
-    private static boolean devMode = true;
-    private static BiConsumer<Level, String> logMethod = null;
-
+    private static BiConsumer<LogType, String> logMethod = null;
+    private static boolean devMode = false;
+    
     public static void setDevMode(boolean devMode) {
         ConsoleHelper.devMode = devMode;
     }
+    
+    public static void setLogMethod(BiConsumer<LogType, String> logMethod) {
+        ConsoleHelper.logMethod = logMethod;
+    }
 
     public static void printInfo(String message) {
-        print(Level.INFO, message);
+        print(LogType.INFO, message);
     }
 
     public static void printError(String message) {
@@ -23,29 +27,41 @@ public class ConsoleHelper {
     }
 
     public static void printError(String message, Throwable error) {
-        print(Level.SEVERE, message);
+        print(LogType.ERROR, message);
 
-        if (error != null && devMode) {
+        if (error != null) {
             error.printStackTrace();
         }
     }
     
     public static void printDebug(String message) {
-        if(devMode) {
-            print(Level.INFO, message);
-        }
+        print(LogType.DEBUG, message);
     }
     
-    public static void setLogMethod(BiConsumer<Level, String> logMethod) {
-        ConsoleHelper.logMethod = logMethod;
-    }
-    
-    private static void print(Level level, String message) {
+    private static void print(LogType type, String message) {
         if(logMethod != null) {
-            logMethod.accept(level, message);
+            logMethod.accept(type, message);
+            return;
         }
         
-        Bukkit.getLogger().log(level, message);
+        // Check if we should ignore
+        if(type != LogType.DEBUG || devMode) {
+            Level level = Level.INFO;
+            
+            if(type == LogType.WARNING) {
+                level = Level.WARNING;
+            } else if(type == LogType.ERROR) {
+                level = Level.SEVERE;
+            }
+            
+            Bukkit.getLogger().log(level, message);
+        }
+    }
+    
+    public enum LogType {
+        
+        INFO, WARNING, ERROR, DEBUG
+        
     }
 
 }
