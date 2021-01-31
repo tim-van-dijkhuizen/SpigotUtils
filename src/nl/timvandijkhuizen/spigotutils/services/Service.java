@@ -9,7 +9,7 @@ public interface Service {
      */
     @Deprecated
     public default String getHandle() {
-        throw new RuntimeException("Handle has not been set");
+        return null;
     }
 
     /**
@@ -36,6 +36,15 @@ public interface Service {
      * @throws Throwable
      */
     public default void unload() throws Throwable {
+        
+    }
+    
+    /**
+     * Called when the service is destroyed.
+     * 
+     * @throws Throwable
+     */
+    public default void destroy() throws Throwable {
         
     }
 

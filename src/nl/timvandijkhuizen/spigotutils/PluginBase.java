@@ -21,19 +21,23 @@ public abstract class PluginBase extends JavaPlugin {
     public void onLoad() {
         try {
             for (Service service : registerServices()) {
-                serviceHandles.put(service.getHandle(), service);
                 services.put(service.getClass(), service);
+                
+                if(service.getHandle() != null) {
+                    serviceHandles.put(service.getHandle(), service);
+                }
                 
                 ConsoleHelper.printDebug("Registered service " + service.getClass().getSimpleName());
             }
-        } catch (Throwable e) {
-            ConsoleHelper.printError("Failed to register services.", e);
+        } catch (Throwable t) {
+            ConsoleHelper.printError("Failed to register services.", t);
         }
         
+        // Set up plug-in
         try {
             setup();
-        } catch (Throwable e) {
-            ConsoleHelper.printError("Failed to setup plugin.", e);
+        } catch (Throwable t) {
+            ConsoleHelper.printError("Failed to set up plug-in.", t);
         }
     }
     
@@ -41,26 +45,37 @@ public abstract class PluginBase extends JavaPlugin {
     public void onEnable() {
         try {
             init();
-
-            for (Service service : services.values()) {
-                service.init();
-                ConsoleHelper.printDebug("Initialized service " + service.getClass().getSimpleName());
-            }
-        } catch (Throwable e) {
-            ConsoleHelper.printError("Failed to initialize plugin or service.", e);
+        } catch (Throwable t) {
+            ConsoleHelper.printError("Failed to initialize plug-in.", t);
         }
 
+        // Initialize services
+        for (Service service : services.values()) {
+            try {
+                service.init();
+                ConsoleHelper.printDebug("Initialized service " + service.getClass().getSimpleName());
+            } catch (Throwable t) {
+                ConsoleHelper.printError("Failed to initialize service.", t);
+            }
+        }
+        
+        // Load plug-in
         try {
             load();
-
-            for (Service service : services.values()) {
-                loadService(service);
-                ConsoleHelper.printDebug("Loaded service " + service.getClass().getSimpleName());
-            }
-
+        } catch (Throwable t) {
+            ConsoleHelper.printError("Failed to load plug-in.", t);
+        }
+        
+        // Load services
+        for (Service service : services.values()) {
+            loadService(service);
+        }
+        
+        // Plug-in ready
+        try {
             ready();
-        } catch (Throwable e) {
-            ConsoleHelper.printError("Failed to load plugin or service.", e);
+        } catch (Throwable t) {
+            ConsoleHelper.printError("Failed to call plug-in ready.", t);
         }
     }
 
@@ -73,7 +88,23 @@ public abstract class PluginBase extends JavaPlugin {
         try {
             unload();
         } catch (Throwable e) {
-            ConsoleHelper.printError("Failed to unload plugin.", e);
+            ConsoleHelper.printError("Failed to unload plug-in.", e);
+        }
+        
+        // Destroy services
+        for (Service service : services.values()) {
+            try {
+                service.destroy();
+            } catch (Throwable t) {
+                ConsoleHelper.printError("Failed to destroy service.", t);
+            }
+        }
+        
+        // Destroy plug-in
+        try {
+            destroy();
+        } catch (Throwable t) {
+            ConsoleHelper.printError("Failed to unload plug-in.", t);
         }
     }
 
@@ -118,13 +149,21 @@ public abstract class PluginBase extends JavaPlugin {
     }
 
     /**
+     * Called when the plugin is destroyed.
+     * 
+     * @throws Throwable
+     */
+    public void destroy() throws Throwable {
+    }
+    
+    /**
      * Reloads all services.
      */
     public void reload() {
         try {
             unload();
         } catch (Throwable e) {
-            ConsoleHelper.printError("Failed to unload plugin.", e);
+            ConsoleHelper.printError("Failed to unload plug-in.", e);
         }
 
         for (Service service : services.values()) {
@@ -134,7 +173,7 @@ public abstract class PluginBase extends JavaPlugin {
         try {
             load();
         } catch (Throwable e) {
-            ConsoleHelper.printError("Failed to load plugin.", e);
+            ConsoleHelper.printError("Failed to load plug-in.", e);
         }
     }
 
@@ -161,10 +200,15 @@ public abstract class PluginBase extends JavaPlugin {
             if (service instanceof Listener) {
                 getServer().getPluginManager().registerEvents((Listener) service, this);
             }
+            
+            ConsoleHelper.printDebug("Loaded service " + service.getClass().getSimpleName());
         } catch (Throwable e) {
             ConsoleHelper.printError("Failed to load service: " + service.getClass().getSimpleName(), e);
             serviceErrors.put(service.getClass(), e.getMessage());
-            serviceErrorHandles.put(service.getHandle(), e.getMessage());
+            
+            if(service.getHandle() != null) {
+                serviceErrorHandles.put(service.getHandle(), e.getMessage());
+            }
         }
     }
 
@@ -176,6 +220,7 @@ public abstract class PluginBase extends JavaPlugin {
     private void unloadService(Service service) {
         try {
             service.unload();
+            ConsoleHelper.printDebug("Unloaded service " + service.getClass().getSimpleName());
         } catch (Throwable e) {
             ConsoleHelper.printError("Failed to unload service: " + service.getClass().getSimpleName(), e);
         }
@@ -188,7 +233,10 @@ public abstract class PluginBase extends JavaPlugin {
      */
     private void reloadService(Service service) {
         serviceErrors.remove(service.getClass());
-        serviceErrorHandles.remove(service.getHandle());
+        
+        if(service.getHandle() != null) {
+            serviceErrorHandles.remove(service.getHandle());
+        }
 
         try {
             service.unload();
@@ -196,7 +244,10 @@ public abstract class PluginBase extends JavaPlugin {
         } catch (Throwable e) {
             ConsoleHelper.printError("Failed to reload service: " + service.getClass().getSimpleName(), e);
             serviceErrors.put(service.getClass(), e.getMessage());
-            serviceErrorHandles.put(service.getHandle(), e.getMessage());
+            
+            if(service.getHandle() != null) {
+                serviceErrorHandles.put(service.getHandle(), e.getMessage());
+            }
         }
     }
 
