@@ -1,5 +1,6 @@
 package nl.timvandijkhuizen.spigotutils.helpers;
 
+import java.util.function.BiConsumer;
 import java.util.logging.Level;
 
 import org.bukkit.Bukkit;
@@ -7,13 +8,14 @@ import org.bukkit.Bukkit;
 public class ConsoleHelper {
 
     private static boolean devMode = true;
+    private static BiConsumer<Level, String> logMethod = null;
 
     public static void setDevMode(boolean devMode) {
         ConsoleHelper.devMode = devMode;
     }
 
     public static void printInfo(String message) {
-        Bukkit.getLogger().log(Level.INFO, message);
+        print(Level.INFO, message);
     }
 
     public static void printError(String message) {
@@ -21,7 +23,7 @@ public class ConsoleHelper {
     }
 
     public static void printError(String message, Throwable error) {
-        Bukkit.getLogger().log(Level.WARNING, message);
+        print(Level.SEVERE, message);
 
         if (error != null && devMode) {
             error.printStackTrace();
@@ -30,8 +32,20 @@ public class ConsoleHelper {
     
     public static void printDebug(String message) {
         if(devMode) {
-            Bukkit.getLogger().log(Level.INFO, message);
+            print(Level.INFO, message);
         }
+    }
+    
+    public static void setLogMethod(BiConsumer<Level, String> logMethod) {
+        ConsoleHelper.logMethod = logMethod;
+    }
+    
+    private static void print(Level level, String message) {
+        if(logMethod != null) {
+            logMethod.accept(level, message);
+        }
+        
+        Bukkit.getLogger().log(level, message);
     }
 
 }
