@@ -2,7 +2,6 @@ package nl.timvandijkhuizen.spigotutils.helpers;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -12,7 +11,7 @@ import org.yaml.snakeyaml.external.biz.base64Coder.Base64Coder;
 
 public class InventoryHelper {
 
-	public static String serialize(Inventory inventory) {
+	public static String serialize(Inventory inventory) throws Exception {
         try {
             ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
             BukkitObjectOutputStream dataOutput = new BukkitObjectOutputStream(outputStream);
@@ -28,12 +27,12 @@ public class InventoryHelper {
             // Serialize that array
             dataOutput.close();
             return Base64Coder.encodeLines(outputStream.toByteArray());
-        } catch (Exception e) {
-            throw new IllegalStateException("Unable to save item stacks.", e);
+        } catch (Throwable t) {
+            throw new Exception("Failed to serialize inventory: " + t.getMessage(), t);
         }    
     }
 	
-	public static void deserialize(Inventory inventory, String data) throws IOException {
+	public static void deserialize(Inventory inventory, String data) throws Exception {
         try {
             ByteArrayInputStream inputStream = new ByteArrayInputStream(Base64Coder.decodeLines(data));
             BukkitObjectInputStream dataInput = new BukkitObjectInputStream(inputStream);
@@ -44,8 +43,8 @@ public class InventoryHelper {
             }
             
             dataInput.close();
-        } catch (ClassNotFoundException e) {
-            throw new IOException("Unable to decode class type.", e);
+        } catch (Throwable t) {
+            throw new Exception("Failed to deserialize inventory: " + t.getMessage(), t);
         }
     }
 	
