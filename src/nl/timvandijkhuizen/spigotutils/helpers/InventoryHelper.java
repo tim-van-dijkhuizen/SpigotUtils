@@ -12,39 +12,48 @@ import org.yaml.snakeyaml.external.biz.base64Coder.Base64Coder;
 public class InventoryHelper {
 
 	public static String serialize(Inventory inventory) throws Exception {
+        if(inventory == null) {
+            throw new IllegalArgumentException("Inventory can not be null");
+        }
+	    
+        // Write the size of the inventory
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        BukkitObjectOutputStream dataOutput = new BukkitObjectOutputStream(outputStream);
+
         try {
-            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-            BukkitObjectOutputStream dataOutput = new BukkitObjectOutputStream(outputStream);
-        
-            // Write the size of the inventory
             dataOutput.writeInt(inventory.getSize());
-        
-            // Save every element in the list
+            
             for (int i = 0; i < inventory.getSize(); i++) {
                 dataOutput.writeObject(inventory.getItem(i));
             }
-        
-            // Serialize that array
+        } finally {
             dataOutput.close();
-            return Base64Coder.encodeLines(outputStream.toByteArray());
-        } catch (Throwable t) {
-            throw new Exception("Failed to serialize inventory: " + t.getMessage(), t);
-        }    
+        }
+    
+        return Base64Coder.encodeLines(outputStream.toByteArray());
     }
 	
 	public static void deserialize(Inventory inventory, String data) throws Exception {
+        if(inventory == null) {
+            throw new IllegalArgumentException("Inventory can not be null");
+        }
+        
+        if(data == null) {
+            throw new IllegalArgumentException("Data can not be null");
+        }
+	    
+        // Read the serialized inventory
+        ByteArrayInputStream inputStream = new ByteArrayInputStream(Base64Coder.decodeLines(data));
+        BukkitObjectInputStream dataInput = new BukkitObjectInputStream(inputStream);
+        
         try {
-            ByteArrayInputStream inputStream = new ByteArrayInputStream(Base64Coder.decodeLines(data));
-            BukkitObjectInputStream dataInput = new BukkitObjectInputStream(inputStream);
-
-            // Read the serialized inventory
-            for (int i = 0; i < inventory.getSize(); i++) {
+            int size = dataInput.readInt();
+            
+            for (int i = 0; i < size; i++) {
                 inventory.setItem(i, (ItemStack) dataInput.readObject());
             }
-            
+        } finally {
             dataInput.close();
-        } catch (Throwable t) {
-            throw new Exception("Failed to deserialize inventory: " + t.getMessage(), t);
         }
     }
 	
