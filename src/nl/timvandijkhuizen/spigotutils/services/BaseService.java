@@ -1,5 +1,6 @@
 package nl.timvandijkhuizen.spigotutils.services;
 
+@Deprecated
 public abstract class BaseService implements Service {
 
     @Override

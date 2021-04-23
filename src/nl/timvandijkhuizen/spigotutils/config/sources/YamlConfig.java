@@ -19,13 +19,21 @@ public class YamlConfig extends YamlConfiguration implements OptionConfig {
     private Collection<ConfigOption<?>> options = new LinkedHashSet<>();
 
     public YamlConfig(PluginBase plugin) throws Throwable {
-        this(plugin, "config.yml", null);
+        this(plugin, "config.yml");
     }
 
+    public YamlConfig(PluginBase plugin, String fileName) throws Throwable {
+        this(plugin, new File(plugin.getDataFolder(), fileName), null);
+    }
+    
     public YamlConfig(PluginBase plugin, String fileName, String defaults) throws Throwable {
         this(plugin, new File(plugin.getDataFolder(), fileName), defaults);
     }
 
+    public YamlConfig(PluginBase plugin, File file) throws Throwable {
+        this(plugin, file, null);
+    }
+    
     public YamlConfig(PluginBase plugin, File file, String defaults) throws Throwable {
         this.file = file;
 
@@ -65,8 +73,13 @@ public class YamlConfig extends YamlConfiguration implements OptionConfig {
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public <T> ConfigOption<T> getOption(String path) {
-        return options.stream().filter(i -> i.getPath().equals(path)).map(i -> (ConfigOption<T>) i).findFirst().orElse(null);
+        return options.stream()
+            .filter(i -> i.getPath().equals(path))
+            .map(i -> (ConfigOption<T>) i)
+            .findFirst()
+            .orElse(null);
     }
     
     @Override

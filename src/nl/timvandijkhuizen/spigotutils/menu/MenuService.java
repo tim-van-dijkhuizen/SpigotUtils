@@ -6,9 +6,9 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 
-import nl.timvandijkhuizen.spigotutils.services.BaseService;
+import nl.timvandijkhuizen.spigotutils.services.Service;
 
-public class MenuService extends BaseService implements Listener {
+public class MenuService implements Service, Listener {
 
     @Override
     public String getHandle() {

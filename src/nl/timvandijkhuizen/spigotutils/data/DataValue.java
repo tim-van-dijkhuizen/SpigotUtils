@@ -54,6 +54,7 @@ public class DataValue extends TypedValue<Object> {
         return (List<?>) value;
     }
 
+    @SuppressWarnings("unchecked")
     public <T> List<T> asList(Class<T> type) {
         return (List<T>) value;
     }
@@ -62,10 +63,12 @@ public class DataValue extends TypedValue<Object> {
         return (Set<?>) value;
     }
 
+    @SuppressWarnings("unchecked")
     public <T> Set<T> asSet(Class<T> type) {
         return (Set<T>) value;
     }
 
+    @SuppressWarnings("unchecked")
     public <K, V> Map<K, V> asMap(Class<K> keyType, Class<V> valueType) {
         return (Map<K, V>) value;
     }

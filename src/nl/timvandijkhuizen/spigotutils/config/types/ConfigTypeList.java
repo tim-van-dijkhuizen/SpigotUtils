@@ -55,7 +55,7 @@ public class ConfigTypeList<T extends ConfigObject> implements ConfigType<List<T
             try {
                 ConfigObjectData data = new ConfigObjectData(rawObject);
 
-                object = clazz.newInstance();
+                object = clazz.getConstructor().newInstance();
                 object.deserialize(data);
                 
                 output.add(object);
@@ -226,7 +226,7 @@ public class ConfigTypeList<T extends ConfigObject> implements ConfigType<List<T
     }
     
     private T createObject(T base) throws Exception {
-        T object = clazz.newInstance();
+        T object = clazz.getConstructor().newInstance();
         
         if(base != null) {
             copyObjectData(base, object);

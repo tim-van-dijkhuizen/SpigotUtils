@@ -6,9 +6,9 @@ import java.util.Set;
 import org.bukkit.command.PluginCommand;
 
 import nl.timvandijkhuizen.spigotutils.PluginBase;
-import nl.timvandijkhuizen.spigotutils.services.BaseService;
+import nl.timvandijkhuizen.spigotutils.services.Service;
 
-public class CommandService extends BaseService {
+public class CommandService implements Service {
 
     private PluginBase plugin;
     private Set<BaseCommand> commands = new LinkedHashSet<>();
