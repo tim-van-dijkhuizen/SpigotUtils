@@ -5,6 +5,14 @@
 	<version>1.2.0</version>
 	<name>SpigotUtils</name>
 
+    <distributionManagement>
+        <repository>
+            <id>timvandijkhuizen</id>
+            <name>SpigotUtils</name>
+            <url>https://maven.pkg.github.com/timvandijkhuizen/SpigotUtils</url>
+        </repository>
+    </distributionManagement>
+
 	<build>
 		<sourceDirectory>src</sourceDirectory>
 		
