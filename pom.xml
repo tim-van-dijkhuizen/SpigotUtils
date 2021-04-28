@@ -7,9 +7,9 @@
 
     <distributionManagement>
         <repository>
-            <id>timvandijkhuizen</id>
-            <name>SpigotUtils</name>
-            <url>https://maven.pkg.github.com/timvandijkhuizen/SpigotUtils</url>
+            <id>github</id>
+            <name>GitHub TimvanDijkhuizen Apache Maven Packages</name>
+            <url>https://maven.pkg.github.com/TimvanDijkhuizen/SpigotUtils</url>
         </repository>
     </distributionManagement>
 
