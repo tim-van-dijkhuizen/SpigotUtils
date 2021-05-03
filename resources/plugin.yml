@@ -1,7 +1,7 @@
 name: SpigotUtils
 description: A Spigot plugin to make plugin development easier.
 author: Tim van Dijkhuizen
-version: "1.2.2"
+version: "1.2.3"
 api-version: 1.13
 main: nl.timvandijkhuizen.spigotutils.SpigotUtils
 load: STARTUP
