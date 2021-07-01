@@ -1,7 +1,9 @@
 package nl.timvandijkhuizen.spigotutils.config.types;
 
 import java.util.Currency;
+import java.util.Set;
 import java.util.function.Consumer;
+import java.util.stream.Collectors;
 
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -19,6 +21,10 @@ import nl.timvandijkhuizen.spigotutils.ui.UI;
 
 public class ConfigTypeCurrency implements ConfigType<Currency> {
 
+    private static final Set<Currency> CURRENCIES = Currency.getAvailableCurrencies().stream() //
+        .sorted((a, b) -> a.getDisplayName().compareTo(b.getDisplayName())) //
+        .collect(Collectors.toSet());
+    
     @Override
     public Currency getValue(OptionConfig config, ConfigOption<Currency> option) {
         try {
@@ -55,7 +61,7 @@ public class ConfigTypeCurrency implements ConfigType<Currency> {
         Player player = event.getPlayer();
         Currency selected = getValue(config, option);
 
-        for (Currency currency : Currency.getAvailableCurrencies()) {
+        for (Currency currency : CURRENCIES) {
             MenuItemBuilder item = new MenuItemBuilder(XMaterial.SUNFLOWER);
 
             item.setName(UI.color(currency.getDisplayName(), UI.COLOR_PRIMARY, ChatColor.BOLD));
