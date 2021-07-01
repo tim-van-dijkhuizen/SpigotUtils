@@ -7,6 +7,7 @@ import org.bukkit.Material;
 import com.cryptomorin.xseries.XMaterial;
 
 import nl.timvandijkhuizen.spigotutils.data.DataArguments;
+import nl.timvandijkhuizen.spigotutils.helpers.InventoryHelper;
 import nl.timvandijkhuizen.spigotutils.menu.MenuClick;
 
 public class ConfigOption<T> {
@@ -32,7 +33,7 @@ public class ConfigOption<T> {
     }
 
     public ConfigOption(String path, String name, XMaterial icon, ConfigType<T> type) {
-        this(path, name, icon.parseMaterial(true), type);
+        this(path, name, InventoryHelper.parseMaterial(icon), type);
     }
 
     /**

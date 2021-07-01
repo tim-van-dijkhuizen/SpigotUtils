@@ -18,6 +18,8 @@ import org.bukkit.inventory.meta.SkullMeta;
 import com.cryptomorin.xseries.SkullUtils;
 import com.cryptomorin.xseries.XMaterial;
 
+import nl.timvandijkhuizen.spigotutils.helpers.InventoryHelper;
+
 public class ItemBuilder {
 
     protected ItemStack itemStack;
@@ -35,7 +37,7 @@ public class ItemBuilder {
     }
 
     public ItemBuilder(XMaterial material, int amount) {
-        this(material.parseMaterial(true), amount);
+        this(InventoryHelper.parseMaterial(material), amount);
     }
 
     public ItemBuilder(ItemStack itemStack) {
@@ -69,7 +71,7 @@ public class ItemBuilder {
      * @return
      */
     public ItemBuilder setType(XMaterial material) {
-        return setType(material.parseMaterial(true));
+        return setType(InventoryHelper.parseMaterial(material));
     }
 
     /**
