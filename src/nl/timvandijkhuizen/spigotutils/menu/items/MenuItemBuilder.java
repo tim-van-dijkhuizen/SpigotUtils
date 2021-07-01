@@ -11,6 +11,7 @@ import org.bukkit.inventory.ItemStack;
 
 import com.cryptomorin.xseries.XMaterial;
 
+import nl.timvandijkhuizen.spigotutils.helpers.InventoryHelper;
 import nl.timvandijkhuizen.spigotutils.inventory.ItemBuilder;
 import nl.timvandijkhuizen.spigotutils.menu.MenuClickListener;
 
@@ -44,7 +45,7 @@ public class MenuItemBuilder extends ItemBuilder {
     }
 
     public MenuItemBuilder(XMaterial material, int amount) {
-        super(material.parseMaterial(true), amount);
+        super(InventoryHelper.parseMaterial(material), amount);
     }
 
     public MenuItemBuilder(ItemStack itemStack) {

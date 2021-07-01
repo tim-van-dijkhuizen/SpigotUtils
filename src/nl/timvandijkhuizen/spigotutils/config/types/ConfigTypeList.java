@@ -19,6 +19,7 @@ import nl.timvandijkhuizen.spigotutils.config.ConfigType;
 import nl.timvandijkhuizen.spigotutils.config.OptionConfig;
 import nl.timvandijkhuizen.spigotutils.data.TypedValue;
 import nl.timvandijkhuizen.spigotutils.helpers.ConsoleHelper;
+import nl.timvandijkhuizen.spigotutils.helpers.InventoryHelper;
 import nl.timvandijkhuizen.spigotutils.menu.MenuClick;
 import nl.timvandijkhuizen.spigotutils.menu.items.MenuItemBuilder;
 import nl.timvandijkhuizen.spigotutils.menu.items.MenuItems;
@@ -38,7 +39,7 @@ public class ConfigTypeList<T extends ConfigObject> implements ConfigType<List<T
     }
 
     public ConfigTypeList(Class<T> clazz, String menuTitle, XMaterial menuIcon) {
-        this(clazz, menuTitle, menuIcon.parseMaterial(true));
+        this(clazz, menuTitle, InventoryHelper.parseMaterial(menuIcon));
     }
 
     public ConfigTypeList(Class<T> clazz, String menuTitle) {
