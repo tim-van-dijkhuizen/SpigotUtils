@@ -62,3 +62,23 @@ for (int i = 1; i <= 42; ++i) {
 
 menu.open(player);
 ```
+
+### Register MenuService
+Register the MenuService, so menu's can start handling clicks. Without this, menu's can be opened but won't register any clicks.
+
+```java
+import nl.timvandijkhuizen.spigotutils.PluginBase;
+import nl.timvandijkhuizen.spigotutils.menu.MenuService;
+import nl.timvandijkhuizen.spigotutils.services.Service;
+
+public class TestPlugin extends PluginBase {
+    
+    @Override
+    public Service[] registerServices() throws Throwable {
+        return new Service[] {
+            new MenuService()
+        };
+    }
+
+}
+```
