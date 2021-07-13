@@ -9,12 +9,7 @@ import org.bukkit.inventory.InventoryHolder;
 import nl.timvandijkhuizen.spigotutils.services.Service;
 
 public class MenuService implements Service, Listener {
-
-    @Override
-    public String getHandle() {
-        return "menus";
-    }
-
+    
     @EventHandler
     public void onClickMenu(InventoryClickEvent event) {
         Inventory inventory = event.getClickedInventory();

@@ -18,11 +18,6 @@ public class CommandService implements Service {
     }
 
     @Override
-    public String getHandle() {
-        return "commands";
-    }
-
-    @Override
     public void init() throws Throwable {
         for(BaseCommand executor : commands) {
             PluginCommand command = plugin.getCommand(executor.getCommand());

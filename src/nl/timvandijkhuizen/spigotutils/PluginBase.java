@@ -14,19 +14,11 @@ public abstract class PluginBase extends JavaPlugin {
     private Map<Class<? extends Service>, Service> services = new HashMap<>();
     private Map<Class<? extends Service>, String> serviceErrors = new HashMap<>();
 
-    private Map<String, Service> serviceHandles = new HashMap<>();
-    private Map<String, String> serviceErrorHandles = new HashMap<>();
-    
     @Override
     public void onLoad() {
         try {
             for (Service service : registerServices()) {
                 services.put(service.getClass(), service);
-                
-                if(service.getHandle() != null) {
-                    serviceHandles.put(service.getHandle(), service);
-                }
-                
                 ConsoleHelper.printDebug("Registered service " + service.getClass().getSimpleName());
             }
         } catch (Throwable t) {
@@ -205,10 +197,6 @@ public abstract class PluginBase extends JavaPlugin {
         } catch (Throwable e) {
             ConsoleHelper.printError("Failed to load service: " + service.getClass().getSimpleName(), e);
             serviceErrors.put(service.getClass(), e.getMessage());
-            
-            if(service.getHandle() != null) {
-                serviceErrorHandles.put(service.getHandle(), e.getMessage());
-            }
         }
     }
 
@@ -233,10 +221,6 @@ public abstract class PluginBase extends JavaPlugin {
      */
     private void reloadService(Service service) {
         serviceErrors.remove(service.getClass());
-        
-        if(service.getHandle() != null) {
-            serviceErrorHandles.remove(service.getHandle());
-        }
 
         try {
             service.unload();
@@ -244,10 +228,6 @@ public abstract class PluginBase extends JavaPlugin {
         } catch (Throwable e) {
             ConsoleHelper.printError("Failed to reload service: " + service.getClass().getSimpleName(), e);
             serviceErrors.put(service.getClass(), e.getMessage());
-            
-            if(service.getHandle() != null) {
-                serviceErrorHandles.put(service.getHandle(), e.getMessage());
-            }
         }
     }
 
@@ -267,33 +247,6 @@ public abstract class PluginBase extends JavaPlugin {
 
     public String getServiceErrors(Class<? extends Service> service) {
         return serviceErrors.get(service);
-    }
-    
-    /**
-     * Returns a service by its handle.
-     * 
-     * @param handle
-     * @return
-     */
-    @SuppressWarnings("unchecked")
-    @Deprecated
-    public <T extends Service> T getService(String handle) {
-        try {
-            return (T) serviceHandles.get(handle);
-        } catch (ClassCastException e) {
-            ConsoleHelper.printError("Service with handle " + handle + " cannot be cast to the specified type.");
-            return null;
-        }
-    }
-
-    @Deprecated
-    public Map<String, String> getServiceErrors() {
-        return serviceErrorHandles;
-    }
-
-    @Deprecated
-    public String getServiceError(String handle) {
-        return serviceErrorHandles.get(handle);
     }
 
 }

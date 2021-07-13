@@ -3,16 +3,6 @@ package nl.timvandijkhuizen.spigotutils.services;
 public interface Service {
 
     /**
-     * Returns the handle of the service.
-     * 
-     * @return
-     */
-    @Deprecated
-    public default String getHandle() {
-        return null;
-    }
-
-    /**
      * Called when the service is created.
      * 
      * @throws Throwable
